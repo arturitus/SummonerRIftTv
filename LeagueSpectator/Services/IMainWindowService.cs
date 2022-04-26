@@ -1,5 +1,5 @@
-﻿
-using LeagueSpectator.Models;
+﻿using LeagueSpectator.Models;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace LeagueSpectator.Services
@@ -7,7 +7,9 @@ namespace LeagueSpectator.Services
     internal interface IMainWindowService
     {
         Task<bool> SearchSummonerAsync(string summonerName, Region region, string apiKey, out string summonerId);
-        Task<bool> SearchSpectableGameAsync(string summonerId, Region region, string apiKey);
-        Task<bool> SpectateGameAsync();
+        Task<bool> SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out ObservableCollection<int> championsIds);
+        Task<bool> SpectateGameAsync(string lolFolderPath);
+        Task<bool> GetAppData(ref AppData appData);
+        Task<bool> SetAppData(AppData appData);
     }
 }

@@ -13,6 +13,8 @@ namespace LeagueSpectator.Models
         EUW,
         EUNE,
         NA,
-        KR
+        KR,
+        RU,
+        BR
     }
 }

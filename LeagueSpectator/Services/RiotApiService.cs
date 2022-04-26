@@ -15,7 +15,12 @@ namespace LeagueSpectator.Services
         {            
             using (HttpClient httpClient = new())
             {
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{region}1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{summonerId}?api_key={apiKey}").Result)
+                object regionConcat = region;
+                if (region != Region.KR && region != Region.RU)
+                {
+                    regionConcat = $"{regionConcat}1";
+                }
+                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{regionConcat}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{summonerId}?api_key={apiKey}").Result)
                 {
                     responseMessage.EnsureSuccessStatusCode();
                     return JsonConvert.DeserializeObject<ActiveGame>(await responseMessage.Content.ReadAsStringAsync());
@@ -28,7 +33,12 @@ namespace LeagueSpectator.Services
         {
             using (HttpClient httpClient = new())
             {
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{region}1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey}").Result)
+                object regionConcat = region;
+                if (region != Region.KR && region != Region.RU)
+                {
+                    regionConcat = $"{regionConcat}1";
+                }
+                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{regionConcat}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey}").Result)
                 {
                     responseMessage.EnsureSuccessStatusCode();
                     return JsonConvert.DeserializeObject<Summoner>(await responseMessage.Content.ReadAsStringAsync());

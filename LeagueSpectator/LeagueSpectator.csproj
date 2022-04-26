@@ -9,7 +9,171 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Remove="Assets\AppData.json" />
+    <AvaloniaResource Remove="Assets\spectator.bat" />
     <None Remove=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Champions\-1.png" />
+    <Content Include="Assets\Champions\1.png" />
+    <Content Include="Assets\Champions\10.png" />
+    <Content Include="Assets\Champions\101.png" />
+    <Content Include="Assets\Champions\102.png" />
+    <Content Include="Assets\Champions\103.png" />
+    <Content Include="Assets\Champions\104.png" />
+    <Content Include="Assets\Champions\105.png" />
+    <Content Include="Assets\Champions\106.png" />
+    <Content Include="Assets\Champions\107.png" />
+    <Content Include="Assets\Champions\11.png" />
+    <Content Include="Assets\Champions\110.png" />
+    <Content Include="Assets\Champions\111.png" />
+    <Content Include="Assets\Champions\112.png" />
+    <Content Include="Assets\Champions\113.png" />
+    <Content Include="Assets\Champions\114.png" />
+    <Content Include="Assets\Champions\115.png" />
+    <Content Include="Assets\Champions\117.png" />
+    <Content Include="Assets\Champions\119.png" />
+    <Content Include="Assets\Champions\12.png" />
+    <Content Include="Assets\Champions\120.png" />
+    <Content Include="Assets\Champions\121.png" />
+    <Content Include="Assets\Champions\122.png" />
+    <Content Include="Assets\Champions\126.png" />
+    <Content Include="Assets\Champions\127.png" />
+    <Content Include="Assets\Champions\13.png" />
+    <Content Include="Assets\Champions\131.png" />
+    <Content Include="Assets\Champions\133.png" />
+    <Content Include="Assets\Champions\134.png" />
+    <Content Include="Assets\Champions\136.png" />
+    <Content Include="Assets\Champions\14.png" />
+    <Content Include="Assets\Champions\141.png" />
+    <Content Include="Assets\Champions\142.png" />
+    <Content Include="Assets\Champions\143.png" />
+    <Content Include="Assets\Champions\145.png" />
+    <Content Include="Assets\Champions\147.png" />
+    <Content Include="Assets\Champions\15.png" />
+    <Content Include="Assets\Champions\150.png" />
+    <Content Include="Assets\Champions\154.png" />
+    <Content Include="Assets\Champions\157.png" />
+    <Content Include="Assets\Champions\16.png" />
+    <Content Include="Assets\Champions\161.png" />
+    <Content Include="Assets\Champions\163.png" />
+    <Content Include="Assets\Champions\164.png" />
+    <Content Include="Assets\Champions\166.png" />
+    <Content Include="Assets\Champions\17.png" />
+    <Content Include="Assets\Champions\18.png" />
+    <Content Include="Assets\Champions\19.png" />
+    <Content Include="Assets\Champions\2.png" />
+    <Content Include="Assets\Champions\20.png" />
+    <Content Include="Assets\Champions\201.png" />
+    <Content Include="Assets\Champions\202.png" />
+    <Content Include="Assets\Champions\203.png" />
+    <Content Include="Assets\Champions\21.png" />
+    <Content Include="Assets\Champions\22.png" />
+    <Content Include="Assets\Champions\221.png" />
+    <Content Include="Assets\Champions\222.png" />
+    <Content Include="Assets\Champions\223.png" />
+    <Content Include="Assets\Champions\23.png" />
+    <Content Include="Assets\Champions\234.png" />
+    <Content Include="Assets\Champions\235.png" />
+    <Content Include="Assets\Champions\236.png" />
+    <Content Include="Assets\Champions\238.png" />
+    <Content Include="Assets\Champions\24.png" />
+    <Content Include="Assets\Champions\240.png" />
+    <Content Include="Assets\Champions\245.png" />
+    <Content Include="Assets\Champions\246.png" />
+    <Content Include="Assets\Champions\25.png" />
+    <Content Include="Assets\Champions\254.png" />
+    <Content Include="Assets\Champions\26.png" />
+    <Content Include="Assets\Champions\266.png" />
+    <Content Include="Assets\Champions\267.png" />
+    <Content Include="Assets\Champions\268.png" />
+    <Content Include="Assets\Champions\27.png" />
+    <Content Include="Assets\Champions\28.png" />
+    <Content Include="Assets\Champions\29.png" />
+    <Content Include="Assets\Champions\3.png" />
+    <Content Include="Assets\Champions\30.png" />
+    <Content Include="Assets\Champions\31.png" />
+    <Content Include="Assets\Champions\32.png" />
+    <Content Include="Assets\Champions\33.png" />
+    <Content Include="Assets\Champions\34.png" />
+    <Content Include="Assets\Champions\35.png" />
+    <Content Include="Assets\Champions\350.png" />
+    <Content Include="Assets\Champions\36.png" />
+    <Content Include="Assets\Champions\360.png" />
+    <Content Include="Assets\Champions\37.png" />
+    <Content Include="Assets\Champions\38.png" />
+    <Content Include="Assets\Champions\39.png" />
+    <Content Include="Assets\Champions\4.png" />
+    <Content Include="Assets\Champions\40.png" />
+    <Content Include="Assets\Champions\41.png" />
+    <Content Include="Assets\Champions\412.png" />
+    <Content Include="Assets\Champions\42.png" />
+    <Content Include="Assets\Champions\420.png" />
+    <Content Include="Assets\Champions\421.png" />
+    <Content Include="Assets\Champions\427.png" />
+    <Content Include="Assets\Champions\429.png" />
+    <Content Include="Assets\Champions\43.png" />
+    <Content Include="Assets\Champions\432.png" />
+    <Content Include="Assets\Champions\44.png" />
+    <Content Include="Assets\Champions\45.png" />
+    <Content Include="Assets\Champions\48.png" />
+    <Content Include="Assets\Champions\497.png" />
+    <Content Include="Assets\Champions\498.png" />
+    <Content Include="Assets\Champions\5.png" />
+    <Content Include="Assets\Champions\50.png" />
+    <Content Include="Assets\Champions\51.png" />
+    <Content Include="Assets\Champions\516.png" />
+    <Content Include="Assets\Champions\517.png" />
+    <Content Include="Assets\Champions\518.png" />
+    <Content Include="Assets\Champions\523.png" />
+    <Content Include="Assets\Champions\526.png" />
+    <Content Include="Assets\Champions\53.png" />
+    <Content Include="Assets\Champions\54.png" />
+    <Content Include="Assets\Champions\55.png" />
+    <Content Include="Assets\Champions\555.png" />
+    <Content Include="Assets\Champions\56.png" />
+    <Content Include="Assets\Champions\57.png" />
+    <Content Include="Assets\Champions\58.png" />
+    <Content Include="Assets\Champions\59.png" />
+    <Content Include="Assets\Champions\6.png" />
+    <Content Include="Assets\Champions\60.png" />
+    <Content Include="Assets\Champions\61.png" />
+    <Content Include="Assets\Champions\62.png" />
+    <Content Include="Assets\Champions\63.png" />
+    <Content Include="Assets\Champions\64.png" />
+    <Content Include="Assets\Champions\67.png" />
+    <Content Include="Assets\Champions\68.png" />
+    <Content Include="Assets\Champions\69.png" />
+    <Content Include="Assets\Champions\7.png" />
+    <Content Include="Assets\Champions\711.png" />
+    <Content Include="Assets\Champions\72.png" />
+    <Content Include="Assets\Champions\74.png" />
+    <Content Include="Assets\Champions\75.png" />
+    <Content Include="Assets\Champions\76.png" />
+    <Content Include="Assets\Champions\77.png" />
+    <Content Include="Assets\Champions\777.png" />
+    <Content Include="Assets\Champions\78.png" />
+    <Content Include="Assets\Champions\79.png" />
+    <Content Include="Assets\Champions\8.png" />
+    <Content Include="Assets\Champions\80.png" />
+    <Content Include="Assets\Champions\81.png" />
+    <Content Include="Assets\Champions\82.png" />
+    <Content Include="Assets\Champions\83.png" />
+    <Content Include="Assets\Champions\84.png" />
+    <Content Include="Assets\Champions\85.png" />
+    <Content Include="Assets\Champions\86.png" />
+    <Content Include="Assets\Champions\875.png" />
+    <Content Include="Assets\Champions\876.png" />
+    <Content Include="Assets\Champions\887.png" />
+    <Content Include="Assets\Champions\888.png" />
+    <Content Include="Assets\Champions\89.png" />
+    <Content Include="Assets\Champions\9.png" />
+    <Content Include="Assets\Champions\90.png" />
+    <Content Include="Assets\Champions\91.png" />
+    <Content Include="Assets\Champions\92.png" />
+    <Content Include="Assets\Champions\96.png" />
+    <Content Include="Assets\Champions\98.png" />
+    <Content Include="Assets\Champions\99.png" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
@@ -26,5 +190,13 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
     <PackageReference Include="Material.Avalonia" Version="2.5.1" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\AppData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\spectator.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
