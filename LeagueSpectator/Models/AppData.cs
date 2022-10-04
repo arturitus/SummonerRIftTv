@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Avalonia;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +39,20 @@ namespace LeagueSpectator.Models
             set
             {
                 lolFolderPath = value;
+                if (lolFolderPath != null && apiKey != null)
+                {
+                    SetAppData();
+                }
+            }
+        }
+
+        private PixelPoint position;
+        public PixelPoint Position 
+        {
+            get => position;
+            set
+            {
+                position = value; 
                 if (lolFolderPath != null && apiKey != null)
                 {
                     SetAppData();

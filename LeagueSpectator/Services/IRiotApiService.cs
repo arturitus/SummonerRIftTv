@@ -5,7 +5,7 @@ namespace LeagueSpectator.Services
 {
     public interface IRiotApiService
     {
-        Task<Summoner> GetSummonerByNameAsync(string summonerName, Region region, string apiKey);
-        Task<ActiveGame> GetActiveGameAsync(string summonerId, Region region, string apiKey);
+        Task<RiotApiResponse<Summoner>> GetSummonerByNameAsync(string summonerName, Region region, string apiKey);
+        Task<RiotApiResponse<ActiveGame>> GetActiveGameAsync(string summonerId, Region region, string apiKey);
     }
 }

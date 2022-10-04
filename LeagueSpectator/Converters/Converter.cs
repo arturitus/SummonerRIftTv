@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,18 @@ namespace LeagueSpectator.Converters
         {
             if (value != null && value!.ToString() != "(unset)" && (int)value != -1)
             {
-                return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{value}.png")));
+                //return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{value}.png")));
+                using (HttpClient httpClient = new() { BaseAddress = new Uri("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/") })
+                {
+                    using (HttpResponseMessage responseMessage1 = httpClient.GetAsync($"{value}.png").Result)
+                    {
+                        if (responseMessage1.IsSuccessStatusCode)
+                        {
+                            return new Bitmap(responseMessage1.Content.ReadAsStreamAsync().Result);
+                        }
+                        return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/-1.png")));
+                    }
+                }
             }
             return null;
         }

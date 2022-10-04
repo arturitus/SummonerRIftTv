@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="LeagueSpectator.Views.MainWindow"
-		Width="450"
-		CanResize="False"
-		ExtendClientAreaToDecorationsHint="True"
-		ExtendClientAreaTitleBarHeightHint="30"
-		Height="500"
+				Width="450"
+				CanResize="True"
+        Background="White"
+				ExtendClientAreaToDecorationsHint="False"
+				Height="500"
         Icon="/Assets/avalonia-logo.ico"
         Title="LeagueSpectator">
 
-	<Window.DataContext>
+  <!--ExtendClientAreaTitleBarHeightHint="30"-->
+  <Window.DataContext>
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>
 
-	<Grid Margin="30">
+	<Grid Margin="30" Background="Transparent">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
@@ -43,7 +44,7 @@
 						</Button.CommandParameter>
 					</Button>
 					<Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="Spectate" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
-					<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}"/>
+					<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
 					
 					<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[0], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
@@ -81,9 +82,9 @@
 			</TabItem>
 		</TabControl>
 	</Grid>	
-	<Window.Styles>
+	<!--<Window.Styles>
 		<Style Selector="Window Panel#PART_RestoreButton">
 			<Setter Property="IsVisible" Value="False"></Setter>
 		</Style>
-	</Window.Styles>
+	</Window.Styles>-->
 </Window>

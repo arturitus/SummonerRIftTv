@@ -1,4 +1,8 @@
 ﻿{
-  "ApiKey": "RGAPI-de6cb05f-c644-40f9-a4fc-fd7efada7195",
-  "LolFolderPath": "C:/Riot Games/League of Legends"
+  "ApiKey": "",
+  "LolFolderPath": "C:/Riot Games/League of Legends",
+  "Position": {
+    "X": 735,
+    "Y": 290
+  }
 }

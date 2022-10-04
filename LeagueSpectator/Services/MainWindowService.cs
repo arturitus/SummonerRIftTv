@@ -34,14 +34,15 @@ namespace LeagueSpectator.Services
         {
             try
             {
-                Summoner summoner = riotApiService.GetSummonerByNameAsync(summonerName, region, apiKey).Result;
-                summonerId = summoner.Id!;
+                RiotApiResponse<Summoner> res = riotApiService.GetSummonerByNameAsync(summonerName, region, apiKey).Result;
+                summonerId = res.Response!.Id!;
                 return Task.FromResult(true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                summonerId = string.Empty;
-                return Task.FromResult(false);
+                //summonerId = string.Empty;
+                //return Task.FromResult(false);
+                throw e.InnerException!;
             }
         }
 
@@ -49,9 +50,9 @@ namespace LeagueSpectator.Services
         {
             try
             {
-                ActiveGame activeGame = riotApiService.GetActiveGameAsync(summonerId, region, apiKey).Result;
-                authentication = activeGame.Observers!.EncryptionKey!;
-                matchId = activeGame.GameId;
+                RiotApiResponse<ActiveGame> res = riotApiService.GetActiveGameAsync(summonerId, region, apiKey).Result;
+                authentication = res.Response!.Observers!.EncryptionKey!;
+                matchId = res.Response.GameId;
                 _region = region == Region.BR || region == Region.KR ? region.ToString() : $"{region}1";
                 switch (region)
                 {
@@ -73,16 +74,17 @@ namespace LeagueSpectator.Services
                         break;
                 }
                 championsIds = new ObservableCollection<int>();
-                foreach (Participant participant in activeGame.Participants!)
+                foreach (Participant participant in res.Response.Participants!)
                 {
                     championsIds.Add(participant.ChampionId);
                 }
-                return Task.FromResult(activeGame != null);
+                return Task.FromResult(res.Response != null);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                championsIds = new ObservableCollection<int>();
-                return Task.FromResult(false);
+                //championsIds = new ObservableCollection<int>();
+                //return Task.FromResult(false);
+                throw e.InnerException!;
             }
         }
 
