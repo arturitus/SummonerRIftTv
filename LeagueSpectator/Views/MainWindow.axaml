@@ -1,12 +1,16 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:LeagueSpectator.ViewModels"
+				xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="LeagueSpectator.Views.MainWindow"
 				Width="450"
 				CanResize="True"
+        SizeToContent="Manual"
+        MinHeight="700"
+        MinWidth="500"
         Background="White"
 				ExtendClientAreaToDecorationsHint="False"
 				Height="500"
@@ -18,35 +22,35 @@
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>
 
-	<Grid Margin="30" Background="Transparent">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
-		<TabControl>
-			<TabItem Header="Spectate">
-				<DockPanel Margin="0, 30, 0, 0">
-					<TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="Search for a Summoner" HorizontalAlignment="Center"/>
-					<TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="Outline" Watermark="Summoner Name"/>
-					<ComboBox Name="comboRegion" DockPanel.Dock="Top" Margin="5" MinWidth="120" Classes="Outline" Items="{Binding Regions}" SelectedIndex="0"/>
-					<Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="Search" Command="{Binding OnSearchClick}">
-						<Button.IsEnabled>
-							<MultiBinding Converter="{StaticResource MultiEnabledConverter}">
-								<Binding ElementName="tbsummName" Path="Text" />
-								<Binding ElementName="comboRegion" Path="SelectedItem" />
-							</MultiBinding>
-						</Button.IsEnabled>
-						<Button.CommandParameter>
-							<MultiBinding>
-								<Binding ElementName="tbsummName" Path="Text"/>
-								<Binding ElementName="comboRegion" Path="SelectedItem"/>
-								<Binding ElementName="tbApiKey" Path="Text"/>
-							</MultiBinding>
-						</Button.CommandParameter>
-					</Button>
-					<Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="Spectate" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
-					<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
-					
-					<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
+  <Grid Margin="30" Background="Transparent">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <TabControl>
+      <TabItem Header="Spectate">
+        <DockPanel Margin="0, 30, 0, 0">
+          <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="Search for a Summoner" HorizontalAlignment="Center"/>
+          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="Outline" Watermark="Summoner Name"/>
+          <ComboBox Name="comboRegion" DockPanel.Dock="Top" Margin="5" MinWidth="120" Classes="Outline" Items="{Binding Regions}" SelectedIndex="0"/>
+          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="Search" Command="{Binding OnSearchClick}">
+            <Button.IsEnabled>
+              <MultiBinding Converter="{StaticResource MultiEnabledConverter}">
+                <Binding ElementName="tbsummName" Path="Text" />
+                <Binding ElementName="comboRegion" Path="SelectedItem" />
+              </MultiBinding>
+            </Button.IsEnabled>
+            <Button.CommandParameter>
+              <MultiBinding>
+                <Binding ElementName="tbsummName" Path="Text"/>
+                <Binding ElementName="comboRegion" Path="SelectedItem"/>
+                <Binding ElementName="tbApiKey" Path="Text"/>
+              </MultiBinding>
+            </Button.CommandParameter>
+          </Button>
+          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="Spectate" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
+          <TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
+
+          <!--<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[0], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[1], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[2], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
@@ -59,14 +63,83 @@
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[7], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[8], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[9], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
-					</StackPanel>
-					<!--<Grid DockPanel.Dock="Top" Height="20" HorizontalAlignment="Stretch" Background="Red"></Grid>-->
-					
-				</DockPanel>
-			</TabItem>
-			<TabItem Header="Options">
-				<DockPanel Margin="0, 30, 0, 0" VerticalAlignment="Top">
-					<!--<Grid.ColumnDefinitions>
+					</StackPanel>-->
+          <ScrollViewer>
+          <Grid Margin="10,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ItemsControl Margin="5" Items="{Binding Players1}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Expander Margin="2" Tag="Runes">
+                    <Expander.Header>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="Blue" Width="5" Margin="2"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="2" Height="40" Width="40" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                        <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
+                          <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                          <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
+                      </Grid>
+                    </Expander.Header>
+                    <TextBlock Text="ASDASDASD"></TextBlock>
+                  </Expander>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <ItemsControl Margin="5" Items="{Binding Players2}" Grid.Column="1">
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<StackPanel/>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+                  <Expander Margin="2" Tag="Runes">
+                    <Expander.Header>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="Red" Width="5" Margin="2.5"/>
+                        <Image Grid.Column="1" Margin="2.5" HorizontalAlignment="Right" Height="35" Width="35" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                        <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
+                            <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                            <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding ChampionId, Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+                          </StackPanel>
+                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>     
+                      </Grid>
+                    </Expander.Header>
+                  </Expander>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+            <!--<Grid DockPanel.Dock="Top" Height="20" HorizontalAlignment="Stretch" Background="Red"></Grid>-->
+          </Grid>
+          </ScrollViewer>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="Options">
+        <DockPanel Margin="0, 30, 0, 0" VerticalAlignment="Top">
+          <!--<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
@@ -74,15 +147,15 @@
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>-->
-					<TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Text="League of Legends folder path"/>
-					<TextBox Text="{Binding AppData.LolFolderPath}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
-					<TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Grid.Row="1" Text="Riot API key"/>
-					<TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
-				</DockPanel>
-			</TabItem>
-		</TabControl>
-	</Grid>	
-	<!--<Window.Styles>
+          <TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Text="League of Legends folder path"/>
+          <TextBox Text="{Binding AppData.LolFolderPath}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
+          <TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Grid.Row="1" Text="Riot API key"/>
+          <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+        </DockPanel>
+      </TabItem>
+    </TabControl>
+  </Grid>
+  <!--<Window.Styles>
 		<Style Selector="Window Panel#PART_RestoreButton">
 			<Setter Property="IsVisible" Value="False"></Setter>
 		</Style>

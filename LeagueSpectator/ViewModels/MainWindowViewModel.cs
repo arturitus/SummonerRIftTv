@@ -31,12 +31,20 @@ namespace LeagueSpectator.ViewModels
             set => this.RaiseAndSetIfChanged(ref message, value, nameof(Message));
         }
 
-        private ObservableCollection<int> championIds;
-        public ObservableCollection<int> ChampionIds
+        private ObservableCollection<Participant> players1;
+        public ObservableCollection<Participant> Players1
         {
-            get => championIds;
-            set => this.RaiseAndSetIfChanged(ref championIds, value, nameof(ChampionIds));
+            get => players1;
+            set => this.RaiseAndSetIfChanged(ref players1, value, nameof(Players1));
         }
+
+        private ObservableCollection<Participant> players2;
+        public ObservableCollection<Participant> Players2
+        {
+            get => players2;
+            set => this.RaiseAndSetIfChanged(ref players2, value, nameof(Players2));
+        }
+
 
         private bool canSpectate;
         public bool CanSpectate
@@ -61,7 +69,8 @@ namespace LeagueSpectator.ViewModels
             summonerId = string.Empty;
             message = string.Empty;
             canSpectate = false;
-            championIds = new();
+            players1 = new();
+            players2 = new();
             appData = new();
             fileSystemWatcher = new("./Assets");
 
@@ -84,11 +93,12 @@ namespace LeagueSpectator.ViewModels
             try
             {
                 await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (Region)parameters[1], parameters[2].ToString()!, out summonerId);
-                await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out championIds);   
+                await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out players1, out players2);   
                 
                 Message = $"{parameters[0]} is in game.";
                 CanSpectate = true;
-                this.RaisePropertyChanged(nameof(ChampionIds));
+                this.RaisePropertyChanged(nameof(Players1));
+                this.RaisePropertyChanged(nameof(Players2));
 
                 return;
                     
@@ -97,7 +107,8 @@ namespace LeagueSpectator.ViewModels
             {
                 if (e.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    ChampionIds = new();
+                    Players1 = new();
+                    Players2 = new();
                     CanSpectate = false;
                     Message = $"API Key is no longer valid.";
 
@@ -106,14 +117,16 @@ namespace LeagueSpectator.ViewModels
                 switch (e.FunctionName)
                 {
                     case nameof(IRiotApiService.GetSummonerByNameAsync):
-                        ChampionIds = new();
+                        Players1 = new();
+                        Players2 = new();
                         CanSpectate = false;
                         Message = $"{parameters[0]} doesn't exist";
 
                         return;
                     case nameof(IRiotApiService.GetActiveGameAsync):
                         Message = $"{parameters[0]} is not in game.";
-                        ChampionIds = new();
+                        Players1 = new();
+                        Players2 = new();
                         CanSpectate = false;
 
                         return;
@@ -158,7 +171,8 @@ namespace LeagueSpectator.ViewModels
             leagueGameProcess.Dispose();
             Message = $"Game ended.";
             CanSpectate = true;
-            ChampionIds = new();
+            Players1 = new();
+            Players2 = new();
         }
     }
 }

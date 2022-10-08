@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LeagueSpectator.Services
@@ -46,7 +47,7 @@ namespace LeagueSpectator.Services
             }
         }
 
-        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out ObservableCollection<int> championsIds)
+        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out ObservableCollection<Participant> players1, out ObservableCollection<Participant> players2)
         {
             try
             {
@@ -73,10 +74,15 @@ namespace LeagueSpectator.Services
                         spectatorRegion = _region;
                         break;
                 }
-                championsIds = new ObservableCollection<int>();
-                foreach (Participant participant in res.Response.Participants!)
+                players1 = new ObservableCollection<Participant>();
+                foreach (Participant participant in res.Response.Participants!.Where(x => x.TeamId == 100))
                 {
-                    championsIds.Add(participant.ChampionId);
+                    players1.Add(participant);
+                }
+                players2 = new ObservableCollection<Participant>(); 
+                foreach (Participant participant in res.Response.Participants!.Where(x => x.TeamId == 200))
+                {
+                    players2.Add(participant);
                 }
                 return Task.FromResult(res.Response != null);
             }

@@ -37,7 +37,7 @@ namespace LeagueSpectator.Services
             using (HttpClient httpClient = new())
             {
                 object regionConcat = region;
-                if (region != Region.KR && region != Region.RU)
+                if (region != Region.KR && region != Region.RU && region != Region.EUNE)
                 {
                     regionConcat = $"{regionConcat}1";
                 }

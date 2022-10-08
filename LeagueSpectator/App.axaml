@@ -1,8 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:LeagueSpectator"
-			 xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"			 
-			 xmlns:converters="using:LeagueSpectator.Converters"
+						 xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"			 
+						 xmlns:converters="using:LeagueSpectator.Converters"
              x:Class="LeagueSpectator.App">
     <Application.DataTemplates>
         <local:ViewLocator/>
@@ -12,15 +12,17 @@
 		<ResourceDictionary>
 			<converters:Converter x:Key="StringToImg"/>
 			<converters:MultiEnabledConverter x:Key="MultiEnabledConverter"/>
+      <converters:ObjectToStringConverter x:Key="ObjectToString"/>
 			<ResourceDictionary.MergedDictionaries>
 				<themes:BundledTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>
 			</ResourceDictionary.MergedDictionaries>			
 		</ResourceDictionary>
 	</Application.Resources>
-    <Application.Styles>
+    <!--<Application.Styles>
         <FluentTheme Mode="Light"/>
-    </Application.Styles>
+    </Application.Styles>-->
 	<Application.Styles>
 		<StyleInclude Source="avares://Material.Avalonia/Material.Avalonia.Templates.xaml" />
+    <StyleInclude Source="/Styles/Expander.axaml" />
 	</Application.Styles>
 </Application>
