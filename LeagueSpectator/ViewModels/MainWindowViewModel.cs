@@ -1,3 +1,6 @@
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Threading;
 using LeagueSpectator.Helpers;
 using LeagueSpectator.Models;
 using LeagueSpectator.Services;
@@ -5,12 +8,12 @@ using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace LeagueSpectator.ViewModels
 {
@@ -31,21 +34,6 @@ namespace LeagueSpectator.ViewModels
             set => this.RaiseAndSetIfChanged(ref message, value, nameof(Message));
         }
 
-        private ObservableCollection<Participant> players1;
-        public ObservableCollection<Participant> Players1
-        {
-            get => players1;
-            set => this.RaiseAndSetIfChanged(ref players1, value, nameof(Players1));
-        }
-
-        private ObservableCollection<Participant> players2;
-        public ObservableCollection<Participant> Players2
-        {
-            get => players2;
-            set => this.RaiseAndSetIfChanged(ref players2, value, nameof(Players2));
-        }
-
-
         private bool canSpectate;
         public bool CanSpectate
         {
@@ -61,7 +49,13 @@ namespace LeagueSpectator.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref appData, value, nameof(AppData));
             }
-        }        
+        }
+
+        private Team blueTeam;
+        public Team BlueTeam => blueTeam;
+
+        private Team redTeam;
+        public Team RedTeam => redTeam;
 
         public MainWindowViewModel()
         {
@@ -69,15 +63,16 @@ namespace LeagueSpectator.ViewModels
             summonerId = string.Empty;
             message = string.Empty;
             canSpectate = false;
-            players1 = new();
-            players2 = new();
             appData = new();
-            fileSystemWatcher = new("./Assets");
-
-            //fileSystemWatcher.Changed += FileSystemWatcher_Changed;
-            fileSystemWatcher.EnableRaisingEvents = true;
-            fileSystemWatcher.IncludeSubdirectories = false;
-            fileSystemWatcher.Filter = "AppData.json";
+            blueTeam = new();
+            redTeam = new();
+            fileSystemWatcher = new("./Assets")
+            {
+                //fileSystemWatcher.Changed += FileSystemWatcher_Changed;
+                EnableRaisingEvents = true,
+                IncludeSubdirectories = false,
+                Filter = "AppData.json"
+            };
 
             mainWindowService.GetAppData(ref appData);
         }
@@ -90,48 +85,56 @@ namespace LeagueSpectator.ViewModels
 
         private async void OnSearchClick(IList<object> parameters)
         {
-            try
+            await Task.Run(async () =>
             {
-                await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (Region)parameters[1], parameters[2].ToString()!, out summonerId);
-                await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out players1, out players2);   
-                
-                Message = $"{parameters[0]} is in game.";
-                CanSpectate = true;
-                this.RaisePropertyChanged(nameof(Players1));
-                this.RaisePropertyChanged(nameof(Players2));
 
-                return;
-                    
-            }
-            catch (RiotApiError e)
-            {
-                if (e.StatusCode == HttpStatusCode.Forbidden)
+                try
                 {
-                    Players1 = new();
-                    Players2 = new();
-                    CanSpectate = false;
-                    Message = $"API Key is no longer valid.";
+                    ToggleBusyDialog();
+                    await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (Region)parameters[1], parameters[2].ToString()!, out summonerId);
+                    await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out blueTeam, out redTeam);
 
+                    Message = $"{parameters[0]} is in game.";
+                    CanSpectate = true;
+
+                    this.RaisePropertyChanged(nameof(BlueTeam));
+                    this.RaisePropertyChanged(nameof(RedTeam));
                     return;
+
                 }
-                switch (e.FunctionName)
+                catch (RiotApiError e)
                 {
-                    case nameof(IRiotApiService.GetSummonerByNameAsync):
-                        Players1 = new();
-                        Players2 = new();
+                    if (e.StatusCode == HttpStatusCode.Forbidden)
+                    {
+                        BlueTeam.Players = new();
                         CanSpectate = false;
-                        Message = $"{parameters[0]} doesn't exist";
+                        Message = $"API Key is no longer valid.";
 
                         return;
-                    case nameof(IRiotApiService.GetActiveGameAsync):
-                        Message = $"{parameters[0]} is not in game.";
-                        Players1 = new();
-                        Players2 = new();
-                        CanSpectate = false;
+                    }
+                    switch (e.FunctionName)
+                    {
+                        case nameof(IRiotApiService.GetSummonerByNameAsync):
+                            BlueTeam.Players = new();
+                            RedTeam.Players = new();
+                            CanSpectate = false;
+                            Message = $"{parameters[0]} doesn't exist";
 
-                        return;
+                            return;
+                        case nameof(IRiotApiService.GetActiveGameAsync):
+                            Message = $"{parameters[0]} is not in game.";
+                            BlueTeam.Players = new();
+                            RedTeam.Players = new();
+                            CanSpectate = false;
+
+                            return;
+                    }
                 }
-            }
+                finally
+                {
+                    ToggleBusyDialog();
+                }
+            });
         }
 
         private async void OnSpectateClick()
@@ -171,8 +174,30 @@ namespace LeagueSpectator.ViewModels
             leagueGameProcess.Dispose();
             Message = $"Game ended.";
             CanSpectate = true;
-            Players1 = new();
-            Players2 = new();
+            BlueTeam.Players = new();
+            RedTeam.Players = new();
+        }
+
+        private void ToggleBusyDialog()
+        {
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                if (DialogHost.DialogHost.IsDialogOpen("busyDialog"))
+                {
+                    DialogHost.DialogHost.Close("busyDialog");
+                    return;
+                }
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Children.Add(new ProgressBar()
+                {
+                    IsIndeterminate = true,
+                    Classes = new Classes("Circle"),
+                    Width = 30,
+                    Height = 30,
+                    BorderThickness = new Thickness(30)
+                });
+                DialogHost.DialogHost.Show(stackPanel);
+            });
         }
     }
 }

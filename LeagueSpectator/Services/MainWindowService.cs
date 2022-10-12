@@ -47,7 +47,7 @@ namespace LeagueSpectator.Services
             }
         }
 
-        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out ObservableCollection<Participant> players1, out ObservableCollection<Participant> players2)
+        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out Team blueTeam, out Team redTeam)
         {
             try
             {
@@ -74,15 +74,23 @@ namespace LeagueSpectator.Services
                         spectatorRegion = _region;
                         break;
                 }
-                players1 = new ObservableCollection<Participant>();
+                blueTeam = new Team();
                 foreach (Participant participant in res.Response.Participants!.Where(x => x.TeamId == 100))
                 {
-                    players1.Add(participant);
+                    blueTeam.Players.Add(participant);
                 }
-                players2 = new ObservableCollection<Participant>(); 
+                foreach (BannedChampion participant in res.Response.BannedChampions!.Where(x => x.TeamId == 100))
+                {
+                    blueTeam.Bans.Add(participant);
+                }
+                redTeam = new Team();
                 foreach (Participant participant in res.Response.Participants!.Where(x => x.TeamId == 200))
                 {
-                    players2.Add(participant);
+                    redTeam.Players.Add(participant);
+                }
+                foreach (BannedChampion participant in res.Response.BannedChampions!.Where(x => x.TeamId == 200))
+                {
+                    redTeam.Bans.Add(participant);
                 }
                 return Task.FromResult(res.Response != null);
             }

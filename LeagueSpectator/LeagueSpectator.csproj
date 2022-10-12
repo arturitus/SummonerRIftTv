@@ -41,4 +41,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Runes\" />
+    <Folder Include="Assets\SummonerSpells\" />
+  </ItemGroup>
 </Project>

@@ -10,7 +10,6 @@
 	
 	<Application.Resources>
 		<ResourceDictionary>
-			<converters:Converter x:Key="StringToImg"/>
 			<converters:MultiEnabledConverter x:Key="MultiEnabledConverter"/>
       <converters:ObjectToStringConverter x:Key="ObjectToString"/>
 			<ResourceDictionary.MergedDictionaries>
