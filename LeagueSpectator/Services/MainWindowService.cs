@@ -129,7 +129,7 @@ namespace LeagueSpectator.Services
         {
             try
             {
-                appData = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH));
+                appData = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH))!;
                 return Task.FromResult(true);
             }
             catch (Exception)

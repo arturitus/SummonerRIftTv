@@ -18,7 +18,7 @@
 		</ResourceDictionary>
 	</Application.Resources>
     <!--<Application.Styles>
-        <FluentTheme Mode="Light"/>
+        <FluentTheme Mode="Dark"/>
     </Application.Styles>-->
 	<Application.Styles>
 		<StyleInclude Source="avares://Material.Avalonia/Material.Avalonia.Templates.xaml" />

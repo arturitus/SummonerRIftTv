@@ -87,7 +87,6 @@ namespace LeagueSpectator.ViewModels
         {
             await Task.Run(async () =>
             {
-
                 try
                 {
                     ToggleBusyDialog();

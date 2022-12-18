@@ -4,7 +4,12 @@ using Avalonia.Input;
 using Avalonia.Win32;
 using LeagueSpectator.Models;
 using LeagueSpectator.Services;
+using Material.Styles.Themes.Base;
+using Material.Styles.Themes;
 using Splat;
+using Material.Colors;
+using Avalonia.Media;
+using Avalonia.Controls.Primitives;
 
 namespace LeagueSpectator.Views
 {
@@ -19,6 +24,9 @@ namespace LeagueSpectator.Views
             mainWindowService.GetAppData(ref appData);
             Position = appData.Position;
             PositionChanged += MainWindow_PositionChanged;
+
+            new PaletteHelper().SetTheme(Theme.Create(Theme.Dark, Colors.Teal, Colors.Teal));
+            
         }
 
         private void MainWindow_PositionChanged(object? sender, PixelPointEventArgs e)

@@ -10,6 +10,8 @@ namespace LeagueSpectator.Models
         public Participant()
         {
             Bitmaps = new Bitmap[3];
+            SummonerSpellTypes = new SummonerSpellType[2];
+            championType = ChampionType.None;
         }
 
         [JsonProperty("teamId")]
@@ -24,6 +26,7 @@ namespace LeagueSpectator.Models
             {
                 spell1 = value;
                 Bitmaps[1] = BitmapHelper.GetSummonerSpell(spell1);
+                SummonerSpellTypes[0] = (SummonerSpellType)spell1;
             }
         }
 
@@ -36,6 +39,7 @@ namespace LeagueSpectator.Models
             {
                 spell2 = value;
                 Bitmaps[2] = BitmapHelper.GetSummonerSpell(spell2);
+                SummonerSpellTypes[1] = (SummonerSpellType)spell2;
             }
         }
 
@@ -48,6 +52,7 @@ namespace LeagueSpectator.Models
             {
                 championId = value;
                 Bitmaps[0] = BitmapHelper.GetChampion(championId).Result;
+                championType = (ChampionType)championId;
             }
         }
 
@@ -71,5 +76,14 @@ namespace LeagueSpectator.Models
 
         [JsonIgnore]
         public Bitmap[] Bitmaps { get; }
+
+        [JsonIgnore]
+        private ChampionType championType;
+
+        [JsonIgnore]
+        public ChampionType ChampionType => championType;
+
+        [JsonIgnore]
+        public SummonerSpellType[] SummonerSpellTypes { get; }
     }
 }

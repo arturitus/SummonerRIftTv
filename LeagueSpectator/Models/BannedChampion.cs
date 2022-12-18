@@ -15,10 +15,10 @@ namespace LeagueSpectator.Models
             set
             {
                 championId = value;
-                Bitmap = BitmapHelper.GetChampion(championId).Result;
+                bitmap = BitmapHelper.GetChampion(championId).Result;
+                championType = (ChampionType)championId;
             }
         }
-
 
         [JsonProperty("teamId")]
         public int TeamId { get; set; }
@@ -27,6 +27,14 @@ namespace LeagueSpectator.Models
         public int PickTurn { get; set; }
 
         [JsonIgnore]
-        public Bitmap? Bitmap { get; private set; }
+        private Bitmap? bitmap;
+        [JsonIgnore]
+        public Bitmap? Bitmap => bitmap;
+
+        [JsonIgnore]
+        private ChampionType championType;
+
+        [JsonIgnore]
+        public ChampionType ChampionType => championType;
     }
 }
