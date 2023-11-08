@@ -1,32 +1,35 @@
-﻿using ReactiveUI;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace LeagueSpectator.Models
 {
-    public class Team : ReactiveObject
+    public sealed class Team
     {
-        private ObservableCollection<Participant> players;
-        public ObservableCollection<Participant> Players
-        {
-            get => players;
-            set => this.RaiseAndSetIfChanged(ref players, value, nameof(Players));
-        }
-
-        private ObservableCollection<BannedChampion> bans;
-        public ObservableCollection<BannedChampion> Bans
-        {
-            get => bans;
-            set => this.RaiseAndSetIfChanged(ref bans, value, nameof(Bans));
-        }
+        public ObservableCollection<Participant> Players { get; }
+        public ObservableCollection<BannedChampion> Bans { get; }
 
         public Team()
         {
-            players = new();
-            bans = new();
+            Players = new();
+            Bans = new();
+        }
+
+        public void Clear()
+        {
+            Players.Clear();
+            Bans.Clear();
+        }
+        public void ChangeLanguage()
+        {
+            LocalizeCollection(Players);
+            LocalizeCollection(Bans);
+        }
+
+        private static void LocalizeCollection<T>(ObservableCollection<T> items) where T : LocalizableObject
+        {
+            foreach (T item in items)
+            {
+                item.LocalizeObject();
+            }
         }
     }
 }

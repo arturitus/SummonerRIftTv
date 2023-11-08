@@ -1,37 +1,41 @@
-﻿using Avalonia.Platform;
-using Avalonia;
-using LeagueSpectator.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Avalonia;
 using Avalonia.Media.Imaging;
-using Newtonsoft.Json.Linq;
-using Rune = LeagueSpectator.Models.Rune;
+using Avalonia.Platform;
+using LeagueSpectator.IServices;
+using LeagueSpectator.Models;
+using Splat;
+using System;
 
 namespace LeagueSpectator.Helpers
 {
-    public abstract class BitmapHelper
+    public static class BitmapHelper
     {
-        const string BASE_URL = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/";
-        const string SUMMONER_SPELLS_URL = "data/spells/icons2d";
-        const string CHAMPIONS_URL = "v1/champion-icons/";
-        const string STATMODS = "/StatMods/";
-        const string RUNES = "/Styles/";
-        const string RUNES_URL = "v1/perk-images";
-
-        const string SUMMONER_SPELLS_PATH_URL = "v1/summoner-spells.json";       
-        const string RUNES_STYLES_PATH_URL = "v1/perkstyles.json";       
-        const string RUNES_PATH_URL = "v1/perks.json";       
-
-        public static Bitmap GetSummonerSpell(int id)
+        private const string BASE_URL = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/";
+        private const string SUMMONER_SPELLS_URL = "data/spells/icons2d";
+        private const string CHAMPIONS_URL = "v1/champion-icons/";
+        private const string STATMODS = "/StatMods/";
+        private const string RUNES = "/Styles/";
+        private const string RUNES_URL = "v1/perk-images";
+        private const string SUMMONER_SPELLS_PATH_URL = "v1/summoner-spells.json";
+        private const string RUNES_STYLES_PATH_URL = "v1/perkstyles.json";
+        private const string RUNES_PATH_URL = "v1/perks.json";
+        private static IFrozenDataService m_CachedData;
+        public static bool Initialized { get; }
+        static BitmapHelper()
         {
-            return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/SummonerSpells/{id}.png")));
+            m_CachedData = Locator.Current.GetService<IFrozenDataService>();
+            Initialized = true;
         }
+
+        public static void Initialize()
+        {
+            m_CachedData ??= Locator.Current.GetService<IFrozenDataService>();
+        }
+
+        //public static Bitmap GetSummonerSpell(int id)
+        //{
+        //    return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/SummonerSpells/{id}.png")));
+        //}
 
         //DataDragonRequests
         //public static async Task<Bitmap> GetSummonerSpell(int id)
@@ -62,23 +66,44 @@ namespace LeagueSpectator.Helpers
         //        }
         //    }
         //}
-        public static async Task<Bitmap> GetChampion(int id)
+        //public static Bitmap GetChampion(int id)
+        //{
+        //    //using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_URL+CHAMPIONS_URL) })
+        //    //{
+        //    //    using (HttpResponseMessage responseMessage1 = await httpClient.GetAsync($"{id}.png"))
+        //    //    {
+        //    //        if (responseMessage1.IsSuccessStatusCode)
+        //    //        {
+        //    //            return new Bitmap(await responseMessage1.Content.ReadAsStreamAsync());
+        //    //        }
+        //    //        return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/-1.png")));
+        //    //    }
+        //    //}
+
+        //    return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{id}.png")));
+        //}
+
+        //public static Bitmap GetRune(int id)
+        //{
+        //    return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Runes/{id}.png")));
+        //}
+
+        internal static Bitmap Get<T>(int id, T leagueType) where T : Enum
         {
-            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_URL+CHAMPIONS_URL) })
+            return leagueType switch
             {
-                using (HttpResponseMessage responseMessage1 = await httpClient.GetAsync($"{id}.png"))
-                {
-                    if (responseMessage1.IsSuccessStatusCode)
-                    {
-                        return new Bitmap(await responseMessage1.Content.ReadAsStreamAsync());
-                    }
-                    return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/-1.png")));
-                }
-            }
+                ChampionType => new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{id}.png"))),
+                RuneType => new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Runes/{id}.png"))),
+                SummonerSpellType => new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/SummonerSpells/{id}.png"))),
+                _ => new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/-1.png"))),
+            };
         }
-        public static Bitmap GetRune(int id)
+
+        internal static Bitmap GetCachedBitmap<T>(int id, T leagueType) where T : Enum
         {
-            return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Runes/{id}.png")));
+            var a = m_CachedData.GetLeagueObject(id, leagueType);
+            Bitmap bitmap = m_CachedData.GetLeagueObject(id, leagueType).Icon;
+            return bitmap ?? Get(id, leagueType);
         }
         //DataDragonRequests
         //public static async Task<Bitmap> GetRune(int id)

@@ -1,7 +1,7 @@
 ﻿using LeagueSpectator.Models;
 using System.Threading.Tasks;
 
-namespace LeagueSpectator.Services
+namespace LeagueSpectator.IServices
 {
     public interface IRiotApiService
     {

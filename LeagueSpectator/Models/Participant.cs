@@ -1,17 +1,29 @@
 ﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
+using LeagueSpectator.IServices;
+using LeagueSpectator.Services;
 using Newtonsoft.Json;
+using ReactiveUI;
+using Splat;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace LeagueSpectator.Models
 {
-    public class Participant
+    public class Participant : LocalizableObject
     {
         public Participant()
         {
             Bitmaps = new Bitmap[3];
-            SummonerSpellTypes = new SummonerSpellType[2];
             championType = ChampionType.None;
+        }
+
+        public override void LocalizeObject()
+        {
+            Perks.LocalizeObject();
+            this.RaisePropertyChanged(nameof(ChampionType));
+            this.RaisePropertyChanged(nameof(SummonerSpellType2));
+            this.RaisePropertyChanged(nameof(SummonerSpellType2));
         }
 
         [JsonProperty("teamId")]
@@ -25,8 +37,8 @@ namespace LeagueSpectator.Models
             set
             {
                 spell1 = value;
-                Bitmaps[1] = BitmapHelper.GetSummonerSpell(spell1);
-                SummonerSpellTypes[0] = (SummonerSpellType)spell1;
+                m_SummonerSpellType1 = (SummonerSpellType)spell1;
+                Bitmaps[1] = BitmapHelper.GetCachedBitmap(spell1, SummonerSpellType1);
             }
         }
 
@@ -38,8 +50,8 @@ namespace LeagueSpectator.Models
             set
             {
                 spell2 = value;
-                Bitmaps[2] = BitmapHelper.GetSummonerSpell(spell2);
-                SummonerSpellTypes[1] = (SummonerSpellType)spell2;
+                m_SummonerSpellType2 = (SummonerSpellType)spell2;
+                Bitmaps[2] = BitmapHelper.GetCachedBitmap(spell2, SummonerSpellType2);
             }
         }
 
@@ -51,8 +63,8 @@ namespace LeagueSpectator.Models
             set
             {
                 championId = value;
-                Bitmaps[0] = BitmapHelper.GetChampion(championId).Result;
                 championType = (ChampionType)championId;
+                Bitmaps[0] = BitmapHelper.GetCachedBitmap(championId, championType);
             }
         }
 
@@ -60,30 +72,34 @@ namespace LeagueSpectator.Models
         public int ProfileIconId { get; set; }
 
         [JsonProperty("summonerName")]
-        public string? SummonerName { get; set; }
+        public string SummonerName { get; set; }
 
         [JsonProperty("bot")]
         public bool Bot { get; set; }
 
         [JsonProperty("summonerId")]
-        public string? SummonerId { get; set; }
+        public string SummonerId { get; set; }
 
         [JsonProperty("gameCustomizationObjects")]
-        public List<object>? GameCustomizationObjects { get; set; }
+        public List<object> GameCustomizationObjects { get; set; }
 
         [JsonProperty("perks")]
-        public Perks? Perks { get; set; }
+        public Perks Perks { get; set; }
+
 
         [JsonIgnore]
         public Bitmap[] Bitmaps { get; }
-
         [JsonIgnore]
         private ChampionType championType;
-
         [JsonIgnore]
         public ChampionType ChampionType => championType;
-
         [JsonIgnore]
-        public SummonerSpellType[] SummonerSpellTypes { get; }
+        private SummonerSpellType m_SummonerSpellType1;
+        [JsonIgnore]
+        public SummonerSpellType SummonerSpellType1 => m_SummonerSpellType1;
+        [JsonIgnore]
+        private SummonerSpellType m_SummonerSpellType2;
+        [JsonIgnore]
+        public SummonerSpellType SummonerSpellType2 => m_SummonerSpellType2;
     }
 }

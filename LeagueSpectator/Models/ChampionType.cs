@@ -1,4 +1,8 @@
-﻿namespace LeagueSpectator.Models
+﻿using System;
+using System.ComponentModel;
+using System.Globalization;
+
+namespace LeagueSpectator.Models
 {
     public enum ChampionType : short
     {
@@ -31,7 +35,7 @@
         Diana = 131,
         Quinn = 133,
         Syndra = 134,
-        AurelionSol = 146,
+        AurelionSol = 136,
         Sion = 14,
         Kayn = 141,
         Zoe = 142,
@@ -62,8 +66,10 @@
         Jinx = 222,
         TahmKench = 223,
         Tryndamere =23,
+        Briar = 233,
         Viego = 234,
         Senna = 235,
+        Lucian = 236,
         Zed = 238,
         Jax = 24,
         Kled = 240,
@@ -101,6 +107,8 @@
         Ivern = 427,
         Kalista = 429,
         Karma = 43,
+        [LocalizationField("en-EN", "Bard")]
+        [LocalizationField("es-ES", "Bardo")]
         Bard = 432,
         Taric =44,
         Veigar = 45,
@@ -161,8 +169,62 @@
         Malzahar = 90,
         Talon = 91,
         Riven = 92,
+        Naafiri = 950,
         KogMaw = 96,
         Shen = 98,
-        Lux = 99
+        Lux = 99,
+    }
+    public enum ThemeType
+    {
+        [LocalizationField("en-EN", "System")]
+        [LocalizationField("es-ES", "Sistema")]
+        Default,
+        [LocalizationField("en-EN", "Light")]
+        [LocalizationField("es-ES", "Claro")]
+        Light,
+        [LocalizationField("en-EN", "Dark")]
+        [LocalizationField("es-ES", "Oscuro")]
+        Dark
+    }
+
+    public enum Language
+    {
+        //[LocalizationField("es-ES", "Sistema")]
+        //[LocalizationField("en-EN", "System")]
+        //Default,
+        [Culture("en-EN")]
+        [LocalizationField("en-EN", "English")]
+        [LocalizationField("es-ES", "Inglés")]
+        English,
+        [Culture("es-ES")]
+        [LocalizationField("en-EN", "Spanish")]
+        [LocalizationField("es-ES", "Español")]
+        Spanish
+
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
+    public class LocalizationFieldAttribute : Attribute
+    {
+        public CultureInfo CultureInfo { get; }
+        public string DisplayName { get; }
+
+        public LocalizationFieldAttribute(string cultureInfo, string displayName) 
+        {
+            CultureInfo = new CultureInfo(cultureInfo);
+            DisplayName = displayName;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    public class CultureAttribute : Attribute
+    {
+        public CultureInfo CultureInfo { get; }
+
+        public CultureAttribute(string cultureInfo)
+        {
+            CultureInfo = new CultureInfo(cultureInfo);
+        }
     }
 }
+

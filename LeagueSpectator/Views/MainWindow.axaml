@@ -18,9 +18,9 @@
         Title="LeagueSpectator">
 
   <!--ExtendClientAreaTitleBarHeightHint="30"-->
-  <Window.DataContext>
+  <!--<Window.DataContext>
 		<vm:MainWindowViewModel/>
-	</Window.DataContext>
+	</Window.DataContext>-->
 
 	<dialogHost:DialogHost Identifier="busyDialog">
   <Grid Margin="30" Background="Transparent">
@@ -28,12 +28,20 @@
       <ColumnDefinition Width="*"></ColumnDefinition>
     </Grid.ColumnDefinitions>
     <TabControl>
-      <TabItem Header="Spectate">
+      <TabItem Header="{Binding Path=Spectate, Source={StaticResource Strings}}">
         <DockPanel Margin="0, 30, 0, 0">
-          <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="Search for a Summoner" HorizontalAlignment="Center"/>
-          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="Outline" Watermark="Summoner Name"/>
-          <ComboBox Name="comboRegion" DockPanel.Dock="Top" Margin="5" MinWidth="120" Classes="Outline" Items="{Binding Regions}" SelectedIndex="0"/>
-          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="Search" Command="{Binding OnSearchClick}">
+          <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="{Binding Path=SearchSummoner, Source={StaticResource Strings}}" HorizontalAlignment="Center"/>
+			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=SummonerName, Source={StaticResource Strings}}"/>
+          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="Outline"/>
+			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=Region, Source={StaticResource Strings}}"/>
+          <ComboBox Name="comboRegion" DockPanel.Dock="Top" Margin="5" MinWidth="120" Classes="Outline" Items="{Binding Regions}" SelectedIndex="-1">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate >
+					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}, Mode=OneWay}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+			  </ComboBox>
+          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Search, Source={StaticResource Strings}}" Command="{Binding OnSearchClick}">
             <Button.IsEnabled>
               <MultiBinding Converter="{StaticResource MultiEnabledConverter}">
                 <Binding ElementName="tbsummName" Path="Text" />
@@ -48,7 +56,7 @@
               </MultiBinding>
             </Button.CommandParameter>
           </Button>
-          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="Spectate" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
+          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Spectate, Source={StaticResource Strings}}" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
           <TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
 
           <!--<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
@@ -69,9 +77,10 @@
           <Grid RowDefinitions="auto, *" ColumnDefinitions="*, *">
             
             <Grid ColumnDefinitions="*, auto" Margin="5,0,10,0" RowDefinitions="*,*">
-              <TextBlock Margin="2" Grid.Row="1" Text="Blue Team" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center"/>
+              <TextBlock Margin="2" Grid.Row="1" Text="Blue Team" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+				 
               <!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
-                <TextBlock Grid.Column="1" Text="Bans" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6"/>
+                <TextBlock Grid.Column="1" Text="Bans" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
                 <ItemsControl Grid.Column="1" Grid.Row="1" Items="{Binding BlueTeam.Bans}" Margin="2">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -80,7 +89,7 @@
                   </ItemsControl.ItemsPanel>
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                      <Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType}"/>
+                      <Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -88,9 +97,9 @@
             </Grid>
 
 			  <Grid ColumnDefinitions="*, auto" Margin="0,0,5,0" Grid.Column="1" RowDefinitions="*,*">
-				  <TextBlock Grid.Row="1" Margin="2" Text="Red Team" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center"/>
+				  <TextBlock Grid.Row="1" Margin="2" Text="Red Team" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
 				  <!--<StackPanel Margin="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">-->
-					<TextBlock Grid.Column="1" Text="Bans" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"/>
+					<TextBlock Grid.Column="1" Text="Bans" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
 					<ItemsControl Grid.Column="1" Grid.Row="1" Items="{Binding RedTeam.Bans}" VerticalAlignment="Center" Margin="2">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
@@ -99,7 +108,7 @@
 						</ItemsControl.ItemsPanel>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType}"/>
+								<Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
@@ -116,7 +125,7 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <Expander Margin="2" Tag="Runes">
+                  <Expander Margin="2" Tag="{Binding Path=Runes, Source={StaticResource Strings}}">
                     <Expander.Header>
                       <Grid>
                         <Grid.ColumnDefinitions>
@@ -126,10 +135,10 @@
                           <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#5B83E6" Width="5" Margin="2"/>
-                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="2" Height="40" Width="40" Source="{Binding Bitmaps[0]}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType}"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="2" Height="40" Width="40" Source="{Binding Bitmaps[0]}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
                         <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
-                          <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellTypes[0]}"/>
-                          <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellTypes[1]}"/>
+                          <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                          <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource ObjectToLocalizationConverter}}"/>
                         </StackPanel>
                         <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
                       </Grid>
@@ -143,7 +152,7 @@
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
 									<StackPanel>
-										<Image Margin="2" Source="{Binding Tree}" ToolTip.Tip="{Binding RuneType}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
+										<Image Margin="2" Source="{Binding Tree}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
 									    <ItemsControl Items="{Binding Runes}" Margin="2" HorizontalAlignment="Center">
 										    <ItemsControl.ItemsPanel>
 											    <ItemsPanelTemplate>
@@ -152,7 +161,7 @@
 										    </ItemsControl.ItemsPanel>
 										    <ItemsControl.ItemTemplate>
 											    <DataTemplate>
-												    <Image Source="{Binding Bitmap}" ToolTip.Tip="{Binding RuneType}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
+												    <Image Source="{Binding Bitmap}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
 											    </DataTemplate>
 										    </ItemsControl.ItemTemplate>
 									    </ItemsControl>
@@ -173,7 +182,7 @@
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-                  <Expander Margin="2" Tag="Runes">
+                  <Expander Margin="2" Tag="{Binding Path=Runes, Source={StaticResource Strings}}">
                     <Expander.Header>
                       <Grid>
                         <Grid.ColumnDefinitions>
@@ -183,10 +192,10 @@
                           <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#E23E56" Width="5" Margin="2.5"/>
-                        <Image Grid.Column="1" Margin="2.5" HorizontalAlignment="Right" Height="40" Width="40" Source="{Binding Bitmaps[0]}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType}"/>
+                        <Image Grid.Column="1" Margin="2.5" HorizontalAlignment="Right" Height="40" Width="40" Source="{Binding Bitmaps[0]}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
                         <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
-                            <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellTypes[0]}"/>
-                            <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellTypes[1]}"/>
+                            <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                            <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2]}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource ObjectToLocalizationConverter}}"/>
                           </StackPanel>
                         <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>     
                       </Grid>
@@ -200,7 +209,7 @@
 						  <ItemsControl.ItemTemplate>
 							  <DataTemplate>
 								  <StackPanel>
-									  <Image Margin="2" Source="{Binding Tree}" ToolTip.Tip="{Binding RuneType}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
+									  <Image Margin="2" Source="{Binding Tree}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
 									  <ItemsControl Items="{Binding Runes}" Margin="2" HorizontalAlignment="Center">
 										  <ItemsControl.ItemsPanel>
 											  <ItemsPanelTemplate>
@@ -209,7 +218,7 @@
 										  </ItemsControl.ItemsPanel>
 										  <ItemsControl.ItemTemplate>
 											  <DataTemplate>
-												  <Image Source="{Binding Bitmap}" ToolTip.Tip="{Binding RuneType}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
+												  <Image Source="{Binding Bitmap}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
 											  </DataTemplate>
 										  </ItemsControl.ItemTemplate>
 									  </ItemsControl>
@@ -227,8 +236,8 @@
           </Grid>
         </DockPanel>
       </TabItem>
-      <TabItem Header="Options">
-        <DockPanel Margin="0, 30, 0, 0" VerticalAlignment="Top">
+      <TabItem Header="{Binding Path=Options, Source={StaticResource Strings}}">
+        <StackPanel Margin="0, 30, 0, 0" VerticalAlignment="Top">
           <!--<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
@@ -237,11 +246,27 @@
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>-->
-          <TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Text="League of Legends folder path"/>
-          <TextBox Text="{Binding AppData.LolFolderPath}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
-          <TextBlock FontSize="16" DockPanel.Dock="Top" Margin="5" VerticalAlignment="Center" Grid.Row="1" Text="Riot API key"/>
-          <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" DockPanel.Dock="Top" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
-        </DockPanel>
+          <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=LolFolder, Source={StaticResource Strings}}"/>
+          <TextBox Text="{Binding AppData.LolFolderPath}" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
+          <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=RiotApiKey, Source={StaticResource Strings}}"/>
+          <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" Classes="Outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Theme, Source={StaticResource Strings}}"/>
+		  <ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" Classes="Outline" Items="{Binding Themes}" SelectedIndex="{Binding ThemeIndex, Mode=TwoWay}">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate >
+					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}, Mode=OneWay}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+		  </ComboBox>
+		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Language, Source={StaticResource Strings}}"/>
+		  <ComboBox Margin="5" MinWidth="120" Classes="Outline" Items="{Binding Languages}" SelectedIndex="{Binding LanguageIndex, Mode=TwoWay}">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate>
+					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+		  </ComboBox>
+        </StackPanel>
       </TabItem>
     </TabControl>
   </Grid>

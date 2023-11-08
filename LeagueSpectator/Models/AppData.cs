@@ -1,36 +1,32 @@
 ﻿using Avalonia;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace LeagueSpectator.Models
 {
     public class AppData
     {
         public const string APP_DATA_PATH = "./Assets/AppData.json";
-
-        private string? apiKey;
-        public string? ApiKey
+        public event Action<AppData> OnAppDataChanged;
+        private string apiKey;
+        public string ApiKey
         {
             get
             {
                 return apiKey;
             }
             set
-            {                
+            {
                 apiKey = value;
-                if (lolFolderPath != null && apiKey != null)
-                {
-                    SetAppData();
-                }
+                //if (lolFolderPath != null && apiKey != null)
+                //{
+                //}
+
+                OnAppDataChanged?.Invoke(this);
             }
         }
 
-        private string? lolFolderPath;
-        public string? LolFolderPath
+        private string lolFolderPath;
+        public string LolFolderPath
         {
             get
             {
@@ -39,54 +35,42 @@ namespace LeagueSpectator.Models
             set
             {
                 lolFolderPath = value;
-                if (lolFolderPath != null && apiKey != null)
-                {
-                    SetAppData();
-                }
+                //if (lolFolderPath != null && apiKey != null)
+                //{
+                //}
+                OnAppDataChanged?.Invoke(this);
             }
         }
 
         private PixelPoint position;
-        public PixelPoint Position 
+        public PixelPoint Position
         {
             get => position;
             set
             {
-                position = value; 
-                if (lolFolderPath != null && apiKey != null)
-                {
-                    SetAppData();
-                }
+                position = value;
+                OnAppDataChanged?.Invoke(this);
             }
         }
 
-        public Task<bool> SetAppData()
+        private ThemeType m_ThemeType;
+        public ThemeType ThemeType
         {
-            try
+            get => m_ThemeType;
+            set
             {
-                File.WriteAllText(APP_DATA_PATH, JsonConvert.SerializeObject(this, Formatting.Indented));
-                return Task.FromResult(true);
-            }
-            catch (Exception)
-            {
-                return Task.FromResult(false);
+                m_ThemeType = value;
+                OnAppDataChanged?.Invoke(this);
             }
         }
-
-        Task<bool> GetAppData()
+        private Language m_Language;
+        public Language Language
         {
-            try
+            get => m_Language;
+            set
             {
-                JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH));
-                lolFolderPath = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH)).lolFolderPath;
-                apiKey = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH)).apiKey;
-                return Task.FromResult(true);
-            }
-            catch (Exception)
-            {
-                lolFolderPath = string.Empty;
-                apiKey = string.Empty;
-                return Task.FromResult(false);
+                m_Language = value;
+                OnAppDataChanged?.Invoke(this);
             }
         }
     }

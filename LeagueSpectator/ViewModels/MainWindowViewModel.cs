@@ -1,9 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using LeagueSpectator.Helpers;
+using LeagueSpectator.IServices;
+using LeagueSpectator.IViewModels;
 using LeagueSpectator.Models;
-using LeagueSpectator.Services;
 using ReactiveUI;
 using Splat;
 using System;
@@ -17,15 +17,17 @@ using System.Threading.Tasks;
 
 namespace LeagueSpectator.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        Process? leagueGameProcess;
+        private Process leagueGameProcess;
         private string summonerId;
         private readonly IMainWindowService mainWindowService;
-
+        public Action<ThemeType> OnThemeChange;
         private readonly FileSystemWatcher fileSystemWatcher;
 
-        public IEnumerable<Region> Regions { get; } = EnumHelper.GetEnumValues<Region>();
+        public IEnumerable<Region> Regions => Enum.GetValues<Region>();
+        public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
+        public IEnumerable<Language> Languages => Enum.GetValues<Language>();
 
         private string message;
         public string Message
@@ -40,14 +42,44 @@ namespace LeagueSpectator.ViewModels
             get => canSpectate;
             set => this.RaiseAndSetIfChanged(ref canSpectate, value, nameof(CanSpectate));
         }
-
-        private AppData appData;
-        public AppData AppData
+        private readonly IAppDataService m_AppDataService;
+        public AppData AppData => m_AppDataService.AppData;
+        private int m_ThemeIndex;
+        public int ThemeIndex
         {
-            get => appData;
+            get => m_ThemeIndex;
             set
             {
-                this.RaiseAndSetIfChanged(ref appData, value, nameof(AppData));
+                this.RaiseAndSetIfChanged(ref m_ThemeIndex, value, nameof(ThemeIndex));
+                //OnThemeChange?.Invoke((ThemeType)m_ThemeIndex);
+                m_AppDataService.SetTheme((ThemeType)m_ThemeIndex);
+
+
+            }
+        }
+        private int m_LanguageIndex;
+        public int LanguageIndex
+        {
+            get => m_LanguageIndex;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref m_LanguageIndex, value, nameof(LanguageIndex));
+                m_AppDataService.SetLanguage((Language)m_LanguageIndex);
+                int index = m_ThemeIndex;
+                m_ThemeIndex = -1;
+                this.RaisePropertyChanged(nameof(ThemeIndex));
+                m_ThemeIndex = index;
+                this.RaisePropertyChanged(nameof(ThemeIndex));
+
+                //foreach (var b in BlueTeam.Players)
+                //{
+                //    //b.Spell1Id = b.Spell1Id;
+                //    //b.SummonerSpellTypes[0] = b.SummonerSpellTypes[0];
+                //    this.RaisePropertyChanged(nameof(b.SummonerSpellType1));
+                //    this.RaisePropertyChanged(nameof(b.SummonerSpellType2));
+                //}
+                //this.RaisePropertyChanged(nameof(Team));
+                //this.RaisePropertyChanged(nameof(Team.Players));
             }
         }
 
@@ -57,15 +89,16 @@ namespace LeagueSpectator.ViewModels
         private Team redTeam;
         public Team RedTeam => redTeam;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IAppDataService appDataService)
         {
+            m_AppDataService = appDataService;
+            m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             mainWindowService = Locator.Current.GetService<IMainWindowService>();
             summonerId = string.Empty;
             message = string.Empty;
             canSpectate = false;
-            appData = new();
-            blueTeam = new();
-            redTeam = new();
+            blueTeam = new Team();
+            redTeam = new Team();
             fileSystemWatcher = new("./Assets")
             {
                 //fileSystemWatcher.Changed += FileSystemWatcher_Changed;
@@ -73,8 +106,16 @@ namespace LeagueSpectator.ViewModels
                 IncludeSubdirectories = false,
                 Filter = "AppData.json"
             };
-
-            mainWindowService.GetAppData(ref appData);
+            ThemeIndex = (int)AppData.ThemeType;
+            LanguageIndex = (int)AppData.Language;
+        }
+        private void OnLanguageChanged(Language obj)
+        {
+            //this.RaisePropertyChanged(nameof(SummonerSpellTypes));
+            //this.RaisePropertyChanged(nameof(SummonerSpellType1));
+            //this.RaisePropertyChanged(nameof(SummonerSpellType2));
+            BlueTeam.ChangeLanguage();
+            RedTeam.ChangeLanguage();
         }
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
@@ -93,19 +134,19 @@ namespace LeagueSpectator.ViewModels
                     await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (Region)parameters[1], parameters[2].ToString()!, out summonerId);
                     await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out blueTeam, out redTeam);
 
-                    Message = $"{parameters[0]} is in game.";
+                    //Message = $"{parameters[0]} is in game.";
+                    Message = string.Empty;
                     CanSpectate = true;
 
                     this.RaisePropertyChanged(nameof(BlueTeam));
                     this.RaisePropertyChanged(nameof(RedTeam));
                     return;
-
                 }
                 catch (RiotApiError e)
                 {
-                    if (e.StatusCode == HttpStatusCode.Forbidden)
+                    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        BlueTeam.Players = new();
+                        ClearPrevouisMatch();
                         CanSpectate = false;
                         Message = $"API Key is no longer valid.";
 
@@ -114,20 +155,22 @@ namespace LeagueSpectator.ViewModels
                     switch (e.FunctionName)
                     {
                         case nameof(IRiotApiService.GetSummonerByNameAsync):
-                            BlueTeam.Players = new();
-                            RedTeam.Players = new();
+                            ClearPrevouisMatch();
                             CanSpectate = false;
                             Message = $"{parameters[0]} doesn't exist";
 
                             return;
                         case nameof(IRiotApiService.GetActiveGameAsync):
                             Message = $"{parameters[0]} is not in game.";
-                            BlueTeam.Players = new();
-                            RedTeam.Players = new();
+                            ClearPrevouisMatch();
                             CanSpectate = false;
 
                             return;
                     }
+                }
+                catch (Exception e)
+                {
+
                 }
                 finally
                 {
@@ -138,9 +181,9 @@ namespace LeagueSpectator.ViewModels
 
         private async void OnSpectateClick()
         {
-            if (File.Exists($"{appData.LolFolderPath}/LeagueClient.exe"))
+            if (File.Exists($"{m_AppDataService.AppData.LolFolderPath}/LeagueClient.exe"))
             {
-                await mainWindowService.SpectateGameAsync(appData.LolFolderPath!);
+                await mainWindowService.SpectateGameAsync(m_AppDataService.AppData.LolFolderPath!);
 
                 int timer = 0;
                 while (leagueGameProcess == null)
@@ -164,7 +207,7 @@ namespace LeagueSpectator.ViewModels
 
                 return;
             }
-            Message = $"Couldn't locate lol folder at : {appData.LolFolderPath}.";
+            Message = $"Couldn't locate lol folder at : {m_AppDataService.AppData.LolFolderPath}.";
         }
 
         private void LeagueGameProcess_Exited(object? sender, EventArgs e)
@@ -173,8 +216,13 @@ namespace LeagueSpectator.ViewModels
             leagueGameProcess.Dispose();
             Message = $"Game ended.";
             CanSpectate = true;
-            BlueTeam.Players = new();
-            RedTeam.Players = new();
+            ClearPrevouisMatch();
+        }
+
+        private void ClearPrevouisMatch()
+        {
+            BlueTeam.Clear();
+            RedTeam.Clear();
         }
 
         private void ToggleBusyDialog()

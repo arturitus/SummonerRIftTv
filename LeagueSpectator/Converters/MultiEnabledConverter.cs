@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace LeagueSpectator.Converters
 {
@@ -9,7 +10,11 @@ namespace LeagueSpectator.Converters
     {
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (string.IsNullOrEmpty((string)values[0]!) || string.IsNullOrWhiteSpace((string)values[0]!) || (int) values[1]! <= 0 )
+            if(values.Any(x => x == null))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty((string)values[0]!) || string.IsNullOrWhiteSpace((string)values[0]!) || (int) values[1]! <= -1 )
             {
                 return false;
             }

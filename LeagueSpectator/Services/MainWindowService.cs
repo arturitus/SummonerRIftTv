@@ -1,11 +1,10 @@
 ﻿
 
+using LeagueSpectator.IServices;
 using LeagueSpectator.Models;
 using Newtonsoft.Json;
 using Splat;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -117,33 +116,6 @@ namespace LeagueSpectator.Services
                     process.StartInfo.ArgumentList.Add(spectatorRegion);
                     process.Start();
                 }
-                return Task.FromResult(true);
-            }
-            catch (Exception)
-            {
-                return Task.FromResult(false);
-            }
-        }
-
-        Task<bool> IMainWindowService.GetAppData(ref AppData appData)
-        {
-            try
-            {
-                appData = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH))!;
-                return Task.FromResult(true);
-            }
-            catch (Exception)
-            {
-                appData = new AppData();
-                return Task.FromResult(false);
-            }
-        }
-
-        Task<bool> IMainWindowService.SetAppData(AppData appData)
-        {
-            try
-            {
-                File.WriteAllText(APP_DATA_PATH, JsonConvert.SerializeObject(appData, Formatting.Indented));
                 return Task.FromResult(true);
             }
             catch (Exception)

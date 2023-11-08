@@ -1,10 +1,7 @@
-﻿using LeagueSpectator.Models;
+﻿using LeagueSpectator.IServices;
+using LeagueSpectator.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LeagueSpectator.Services
@@ -12,7 +9,7 @@ namespace LeagueSpectator.Services
     public class RiotApiService : IRiotApiService
     {
         async Task<RiotApiResponse<ActiveGame>> IRiotApiService.GetActiveGameAsync(string summonerId, Region region, string apiKey)
-        {            
+        {
             using (HttpClient httpClient = new())
             {
                 object regionConcat = region;
@@ -26,7 +23,7 @@ namespace LeagueSpectator.Services
                     {
                         return new RiotApiResponse<ActiveGame>(JsonConvert.DeserializeObject<ActiveGame>(await responseMessage.Content.ReadAsStringAsync()));
                     }
-                    throw new RiotApiError(responseMessage.StatusCode, await responseMessage.Content.ReadAsStringAsync(), nameof(IRiotApiService.GetActiveGameAsync));                    
+                    throw new RiotApiError(responseMessage.StatusCode, await responseMessage.Content.ReadAsStringAsync(), nameof(IRiotApiService.GetActiveGameAsync));
                     //responseMessage.EnsureSuccessStatusCode();
                 }
             }
@@ -55,3 +52,6 @@ namespace LeagueSpectator.Services
         }
     }
 }
+
+
+///lol/league/v4/entries/by-summoner/{encryptedSummonerId}

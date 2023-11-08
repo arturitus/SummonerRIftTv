@@ -1,11 +1,12 @@
 ﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
 using Newtonsoft.Json;
+using ReactiveUI;
 using System.Collections.Generic;
 
 namespace LeagueSpectator.Models
 {
-    public class BannedChampion
+    public class BannedChampion : LocalizableObject
     {
         private int championId;
         [JsonProperty("championId")]
@@ -15,7 +16,7 @@ namespace LeagueSpectator.Models
             set
             {
                 championId = value;
-                bitmap = BitmapHelper.GetChampion(championId).Result;
+                bitmap = BitmapHelper.GetCachedBitmap(championId, ChampionType);
                 championType = (ChampionType)championId;
             }
         }
@@ -36,5 +37,10 @@ namespace LeagueSpectator.Models
 
         [JsonIgnore]
         public ChampionType ChampionType => championType;
+
+        public override void LocalizeObject()
+        {
+            this.RaisePropertyChanged(nameof(ChampionType));
+        }
     }
 }
