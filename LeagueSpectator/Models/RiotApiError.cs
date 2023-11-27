@@ -13,7 +13,7 @@ namespace LeagueSpectator.Models
         }
 
         public HttpStatusCode StatusCode { get; set; }
-        public string? ErrorMessage { get; set; }
-        public string? FunctionName { get; set; }
+        public string ErrorMessage { get; set; }
+        public string FunctionName { get; set; }
     }
 }

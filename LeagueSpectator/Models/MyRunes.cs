@@ -1,10 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeagueSpectator.Models
 {
@@ -21,7 +17,7 @@ namespace LeagueSpectator.Models
 
         public override void LocalizeObject()
         {
-            foreach (var item in Runes)
+            foreach (MyRune item in Runes)
             {
                 item.LocalizeObject();
             }

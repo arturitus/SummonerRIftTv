@@ -2,7 +2,6 @@
 using LeagueSpectator.Helpers;
 using Newtonsoft.Json;
 using ReactiveUI;
-using System.Collections.Generic;
 
 namespace LeagueSpectator.Models
 {

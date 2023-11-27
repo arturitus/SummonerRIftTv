@@ -1,12 +1,8 @@
 ﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
-using LeagueSpectator.IServices;
-using LeagueSpectator.Services;
 using Newtonsoft.Json;
 using ReactiveUI;
-using Splat;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace LeagueSpectator.Models
 {
@@ -22,7 +18,7 @@ namespace LeagueSpectator.Models
         {
             Perks.LocalizeObject();
             this.RaisePropertyChanged(nameof(ChampionType));
-            this.RaisePropertyChanged(nameof(SummonerSpellType2));
+            this.RaisePropertyChanged(nameof(SummonerSpellType1));
             this.RaisePropertyChanged(nameof(SummonerSpellType2));
         }
 

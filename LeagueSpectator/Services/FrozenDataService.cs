@@ -1,46 +1,61 @@
-﻿using Avalonia;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
 using LeagueSpectator.IServices;
 using LeagueSpectator.Models;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace LeagueSpectator.Services
 {
     internal class FrozenDataService : IFrozenDataService
     {
-        private readonly List<FrozenLeagueObject<ChampionType>> m_Champions;
-        private readonly List<FrozenLeagueObject<RuneType>> m_Runes;
-        private readonly List<FrozenLeagueObject<SummonerSpellType>> m_SummonerSpells;
+        private readonly FrozenSet<FrozenLeagueObject<ChampionType>> m_Champions;
+        private readonly FrozenSet<FrozenLeagueObject<RuneType>> m_Runes;
+        private readonly FrozenSet<FrozenLeagueObject<SummonerSpellType>> m_SummonerSpells;
+
+        //private readonly List<FrozenLeagueObject<ChampionType>> m_Champions;
+        //private readonly List<FrozenLeagueObject<RuneType>> m_Runes;
+        //private readonly List<FrozenLeagueObject<SummonerSpellType>> m_SummonerSpells;
 
         public FrozenDataService()
         {
-            m_Champions = new List<FrozenLeagueObject<ChampionType>>();
-            m_Runes = new List<FrozenLeagueObject<RuneType>>();
-            m_SummonerSpells = new List<FrozenLeagueObject<SummonerSpellType>>();
-            PopulateData();
+            //m_Champions = new List<FrozenLeagueObject<ChampionType>>();
+            //m_Runes = new List<FrozenLeagueObject<RuneType>>();
+            //m_SummonerSpells = new List<FrozenLeagueObject<SummonerSpellType>>();
+            //PopulateData();
+
+            m_Champions = PopulateData<ChampionType>();
+            m_Runes = PopulateData<RuneType>();
+            m_SummonerSpells = PopulateData<SummonerSpellType>();
         }
 
         private void PopulateData()
         {
-            foreach (ChampionType item in Enum.GetValues<ChampionType>())
-            {
-                m_Champions.Add(new FrozenLeagueObject<ChampionType>((int)item));
-            }
+            //foreach (ChampionType item in Enum.GetValues<ChampionType>())
+            //{
+            //    m_Champions.Add(new FrozenLeagueObject<ChampionType>((int)item));
+            //}
 
-            foreach (RuneType item in Enum.GetValues<RuneType>())
-            {
-                m_Runes.Add(new FrozenLeagueObject<RuneType>((int)item));
-            }
+            //foreach (RuneType item in Enum.GetValues<RuneType>())
+            //{
+            //    m_Runes.Add(new FrozenLeagueObject<RuneType>((int)item));
+            //}
 
-            foreach (SummonerSpellType item in Enum.GetValues<SummonerSpellType>())
+            //foreach (SummonerSpellType item in Enum.GetValues<SummonerSpellType>())
+            //{
+            //    m_SummonerSpells.Add(new FrozenLeagueObject<SummonerSpellType>((int)item));
+            //}
+        }
+        private FrozenSet<FrozenLeagueObject<T>> PopulateData<T>() where T : Enum
+        {
+            List<FrozenLeagueObject<T>> items = new List<FrozenLeagueObject<T>>();
+            foreach (T item in Enum.GetValues(typeof(T)))
             {
-                m_SummonerSpells.Add(new FrozenLeagueObject<SummonerSpellType>((int)item));
+                items.Add(new FrozenLeagueObject<T>(Convert.ToInt32(item)));
             }
+            return items.ToFrozenSet();
         }
 
         public FrozenLeagueObject<T> GetLeagueObject<T>(int id, T leagueType) where T : Enum

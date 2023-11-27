@@ -210,7 +210,7 @@ namespace LeagueSpectator.ViewModels
             Message = $"Couldn't locate lol folder at : {m_AppDataService.AppData.LolFolderPath}.";
         }
 
-        private void LeagueGameProcess_Exited(object? sender, EventArgs e)
+        private void LeagueGameProcess_Exited(object sender, EventArgs e)
         {
             leagueGameProcess!.Exited -= LeagueGameProcess_Exited;
             leagueGameProcess.Dispose();

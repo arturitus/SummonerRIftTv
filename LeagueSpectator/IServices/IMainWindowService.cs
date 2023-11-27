@@ -1,5 +1,4 @@
 ﻿using LeagueSpectator.Models;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace LeagueSpectator.IServices

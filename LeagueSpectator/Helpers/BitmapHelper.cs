@@ -101,7 +101,7 @@ namespace LeagueSpectator.Helpers
 
         internal static Bitmap GetCachedBitmap<T>(int id, T leagueType) where T : Enum
         {
-            var a = m_CachedData.GetLeagueObject(id, leagueType);
+            Services.FrozenLeagueObject<T> a = m_CachedData.GetLeagueObject(id, leagueType);
             Bitmap bitmap = m_CachedData.GetLeagueObject(id, leagueType).Icon;
             return bitmap ?? Get(id, leagueType);
         }

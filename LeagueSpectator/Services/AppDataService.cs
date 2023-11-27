@@ -1,6 +1,5 @@
 ﻿using LeagueSpectator.IServices;
 using LeagueSpectator.Models;
-using Material.Styles.Themes;
 using Newtonsoft.Json;
 using System;
 using System.IO;

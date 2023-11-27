@@ -74,7 +74,7 @@ namespace LeagueSpectator.Models
 
         public void LocalizeObject()
         {
-            foreach(MyRunes rune in MyRunes)
+            foreach (MyRunes rune in MyRunes)
             {
                 rune.LocalizeObject();
             }

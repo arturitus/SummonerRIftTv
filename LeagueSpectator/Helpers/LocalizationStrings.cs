@@ -1,5 +1,4 @@
-﻿using Avalonia.Threading;
-using LeagueSpectator.Models;
+﻿using LeagueSpectator.Models;
 using ReactiveUI;
 using System.Globalization;
 using System.Reflection;
@@ -8,7 +7,6 @@ namespace LeagueSpectator.Helpers
 {
     public class LocalizationStrings : ReactiveObject
     {
-
         [LocalizationField("en-EN", "Spectate")]
         [LocalizationField("es-ES", "Espectar")]
         public string Spectate => this.GetDisplayName(nameof(Spectate));
@@ -51,6 +49,18 @@ namespace LeagueSpectator.Helpers
         [LocalizationField("en-EN", "Runes")]
         [LocalizationField("es-ES", "Runas")]
         public string Runes => this.GetDisplayName(nameof(Runes));
+
+        [LocalizationField("en-EN", "Red Team")]
+        [LocalizationField("es-ES", "Equipo Rojo")]
+        public string RedTeam => this.GetDisplayName(nameof(RedTeam));
+
+        [LocalizationField("en-EN", "Blue Team")]
+        [LocalizationField("es-ES", "Equipo Azul")]
+        public string BlueTeam => this.GetDisplayName(nameof(BlueTeam));
+
+        [LocalizationField("en-EN", "Bans")]
+        [LocalizationField("es-ES", "Bloqueos")]
+        public string Bans => this.GetDisplayName(nameof(Bans));
 
         public void SetCultureInfo(CultureInfo culture)
         {

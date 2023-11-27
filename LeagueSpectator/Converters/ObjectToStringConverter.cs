@@ -2,9 +2,6 @@
 using LeagueSpectator.Helpers;
 using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LeagueSpectator.Converters
 {
@@ -15,7 +12,7 @@ namespace LeagueSpectator.Converters
             if (value != null)
             {
                 return value!.ToString() ?? value;
-            } 
+            }
             return null;
         }
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -28,7 +25,7 @@ namespace LeagueSpectator.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            var a = (int?)value > 0;
+            bool a = (int?)value > 0;
             return a;
         }
 
@@ -43,7 +40,7 @@ namespace LeagueSpectator.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var a = value.GetDisplayName(culture);
+            string a = value.GetDisplayName(culture);
             return a;
         }
 
