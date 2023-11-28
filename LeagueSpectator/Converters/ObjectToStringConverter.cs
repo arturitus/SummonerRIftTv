@@ -1,5 +1,5 @@
 ﻿using Avalonia.Data.Converters;
-using LeagueSpectator.Helpers;
+using LeagueSpectator.MVVM.Extensions;
 using System;
 using System.Globalization;
 

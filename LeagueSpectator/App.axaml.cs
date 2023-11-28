@@ -2,84 +2,63 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using LeagueSpectator.Helpers;
 using LeagueSpectator.IServices;
-using LeagueSpectator.IViewModels;
-using LeagueSpectator.Models;
-using LeagueSpectator.RiotApi.IServices;
-using LeagueSpectator.RiotApi.Services;
-using LeagueSpectator.Services;
-using LeagueSpectator.ViewModels;
+using LeagueSpectator.MVVM.Extensions;
+using LeagueSpectator.MVVM.IServices;
+using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.Views;
 using Material.Styles.Themes;
-using Splat;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace LeagueSpectator
 {
-    public partial class App : Application
+    public partial class App : Application, IApp
     {
+        private const string LOCALIZATION_STRINGS_NAME = "Strings";
         private IMainWindow m_MainWindow;
-        public static LocalizationStrings LocalizationStrings { get; } = new LocalizationStrings();
+        private readonly ILocalizationStringsService m_LocalizationStringsService;
+        private readonly IAppDataService m_AppDataService;
+
+        public App(ILocalizationStringsService localizationStringsService, IAppDataService appDataService)
+        {
+            m_LocalizationStringsService = localizationStringsService;
+            m_AppDataService = appDataService;
+        }
+
+        public App()
+        {
+
+        }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
 
-        public App()
-        {
-            BuildServices();
-            if (!BitmapHelper.Initialized)
-            {
-                BitmapHelper.Initialize();
-            }
-        }
-
         public override void OnFrameworkInitializationCompleted()
         {
-            IAppDataService appService = Locator.Current.GetService<IAppDataService>();
-            appService.OnLanguageChanged += OnLanguageChanged;
+            m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                Resources.Add("Strings", LocalizationStrings);
-                m_MainWindow = Locator.Current.GetService<IMainWindow>();
+                Resources.Add(LOCALIZATION_STRINGS_NAME, m_LocalizationStringsService);
+                m_MainWindow = Program.ServiceProvider.GetRequiredService<IMainWindow>();
                 desktop.MainWindow = (MainWindow)m_MainWindow;
             }
 
-            OnThemeChanged(appService.AppData.ThemeType);
-            OnLanguageChanged(appService.AppData.Language);
+            OnThemeChanged(m_AppDataService.AppData.ThemeType);
+            OnLanguageChanged(m_AppDataService.AppData.Language);
 
-            appService.OnThemeChanged += OnThemeChanged;
+            m_AppDataService.OnThemeChanged += OnThemeChanged;
 
             base.OnFrameworkInitializationCompleted();
         }
 
         private void OnLanguageChanged(Language obj)
         {
-            LocalizationStrings.SetCultureInfo(obj.GetCulture());
-        }
-
-        private void BuildServices()
-        {
-            Locator.CurrentMutable.RegisterLazySingleton<IAppDataService>(() => new AppDataService());
-            Locator.CurrentMutable.RegisterLazySingleton<IRiotApiService>(() => new RiotApiService());
-            Locator.CurrentMutable.RegisterLazySingleton<IFrozenDataService>(() => new FrozenDataService());
-            Locator.CurrentMutable.RegisterLazySingleton<IMainWindowViewModel>(() =>
-            {
-                IAppDataService appDataService = Locator.Current.GetService<IAppDataService>();
-                return new MainWindowViewModel(appDataService);
-            });
-
-            Locator.CurrentMutable.RegisterLazySingleton<IMainWindow>(() =>
-            {
-                IMainWindowViewModel mainWindowViewModel = Locator.Current.GetService<IMainWindowViewModel>();
-                return new MainWindow(mainWindowViewModel);
-            });
-
-            Locator.CurrentMutable.RegisterLazySingleton<IMainWindowService>(() => new MainWindowService());
-
+            m_LocalizationStringsService.SetCultureInfo(obj.GetCulture());
         }
 
         private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
@@ -144,6 +123,5 @@ namespace LeagueSpectator
                     break;
             }
         }
-
     }
 }

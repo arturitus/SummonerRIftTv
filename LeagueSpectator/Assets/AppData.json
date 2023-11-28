@@ -1,9 +1,6 @@
 ﻿{
   "ApiKey": "",
   "LolFolderPath": "C:/Riot Games/League of Legends",
-  "Position": {
-    "X": 735,
-    "Y": 290
-  },
+  "Position": "0, 0",
   "ThemeType": 0
 }

@@ -14,6 +14,7 @@
 			<converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
 			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
 			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
+			<converters:UriToBitmapConverter x:Key="UriToBitmap"/>
 			<ResourceDictionary.MergedDictionaries>
 				<themes:BundledTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>
 			</ResourceDictionary.MergedDictionaries>	
