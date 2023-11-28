@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.RiotApi.Models
 {
     public class ActiveGame
     {
@@ -12,25 +12,25 @@ namespace LeagueSpectator.Models
         public int MapId { get; set; }
 
         [JsonProperty("gameMode")]
-        public string? GameMode { get; set; }
+        public string GameMode { get; set; }
 
         [JsonProperty("gameType")]
-        public string? GameType { get; set; }
+        public string GameType { get; set; }
 
         [JsonProperty("gameQueueConfigId")]
         public int GameQueueConfigId { get; set; }
 
         [JsonProperty("participants")]
-        public List<Participant>? Participants { get; set; }
+        public List<Participant> Participants { get; set; }
 
         [JsonProperty("observers")]
-        public Observers? Observers { get; set; }
+        public Observers Observers { get; set; }
 
         [JsonProperty("platformId")]
         public string PlatformId { get; set; }
 
         [JsonProperty("bannedChampions")]
-        public List<BannedChampion>? BannedChampions { get; set; }
+        public List<BannedChampion> BannedChampions { get; set; }
 
         [JsonProperty("gameStartTime")]
         public long GameStartTime { get; set; }

@@ -1,11 +1,13 @@
 ﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
+using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.Models;
 using Newtonsoft.Json;
 using ReactiveUI;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.DTOs
 {
-    public class BannedChampion : LocalizableObject
+    public class BannedChampionDTO : LocalizableObject
     {
         private int championId;
         [JsonProperty("championId")]
@@ -27,9 +29,9 @@ namespace LeagueSpectator.Models
         public int PickTurn { get; set; }
 
         [JsonIgnore]
-        private Bitmap? bitmap;
+        private Bitmap bitmap;
         [JsonIgnore]
-        public Bitmap? Bitmap => bitmap;
+        public Bitmap Bitmap => bitmap;
 
         [JsonIgnore]
         private ChampionType championType;
@@ -40,6 +42,16 @@ namespace LeagueSpectator.Models
         public override void LocalizeObject()
         {
             this.RaisePropertyChanged(nameof(ChampionType));
+        }
+
+        public static implicit operator BannedChampionDTO(BannedChampion bannedChampion)
+        {
+            return new BannedChampionDTO()
+            {
+                TeamId = bannedChampion.TeamId,
+                ChampionId = bannedChampion.ChampionId,
+                PickTurn = bannedChampion.PickTurn
+            };
         }
     }
 }

@@ -1,9 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Threading;
+using LeagueSpectator.DTOs;
 using LeagueSpectator.IServices;
 using LeagueSpectator.IViewModels;
 using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.IServices;
+using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
 using Splat;
 using System;
@@ -25,7 +28,7 @@ namespace LeagueSpectator.ViewModels
         public Action<ThemeType> OnThemeChange;
         private readonly FileSystemWatcher fileSystemWatcher;
 
-        public IEnumerable<Region> Regions => Enum.GetValues<Region>();
+        public IEnumerable<RegionDTO> Regions => Enum.GetValues<RegionDTO>();
         public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
         public IEnumerable<Language> Languages => Enum.GetValues<Language>();
 
@@ -131,8 +134,8 @@ namespace LeagueSpectator.ViewModels
                 try
                 {
                     ToggleBusyDialog();
-                    await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (Region)parameters[1], parameters[2].ToString()!, out summonerId);
-                    await mainWindowService.SearchSpectableGameAsync(summonerId!, (Region)parameters[1], parameters[2].ToString()!, out blueTeam, out redTeam);
+                    await mainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (RegionDTO)parameters[1], parameters[2].ToString()!, out summonerId);
+                    await mainWindowService.SearchSpectableGameAsync(summonerId!, (RegionDTO)parameters[1], parameters[2].ToString()!, out blueTeam, out redTeam);
 
                     //Message = $"{parameters[0]} is in game.";
                     Message = string.Empty;

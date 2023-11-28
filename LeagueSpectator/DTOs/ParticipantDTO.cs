@@ -1,14 +1,17 @@
 ﻿using Avalonia.Media.Imaging;
 using LeagueSpectator.Helpers;
+using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 using ReactiveUI;
 using System.Collections.Generic;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.DTOs
 {
-    public class Participant : LocalizableObject
+    public class ParticipantDTO : LocalizableObject
     {
-        public Participant()
+        public ParticipantDTO()
         {
             Bitmaps = new Bitmap[3];
             championType = ChampionType.None;
@@ -80,7 +83,7 @@ namespace LeagueSpectator.Models
         public List<object> GameCustomizationObjects { get; set; }
 
         [JsonProperty("perks")]
-        public Perks Perks { get; set; }
+        public PerksDTO Perks { get; set; }
 
 
         [JsonIgnore]
@@ -97,5 +100,22 @@ namespace LeagueSpectator.Models
         private SummonerSpellType m_SummonerSpellType2;
         [JsonIgnore]
         public SummonerSpellType SummonerSpellType2 => m_SummonerSpellType2;
+
+        public static implicit operator ParticipantDTO(Participant participant)
+        {
+            return new ParticipantDTO()
+            {
+                Bot = participant.Bot,
+                ChampionId = participant.ChampionId,
+                Perks = participant.Perks,
+                GameCustomizationObjects = participant.GameCustomizationObjects,
+                ProfileIconId = participant.ProfileIconId,
+                Spell1Id = participant.Spell1Id,
+                Spell2Id = participant.Spell2Id,
+                SummonerId = participant.SummonerId,
+                SummonerName = participant.SummonerName,
+                TeamId = participant.TeamId
+            };
+        }
     }
 }

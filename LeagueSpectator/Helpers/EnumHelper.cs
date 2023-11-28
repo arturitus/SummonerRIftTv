@@ -32,7 +32,7 @@ namespace LeagueSpectator.Helpers
             {
                 if (member.GetCustomAttributes<LocalizationFieldAttribute>() is LocalizationFieldAttribute[] attribute)
                 {
-                    if (attribute.Any())
+                    if (attribute.Length != 0)
                     {
                         return attribute.FirstOrDefault(x => x.CultureInfo.Name == cultureInfo.Name).DisplayName;
                     }

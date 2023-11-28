@@ -6,6 +6,8 @@ using LeagueSpectator.Helpers;
 using LeagueSpectator.IServices;
 using LeagueSpectator.IViewModels;
 using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.IServices;
+using LeagueSpectator.RiotApi.Services;
 using LeagueSpectator.Services;
 using LeagueSpectator.ViewModels;
 using LeagueSpectator.Views;

@@ -45,4 +45,7 @@
     <Folder Include="Assets\Runes\" />
     <Folder Include="Assets\SummonerSpells\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeagueSpectator.RiotApi\LeagueSpectator.RiotApi.csproj" />
+  </ItemGroup>
 </Project>

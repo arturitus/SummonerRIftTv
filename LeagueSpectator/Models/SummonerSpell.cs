@@ -21,7 +21,7 @@ namespace LeagueSpectator.Models
         public int Cooldown { get; set; }
 
         [JsonProperty("gameModes")]
-        public List<string>? GameModes { get; set; }
+        public List<string> GameModes { get; set; }
 
         [JsonProperty("iconPath")]
         public string? IconPath { get; set; }

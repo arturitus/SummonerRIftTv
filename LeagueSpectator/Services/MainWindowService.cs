@@ -1,7 +1,10 @@
 ﻿
 
+using LeagueSpectator.DTOs;
 using LeagueSpectator.IServices;
 using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.IServices;
+using LeagueSpectator.RiotApi.Models;
 using Splat;
 using System;
 using System.Diagnostics;
@@ -28,11 +31,11 @@ namespace LeagueSpectator.Services
             spectatorRegion = string.Empty;
         }
 
-        Task<bool> IMainWindowService.SearchSummonerAsync(string summonerName, Region region, string apiKey, out string summonerId)
+        Task<bool> IMainWindowService.SearchSummonerAsync(string summonerName, RegionDTO region, string apiKey, out string summonerId)
         {
             try
             {
-                RiotApiResponse<Summoner> res = riotApiService.GetSummonerByNameAsync(summonerName, region, apiKey).Result;
+                RiotApiResponse<Summoner> res = riotApiService.GetSummonerByNameAsync(summonerName, (Region)region, apiKey).Result;
                 summonerId = res.Response!.Id!;
                 return Task.FromResult(true);
             }
@@ -44,35 +47,35 @@ namespace LeagueSpectator.Services
             }
         }
 
-        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out Team blueTeam, out Team redTeam)
+        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, RegionDTO region, string apiKey, out Team blueTeam, out Team redTeam)
         {
             try
             {
-                RiotApiResponse<ActiveGame> res = riotApiService.GetActiveGameAsync(summonerId, region, apiKey).Result;
+                RiotApiResponse<ActiveGame> res = riotApiService.GetActiveGameAsync(summonerId, (Region)region, apiKey).Result;
                 authentication = res.Response!.Observers!.EncryptionKey!;
                 matchId = res.Response.GameId;
-                _region = region == Region.BR || region == Region.KR ? region.ToString() : $"{region}1";
+                _region = region == RegionDTO.BR || region == RegionDTO.KR ? region.ToString() : $"{region}1";
                 switch (region)
                 {
-                    case Region.KR:
+                    case RegionDTO.KR:
                         spectatorRegion = "kr";
                         break;
-                    case Region.NA:
+                    case RegionDTO.NA:
                         spectatorRegion = "na2";
                         break;
-                    case Region.EUW:
+                    case RegionDTO.EUW:
                         spectatorRegion = "euw1";
                         break;
-                    case Region.RU:
+                    case RegionDTO.RU:
                         break;
-                    case Region.BR:
+                    case RegionDTO.BR:
                         break;
                     default:
                         spectatorRegion = _region;
                         break;
                 }
                 blueTeam = new Team();
-                foreach (Participant participant in res.Response.Participants!.Where(x => x.TeamId == 100))
+                foreach (ParticipantDTO participant in res.Response.Participants!.Where(x => x.TeamId == 100))
                 {
                     blueTeam.Players.Add(participant);
                 }

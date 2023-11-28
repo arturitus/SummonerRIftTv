@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.RiotApi.Models
 {
     public class Summoner
     {
         [JsonProperty("id")]
-        public string? Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("accountId")]
-        public string? AccountId { get; set; }
+        public string AccountId { get; set; }
 
         [JsonProperty("puuid")]
-        public string? Puuid { get; set; }
+        public string Puuid { get; set; }
 
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("profileIconId")]
         public int ProfileIconId { get; set; }

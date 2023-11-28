@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeagueSpectator", "LeagueSpectator\LeagueSpectator.csproj", "{126DF7A8-80DC-49C1-ADE8-21BDF3E9F81A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueSpectator", "LeagueSpectator\LeagueSpectator.csproj", "{126DF7A8-80DC-49C1-ADE8-21BDF3E9F81A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeagueSpectator.RiotApi", "LeagueSpectator.RiotApi\LeagueSpectator.RiotApi.csproj", "{9E45F5F9-828B-4AAC-9197-C44071E39042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{126DF7A8-80DC-49C1-ADE8-21BDF3E9F81A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126DF7A8-80DC-49C1-ADE8-21BDF3E9F81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126DF7A8-80DC-49C1-ADE8-21BDF3E9F81A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

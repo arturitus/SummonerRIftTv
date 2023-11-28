@@ -1,6 +1,8 @@
-﻿namespace LeagueSpectator.Models
+﻿using LeagueSpectator.Models;
+
+namespace LeagueSpectator.DTOs
 {
-    public enum Region
+    public enum RegionDTO
     {
         [LocalizationField("en-EN", "Europe West")]
         [LocalizationField("es-ES", "Europa del Oeste")]

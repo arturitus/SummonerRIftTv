@@ -1,12 +1,14 @@
 ﻿using LeagueSpectator.Helpers;
+using LeagueSpectator.Models;
+using LeagueSpectator.RiotApi.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.DTOs
 {
-    public class Perks
+    public class PerksDTO
     {
-        public Perks()
+        public PerksDTO()
         {
             MyRunes = new MyRunes[3];
             for (int i = 0; i < MyRunes.Length; i++)
@@ -78,6 +80,16 @@ namespace LeagueSpectator.Models
             {
                 rune.LocalizeObject();
             }
+        }
+
+        public static implicit operator PerksDTO(Perks perks)
+        {
+            return new PerksDTO()
+            {
+                PerkIds = perks.PerkIds,
+                PerkStyle = perks.PerkStyle,
+                PerkSubStyle = perks.PerkSubStyle
+            };
         }
     }
 }

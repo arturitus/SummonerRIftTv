@@ -1,10 +1,8 @@
-﻿using LeagueSpectator.IServices;
-using LeagueSpectator.Models;
+﻿using LeagueSpectator.RiotApi.IServices;
+using LeagueSpectator.RiotApi.Models;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace LeagueSpectator.Services
+namespace LeagueSpectator.RiotApi.Services
 {
     public class RiotApiService : IRiotApiService
     {

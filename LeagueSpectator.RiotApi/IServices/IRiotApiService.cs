@@ -1,7 +1,6 @@
-﻿using LeagueSpectator.Models;
-using System.Threading.Tasks;
+﻿using LeagueSpectator.RiotApi.Models;
 
-namespace LeagueSpectator.IServices
+namespace LeagueSpectator.RiotApi.IServices
 {
     public interface IRiotApiService
     {

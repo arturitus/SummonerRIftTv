@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using LeagueSpectator.DTOs;
 
 namespace LeagueSpectator.Models
 {
     public sealed class Team
     {
-        public ObservableCollection<Participant> Players { get; }
-        public ObservableCollection<BannedChampion> Bans { get; }
+        public ObservableCollection<ParticipantDTO> Players { get; }
+        public ObservableCollection<BannedChampionDTO> Bans { get; }
 
         public Team()
         {

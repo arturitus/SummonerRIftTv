@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace LeagueSpectator.Models
+namespace LeagueSpectator.RiotApi.Models
 {
     public class Observers
     {
         [JsonProperty("encryptionKey")]
-        public string? EncryptionKey { get; set; }
+        public string EncryptionKey { get; set; }
     }
-
 }

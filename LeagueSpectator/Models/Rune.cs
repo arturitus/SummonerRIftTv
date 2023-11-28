@@ -29,7 +29,4 @@ namespace LeagueSpectator.Models
         [JsonProperty("endOfGameStatDescs")]
         public List<string> EndOfGameStatDescs { get; set; }
     }
-
-
-
 }
