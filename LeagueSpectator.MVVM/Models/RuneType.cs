@@ -212,10 +212,10 @@
         [LocalizationField("en-EN", "Legend: Bloodline")]
         [LocalizationField("es-ES", "Leyenda: Linaje")]
         LegendBloodline = 9103,
-        [LocalizationField("en-EN", "Leyenda: Alacrity")]
+        [LocalizationField("en-EN", "Legend: Alacrity")]
         [LocalizationField("es-ES", "Leyenda: Presteza")]
         LegendAlacrity = 9104,
-        [LocalizationField("en-EN", "Leyenda: Tenacity")]
+        [LocalizationField("en-EN", "Legend: Tenacity")]
         [LocalizationField("es-ES", "Leyenda: Tenacidad")]
         LegendTenacity = 9105,
         [LocalizationField("en-EN", "Triumph")]

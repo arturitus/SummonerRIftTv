@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.ReactiveUI;
 using LeagueSpectator.IServices;
 using LeagueSpectator.MVVM;
+using LeagueSpectator.MVVM.Helpers;
+using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Splat;
@@ -19,6 +21,7 @@ namespace LeagueSpectator
         static Program()
         {
             ServiceProvider = InitServices();
+            LeagueAssetResolver.InitCache(ServiceProvider.GetRequiredService<IFrozenDataService>());
         }
 
         [STAThread]

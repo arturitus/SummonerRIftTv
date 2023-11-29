@@ -1,10 +1,11 @@
 ﻿using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
 using Splat;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LeagueSpectator.MVVM.Helpers
 {
-    public static class LeagueAssetResolver
+    public class LeagueAssetResolver
     {
         private const string BASE_URL = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/";
         private const string SUMMONER_SPELLS_URL = "data/spells/icons2d";
@@ -23,8 +24,8 @@ namespace LeagueSpectator.MVVM.Helpers
         //    stream.Position = 0;
         //    return stream;
         //}
-        private static readonly IFrozenDataService m_CachedData;
-        public static bool Initialized { get; private set; }
+        private static IFrozenDataService m_CachedData;
+        //public static bool Initialized { get; private set; }
         //public static IBitmapHelper Instance { get; private set; }
 
         //static BitmapHelper()
@@ -33,10 +34,10 @@ namespace LeagueSpectator.MVVM.Helpers
         //    m_CachedData ??= Locator.Current.GetService<IFrozenDataService>();
         //    Initialized = true;
         //}
-        static LeagueAssetResolver()
+        public static void InitCache(IFrozenDataService frozenDataService)
         {
-            m_CachedData = Locator.Current.GetService<IFrozenDataService>();
-            Initialized = true;
+            m_CachedData = frozenDataService;
+            //Initialized = true;
         }
 
         //public static void Initialize()

@@ -11,9 +11,11 @@ namespace LeagueSpectator.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return string.Empty;
+            }
             return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open((Uri)value));
-            //string a = value.GetDisplayName(culture);
-            //return a;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
