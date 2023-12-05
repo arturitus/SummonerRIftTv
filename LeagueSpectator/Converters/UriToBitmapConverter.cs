@@ -15,7 +15,7 @@ namespace LeagueSpectator.Converters
             {
                 return string.Empty;
             }
-            return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open((Uri)value));
+            return new Bitmap(AssetLoader.Open((Uri)value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

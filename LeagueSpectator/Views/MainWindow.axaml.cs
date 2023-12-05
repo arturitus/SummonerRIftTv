@@ -1,47 +1,53 @@
-using Avalonia;
-using Avalonia.Controls;
+using Avalonia.ReactiveUI;
 using Avalonia.Threading;
+using DialogHostAvalonia;
 using LeagueSpectator.IServices;
 using LeagueSpectator.MVVM.IViewModels;
+using LeagueSpectator.ViewModels;
 
 namespace LeagueSpectator.Views
 {
-    public partial class MainWindow : Window, IMainWindow
+    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>, IMainWindow
     {
-        public nint Handle => PlatformImpl.Handle.Handle;
+        public nint Handle => TryGetPlatformHandle().Handle;
         public MainWindow()
         {
 
         }
 
-        public MainWindow(IMainWindowViewModel appDataService)
+        public MainWindow(IMainWindowViewModel mainWindowViewModel) //IAppDataService appDataService,
         {
             InitializeComponent();
-            DataContext = appDataService;
-            appDataService.IsBusy += ToggleBusyDialog;
+            DataContext = mainWindowViewModel;
+            mainWindowViewModel.IsBusy += ToggleBusyDialog;
             //Position = appDataService.AppData.Position;
             //PositionChanged += MainWindow_PositionChanged;
+            //this.WhenActivated(x =>
+            //{
+            //    appDataService.SetTheme(appDataService.AppData.ThemeType);
+            //});
         }
 
         private void ToggleBusyDialog(bool busy)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
-                if (DialogHost.DialogHost.IsDialogOpen("busyDialog"))
+                if (DialogHost.IsDialogOpen("busyDialog"))
                 {
-                    DialogHost.DialogHost.Close("busyDialog");
+                    DialogHost.Close("busyDialog");
                     return;
                 }
-                StackPanel stackPanel = new StackPanel();
-                stackPanel.Children.Add(new ProgressBar()
-                {
-                    IsIndeterminate = true,
-                    Classes = new Classes("Circle"),
-                    Width = 30,
-                    Height = 30,
-                    BorderThickness = new Thickness(30)
-                });
-                DialogHost.DialogHost.Show(stackPanel);
+                //StackPanel stackPanel = new StackPanel();
+                //stackPanel.Children.Add(new ProgressBar()
+                //{
+                //    IsIndeterminate = true,
+                //    Classes = { "Circle" }, //MaterialCircularProgressBar
+                //    Width = 30,
+                //    Height = 30,
+                //    BorderThickness = new Thickness(30)
+                //});
+                //DialogHost.Show(stackPanel, "busyDialog");
+                DialogHost.Show(Resources["BusyDialogPanel"], "busyDialog");
             });
         }
 

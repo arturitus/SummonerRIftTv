@@ -7,6 +7,7 @@ using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
 using System.Diagnostics;
 using System.Net;
+using System.Reactive;
 
 namespace LeagueSpectator.ViewModels
 {
@@ -19,6 +20,8 @@ namespace LeagueSpectator.ViewModels
         public event Action<bool> IsBusy;
         private readonly FileSystemWatcher fileSystemWatcher;
 
+        public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
+        public ReactiveCommand<Unit, Unit> SpectateCommand { get; }
         public IEnumerable<RegionDTO> Regions => Enum.GetValues<RegionDTO>();
         public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
         public IEnumerable<Language> Languages => Enum.GetValues<Language>();
@@ -85,6 +88,8 @@ namespace LeagueSpectator.ViewModels
 
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
+            SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
+            SpectateCommand = ReactiveCommand.Create(OnSpectateClick, CanOnSpectate());
             m_AppDataService = appDataService;
             m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             m_MainWindowService = mainWindowService;
@@ -103,6 +108,11 @@ namespace LeagueSpectator.ViewModels
             ThemeIndex = (int)AppData.ThemeType;
             LanguageIndex = (int)AppData.Language;
         }
+        private IObservable<bool> CanOnSpectate()
+        {
+            return this.WhenAnyValue(x => x.CanSpectate);
+        }
+
         private void OnLanguageChanged(Language obj)
         {
             //this.RaisePropertyChanged(nameof(SummonerSpellTypes));

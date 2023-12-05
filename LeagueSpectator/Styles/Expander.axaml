@@ -1,6 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         
-  xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+  xmlns:styles="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
   xmlns:ripple="clr-namespace:Material.Ripple;assembly=Material.Ripple"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -50,7 +50,7 @@
                 <ToggleButton Name="PART_toggle"
                               Content="{TemplateBinding Header}"
                               ContentTemplate="{TemplateBinding HeaderTemplate}"
-                              Foreground="{DynamicResource MaterialDesignBody}"
+                              Foreground="{DynamicResource MaterialBodyBrush}"
                               IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}"/>
               </LayoutTransformControl>
             </Panel>
@@ -215,7 +215,7 @@
 
   <Style Selector="Expander">
     <Setter Property="ClipToBounds" Value="False"/>
-    <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}"/>
+    <Setter Property="Background" Value="{DynamicResource MaterialCardBackgroundBrush}"/>
     <Setter Property="ContentTransition">
       <Setter.Value>
         <CrossFade Duration="0.25" />
@@ -228,7 +228,7 @@
         <styles:Card Name="PART_ExpanderRoot" Background="{TemplateBinding Background}" Padding="0">
           <Grid RowDefinitions="Auto, *">
             <ToggleButton Name="PART_toggle" Grid.Row="0" Content="{TemplateBinding Header}" Classes="ConstantForeground"
-                          Foreground="{DynamicResource MaterialDesignBody}"
+                          Foreground="{DynamicResource MaterialBodyBrush}"
                           IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" HorizontalContentAlignment="Left" />
             <ContentPresenter Name="PART_ContentPresenter"
                               Grid.Row="1"
@@ -249,7 +249,7 @@
         <styles:Card Name="PART_ExpanderRoot" Background="{TemplateBinding Background}" Padding="0">
           <Grid RowDefinitions="*,Auto">
             <ToggleButton Name="PART_toggle" Grid.Row="1" Content="{TemplateBinding Header}" Classes="ConstantForeground"
-                          Foreground="{DynamicResource MaterialDesignBody}"
+                          Foreground="{DynamicResource MaterialBodyBrush}"
                           IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" HorizontalContentAlignment="Left" />
             <ContentPresenter Name="PART_ContentPresenter"
                               Grid.Row="0"
@@ -270,7 +270,7 @@
         <styles:Card Name="PART_ExpanderRoot" Background="{TemplateBinding Background}" Padding="0">
           <Grid ColumnDefinitions="Auto,*">
             <ToggleButton Name="PART_toggle" Grid.Column="0" Content="{TemplateBinding Header}"
-                          Foreground="{DynamicResource MaterialDesignBody}"
+                          Foreground="{DynamicResource MaterialBodyBrush}"
                           IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" Classes="ConstantForeground" />
             <ContentPresenter Name="PART_ContentPresenter"
                               Grid.Column="1"
@@ -291,7 +291,7 @@
         <styles:Card Name="PART_ExpanderRoot" Background="{TemplateBinding Background}" Padding="0">
           <Grid ColumnDefinitions="*,Auto">
             <ToggleButton Name="PART_toggle" Grid.Column="1" Content="{TemplateBinding Header}" Classes="ConstantForeground"
-                          Foreground="{DynamicResource MaterialDesignBody}"
+                          Foreground="{DynamicResource MaterialBodyBrush}"
                           IsChecked="{TemplateBinding IsExpanded, Mode=TwoWay}" />
             <ContentPresenter Name="PART_ContentPresenter"
                               Grid.Column="0"

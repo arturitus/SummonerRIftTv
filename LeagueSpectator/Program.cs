@@ -35,12 +35,14 @@ namespace LeagueSpectator
         //public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
         public static AppBuilder BuildAvaloniaApp()
         {
-            return AppBuilder.Configure(() => (App)Locator.Current.GetService<IApp>()).UsePlatformDetect().LogToTrace().UseReactiveUI();
+            return AppBuilder.Configure(() => (App)Locator.Current.GetService<IApp>()).UsePlatformDetect()
+            .WithInterFont().LogToTrace().UseReactiveUI();
         }
 
         public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
         {
-            return AppBuilder.Configure(() => (App)serviceProvider.GetRequiredService<IApp>()).UsePlatformDetect().LogToTrace().UseReactiveUI();
+            return AppBuilder.Configure(() => (App)serviceProvider.GetRequiredService<IApp>()).UsePlatformDetect()
+            .WithInterFont().LogToTrace().UseReactiveUI();
         }
 
 
