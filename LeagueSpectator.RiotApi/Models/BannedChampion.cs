@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.RiotApi.Models
 {
     public class BannedChampion
     {
-        [JsonProperty("championId")]
+        [JsonPropertyName("championId")]
         public int ChampionId { get; set; }
 
-        [JsonProperty("teamId")]
+        [JsonPropertyName("teamId")]
         public int TeamId { get; set; }
 
-        [JsonProperty("pickTurn")]
+        [JsonPropertyName("pickTurn")]
         public int PickTurn { get; set; }
     }
 }

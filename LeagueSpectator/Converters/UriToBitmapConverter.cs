@@ -2,8 +2,10 @@
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using LeagueSpectator.Extensions;
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace LeagueSpectator.Converters
 {
@@ -15,7 +17,7 @@ namespace LeagueSpectator.Converters
             {
                 return string.Empty;
             }
-            return new Bitmap(AssetLoader.Open((Uri)value));
+            return ((Uri)value).GetCachedBitmap();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

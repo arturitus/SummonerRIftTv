@@ -17,9 +17,12 @@
 			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
 			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
 			<converters:UriToBitmapConverter x:Key="UriToBitmap"/>
-			<!--<ResourceDictionary.MergedDictionaries>
-				<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>
-			</ResourceDictionary.MergedDictionaries>-->	
+			<ResourceDictionary.MergedDictionaries>
+				<!--<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>-->				
+				<ResourceInclude Source="avares://LeagueSpectator/Styles/ComboBox.axaml" />
+				
+			</ResourceDictionary.MergedDictionaries>
+			
 		</ResourceDictionary>
 	</Application.Resources>
     <!--<Application.Styles>

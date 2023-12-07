@@ -1,37 +1,37 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.RiotApi.Models
 {
     public class Participant
     {
-        [JsonProperty("teamId")]
+        [JsonPropertyName("teamId")]
         public int TeamId { get; set; }
 
-        [JsonProperty("spell1Id")]
+        [JsonPropertyName("spell1Id")]
         public int Spell1Id { get; set; }
 
-        [JsonProperty("spell2Id")]
+        [JsonPropertyName("spell2Id")]
         public int Spell2Id { get; set; }
 
-        [JsonProperty("championId")]
+        [JsonPropertyName("championId")]
         public int ChampionId { get; set; }
 
-        [JsonProperty("profileIconId")]
+        [JsonPropertyName("profileIconId")]
         public int ProfileIconId { get; set; }
 
-        [JsonProperty("summonerName")]
+        [JsonPropertyName("summonerName")]
         public string SummonerName { get; set; }
 
-        [JsonProperty("bot")]
+        [JsonPropertyName("bot")]
         public bool Bot { get; set; }
 
-        [JsonProperty("summonerId")]
+        [JsonPropertyName("summonerId")]
         public string SummonerId { get; set; }
 
-        [JsonProperty("gameCustomizationObjects")]
+        [JsonPropertyName("gameCustomizationObjects")]
         public List<object> GameCustomizationObjects { get; set; }
 
-        [JsonProperty("perks")]
+        [JsonPropertyName("perks")]
         public Perks Perks { get; set; }
     }
 }

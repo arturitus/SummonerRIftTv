@@ -1,41 +1,49 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.RiotApi.Models
 {
     public class ActiveGame
     {
-        [JsonProperty("gameId")]
+        [JsonPropertyName("gameId")]
         public long GameId { get; set; }
 
-        [JsonProperty("mapId")]
+        [JsonPropertyName("mapId")]
         public int MapId { get; set; }
 
-        [JsonProperty("gameMode")]
+        [JsonPropertyName("gameMode")]
         public string GameMode { get; set; }
 
-        [JsonProperty("gameType")]
+        [JsonPropertyName("gameType")]
         public string GameType { get; set; }
 
-        [JsonProperty("gameQueueConfigId")]
+        [JsonPropertyName("gameQueueConfigId")]
         public int GameQueueConfigId { get; set; }
 
-        [JsonProperty("participants")]
+        [JsonPropertyName("participants")]
         public List<Participant> Participants { get; set; }
 
-        [JsonProperty("observers")]
+        [JsonPropertyName("observers")]
         public Observers Observers { get; set; }
 
-        [JsonProperty("platformId")]
+        [JsonPropertyName("platformId")]
         public string PlatformId { get; set; }
 
-        [JsonProperty("bannedChampions")]
+        [JsonPropertyName("bannedChampions")]
         public List<BannedChampion> BannedChampions { get; set; }
 
-        [JsonProperty("gameStartTime")]
+        [JsonPropertyName("gameStartTime")]
         public long GameStartTime { get; set; }
 
-        [JsonProperty("gameLength")]
+        [JsonPropertyName("gameLength")]
         public int GameLength { get; set; }
+    }
+
+    [JsonSourceGenerationOptions(WriteIndented = true)]
+    [JsonSerializable(typeof(ActiveGame))]
+    [JsonSerializable(typeof(Summoner))]
+    internal partial class SourceGenerationContext : JsonSerializerContext
+    {
     }
 
 }

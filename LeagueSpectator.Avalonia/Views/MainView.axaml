@@ -14,5 +14,12 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{x:Static assets:Strings.Spectate}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+	  <ComboBox.Items>
+		  <ComboBoxItem Content="ASDASD1"></ComboBoxItem>
+		  <ComboBoxItem Content="ASDASD2"></ComboBoxItem>
+		  <ComboBoxItem Content="ASDASD3"></ComboBoxItem>
+	  </ComboBox.Items>
+	</ComboBox>
 </UserControl>

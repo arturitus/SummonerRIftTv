@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.RiotApi.Models
 {
     public class Perks
     {
-        [JsonProperty("perkStyle")]
+        [JsonPropertyName("perkStyle")]
         public int PerkStyle { get; set; }
 
-        [JsonProperty("perkSubStyle")]
+        [JsonPropertyName("perkSubStyle")]
         public int PerkSubStyle { get; set; }
 
-        [JsonProperty("perkIds")]
+        [JsonPropertyName("perkIds")]
         public List<int> PerkIds { get; set; }
     }
 }

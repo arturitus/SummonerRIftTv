@@ -22,7 +22,7 @@ namespace LeagueSpectator.ViewModels
 
         public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
         public ReactiveCommand<Unit, Unit> SpectateCommand { get; }
-        public IEnumerable<RegionDTO> Regions => Enum.GetValues<RegionDTO>();
+        public IEnumerable<Region> Regions => Enum.GetValues<Region>();
         public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
         public IEnumerable<Language> Languages => Enum.GetValues<Language>();
 
@@ -89,7 +89,7 @@ namespace LeagueSpectator.ViewModels
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
             SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
-            SpectateCommand = ReactiveCommand.Create(OnSpectateClick, CanOnSpectate());
+            SpectateCommand = ReactiveCommand.Create(OnSpectateClick);
             m_AppDataService = appDataService;
             m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             m_MainWindowService = mainWindowService;

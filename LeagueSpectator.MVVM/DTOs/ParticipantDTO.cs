@@ -2,7 +2,7 @@
 using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.Models;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using ReactiveUI;
 
 namespace LeagueSpectator.MVVM.DTOs
@@ -23,11 +23,11 @@ namespace LeagueSpectator.MVVM.DTOs
             this.RaisePropertyChanged(nameof(SummonerSpellType2));
         }
 
-        [JsonProperty("teamId")]
+        [JsonPropertyName("teamId")]
         public int TeamId { get; set; }
 
         private int spell1;
-        [JsonProperty("spell1Id")]
+        [JsonPropertyName("spell1Id")]
         public int Spell1Id
         {
             get => spell1;
@@ -35,12 +35,12 @@ namespace LeagueSpectator.MVVM.DTOs
             {
                 spell1 = value;
                 m_SummonerSpellType1 = (SummonerSpellType)spell1;
-                Bitmaps[1] = LeagueAssetResolver.GetBitmap(spell1, SummonerSpellType1);
+                Bitmaps[1] = LeagueAssetResolver.GetUri(spell1, SummonerSpellType1);
             }
         }
 
         private int spell2;
-        [JsonProperty("spell2Id")]
+        [JsonPropertyName("spell2Id")]
         public int Spell2Id
         {
             get => spell2;
@@ -48,12 +48,12 @@ namespace LeagueSpectator.MVVM.DTOs
             {
                 spell2 = value;
                 m_SummonerSpellType2 = (SummonerSpellType)spell2;
-                Bitmaps[2] = LeagueAssetResolver.GetBitmap(spell2, SummonerSpellType2);
+                Bitmaps[2] = LeagueAssetResolver.GetUri(spell2, SummonerSpellType2);
             }
         }
 
         private int championId;
-        [JsonProperty("championId")]
+        [JsonPropertyName("championId")]
         public int ChampionId
         {
             get => championId;
@@ -61,26 +61,26 @@ namespace LeagueSpectator.MVVM.DTOs
             {
                 championId = value;
                 championType = (ChampionType)championId;
-                Bitmaps[0] = LeagueAssetResolver.GetBitmap(championId, championType);
+                Bitmaps[0] = LeagueAssetResolver.GetUri(championId, championType);
             }
         }
 
-        [JsonProperty("profileIconId")]
+        [JsonPropertyName("profileIconId")]
         public int ProfileIconId { get; set; }
 
-        [JsonProperty("summonerName")]
+        [JsonPropertyName("summonerName")]
         public string SummonerName { get; set; }
 
-        [JsonProperty("bot")]
+        [JsonPropertyName("bot")]
         public bool Bot { get; set; }
 
-        [JsonProperty("summonerId")]
+        [JsonPropertyName("summonerId")]
         public string SummonerId { get; set; }
 
-        [JsonProperty("gameCustomizationObjects")]
+        [JsonPropertyName("gameCustomizationObjects")]
         public List<object> GameCustomizationObjects { get; set; }
 
-        [JsonProperty("perks")]
+        [JsonPropertyName("perks")]
         public PerksDTO Perks { get; set; }
 
 

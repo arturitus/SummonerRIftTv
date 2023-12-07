@@ -1,5 +1,7 @@
 ﻿using Avalonia.Data.Converters;
 using LeagueSpectator.MVVM.Extensions;
+using LeagueSpectator.MVVM.Models;
+using LeagueSpectator.MVVM.Services;
 using System;
 using System.Globalization;
 
@@ -10,8 +12,9 @@ namespace LeagueSpectator.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var b = ((Enum)value).GetDisplayName();
             string a = value.GetDisplayName(culture);
-            return a;
+            return b;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

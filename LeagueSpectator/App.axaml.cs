@@ -11,7 +11,7 @@ using LeagueSpectator.Views;
 using Material.Colors;
 using Material.Styles.Themes;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -50,17 +50,14 @@ namespace LeagueSpectator
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 Resources.Add(LOCALIZATION_STRINGS_NAME, m_LocalizationStringsService);
-                m_MainWindow = Program.ServiceProvider.GetRequiredService<IMainWindow>();
+                m_MainWindow = DependencyInjector.GetRequiredService<IMainWindow>();
                 desktop.MainWindow = (MainWindow)m_MainWindow;
             }
 
             OnLanguageChanged(m_AppDataService.AppData.Language);
 
             m_AppDataService.OnThemeChanged += OnThemeChanged;
-            Current.LocateMaterialTheme<MaterialThemeBase>().CurrentThemeChanged.Subscribe(newTheme =>
-            {
-                var a = 1;
-            });
+            
             OnThemeChanged(m_AppDataService.AppData.ThemeType);
 
         }

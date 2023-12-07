@@ -44,10 +44,10 @@ namespace LeagueSpectator.MVVM.Services
             //    m_SummonerSpells.Add(new FrozenLeagueObject<SummonerSpellType>((int)item));
             //}
         }
-        private FrozenSet<FrozenLeagueObject<T>> PopulateData<T>() where T : Enum
+        private FrozenSet<FrozenLeagueObject<T>> PopulateData<T>() where T : struct, Enum
         {
             List<FrozenLeagueObject<T>> items = new List<FrozenLeagueObject<T>>();
-            foreach (T item in Enum.GetValues(typeof(T)))
+            foreach (T item in Enum.GetValues<T>())
             {
                 items.Add(new FrozenLeagueObject<T>(Convert.ToInt32(item)));
             }
@@ -74,7 +74,7 @@ namespace LeagueSpectator.MVVM.Services
         public FrozenLeagueObject(int id)
         {
             Id = id;
-            Icon = LeagueAssetResolver.GetBitmap(id, ObjectType);
+            Icon = LeagueAssetResolver.GetUri(id, ObjectType);
         }
     }
 }

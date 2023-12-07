@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.MVVM.Models
 {
@@ -72,5 +73,11 @@ namespace LeagueSpectator.MVVM.Models
                 OnAppDataChanged?.Invoke(this);
             }
         }
+    }
+
+    [JsonSourceGenerationOptions(WriteIndented = true)]
+    [JsonSerializable(typeof(AppData))]
+    internal partial class SourceGenerationContext : JsonSerializerContext
+    {
     }
 }

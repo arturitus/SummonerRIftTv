@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.RiotApi.Models
 {
     public class Observers
     {
-        [JsonProperty("encryptionKey")]
+        [JsonPropertyName("encryptionKey")]
         public string EncryptionKey { get; set; }
     }
 }

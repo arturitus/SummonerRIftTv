@@ -13,35 +13,21 @@ namespace LeagueSpectator
 {
     internal class Program
     {
-        public static IServiceProvider ServiceProvider { get; }
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
 
-        static Program()
-        {
-            ServiceProvider = InitServices();
-            LeagueAssetResolver.InitCache(ServiceProvider.GetRequiredService<IFrozenDataService>());
-        }
-
         [STAThread]
         public static void Main(string[] args)
         {
-            //BuildServices();
-            BuildAvaloniaApp(ServiceProvider).StartWithClassicDesktopLifetime(args);
+            BuildServices();
+            LeagueAssetResolver.InitCache(DependencyInjector.GetRequiredService<IFrozenDataService>());
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        //public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
         public static AppBuilder BuildAvaloniaApp()
         {
-            return AppBuilder.Configure(() => (App)Locator.Current.GetService<IApp>()).UsePlatformDetect()
-            .WithInterFont().LogToTrace().UseReactiveUI();
-        }
-
-        public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
-        {
-            return AppBuilder.Configure(() => (App)serviceProvider.GetRequiredService<IApp>()).UsePlatformDetect()
+            return AppBuilder.Configure(() => (App)DependencyInjector.GetRequiredService<IApp>()).UsePlatformDetect()
             .WithInterFont().LogToTrace().UseReactiveUI();
         }
 
@@ -75,15 +61,11 @@ namespace LeagueSpectator
             //    IMainWindowViewModel mainWindowViewModel = Locator.Current.GetService<IMainWindowViewModel>();
             //    return new MainWindow(mainWindowViewModel);
             //});
-        }
-
-        private static ServiceProvider InitServices()
-        {
-            return new ServiceCollection()
+            new ServiceCollection()
                 .BootstrapRequiredServices()
                 .AddSingleton<IApp, App>()
                 .AddSingleton<IMainWindow, MainWindow>()
-                .BuildServiceProvider();
+                .InitDependencyInjector();
         }
     }
 }

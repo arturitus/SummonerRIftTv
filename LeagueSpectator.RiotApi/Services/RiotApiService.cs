@@ -1,6 +1,6 @@
 ﻿using LeagueSpectator.RiotApi.IServices;
 using LeagueSpectator.RiotApi.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace LeagueSpectator.RiotApi.Services
 {
@@ -19,7 +19,7 @@ namespace LeagueSpectator.RiotApi.Services
                 {
                     if (responseMessage.IsSuccessStatusCode)
                     {
-                        return new RiotApiResponse<ActiveGame>(JsonConvert.DeserializeObject<ActiveGame>(await responseMessage.Content.ReadAsStringAsync()));
+                        return new RiotApiResponse<ActiveGame>(JsonSerializer.Deserialize(await responseMessage.Content.ReadAsStringAsync(), SourceGenerationContext.Default.ActiveGame));
                     }
                     throw new RiotApiError(responseMessage.StatusCode, await responseMessage.Content.ReadAsStringAsync(), nameof(IRiotApiService.GetActiveGameAsync));
                     //responseMessage.EnsureSuccessStatusCode();
@@ -42,7 +42,7 @@ namespace LeagueSpectator.RiotApi.Services
                     //return JsonConvert.DeserializeObject<Summoner>(await responseMessage.Content.ReadAsStringAsync());
                     if (responseMessage.IsSuccessStatusCode)
                     {
-                        return new RiotApiResponse<Summoner>(JsonConvert.DeserializeObject<Summoner>(await responseMessage.Content.ReadAsStringAsync()));
+                        return new RiotApiResponse<Summoner>(JsonSerializer.Deserialize(await responseMessage.Content.ReadAsStringAsync(), SourceGenerationContext.Default.Summoner));
                     }
                     throw new RiotApiError(responseMessage.StatusCode, await responseMessage.Content.ReadAsStringAsync(), nameof(IRiotApiService.GetSummonerByNameAsync));
                 }

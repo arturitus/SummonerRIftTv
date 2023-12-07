@@ -1,6 +1,6 @@
 ﻿using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace LeagueSpectator.MVVM.Services
 {
@@ -16,13 +16,13 @@ namespace LeagueSpectator.MVVM.Services
         public AppDataService()
         {
             string a = File.ReadAllText(APP_DATA_PATH);
-            m_AppData = JsonConvert.DeserializeObject<AppData>(File.ReadAllText(APP_DATA_PATH)) ?? new AppData();
+            m_AppData = JsonSerializer.Deserialize(File.ReadAllText(APP_DATA_PATH), SourceGenerationContext.Default.AppData) ?? new AppData();
             m_AppData.OnAppDataChanged += OnAppDataChanged;
         }
 
         public void WriteAppData()
         {
-            File.WriteAllText(APP_DATA_PATH, JsonConvert.SerializeObject(m_AppData, Formatting.Indented));
+            File.WriteAllText(APP_DATA_PATH, JsonSerializer.Serialize(m_AppData, SourceGenerationContext.Default.AppData));
         }
 
         private void OnAppDataChanged(AppData appData)

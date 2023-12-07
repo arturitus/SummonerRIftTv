@@ -1,31 +1,31 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.MVVM.Models
 {
     public class Rune
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("majorChangePatchVersion")]
+        [JsonPropertyName("majorChangePatchVersion")]
         public string MajorChangePatchVersion { get; set; }
 
-        [JsonProperty("tooltip")]
+        [JsonPropertyName("tooltip")]
         public string Tooltip { get; set; }
 
-        [JsonProperty("shortDesc")]
+        [JsonPropertyName("shortDesc")]
         public string ShortDesc { get; set; }
 
-        [JsonProperty("longDesc")]
+        [JsonPropertyName("longDesc")]
         public string LongDesc { get; set; }
 
-        [JsonProperty("iconPath")]
+        [JsonPropertyName("iconPath")]
         public string IconPath { get; set; }
 
-        [JsonProperty("endOfGameStatDescs")]
+        [JsonPropertyName("endOfGameStatDescs")]
         public List<string> EndOfGameStatDescs { get; set; }
     }
 }

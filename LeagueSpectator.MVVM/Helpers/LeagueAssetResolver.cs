@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace LeagueSpectator.MVVM.Helpers
 {
-    public class LeagueAssetResolver
+    public static class LeagueAssetResolver
     {
         private const string BASE_URL = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/";
         private const string SUMMONER_SPELLS_URL = "data/spells/icons2d";
@@ -114,7 +114,7 @@ namespace LeagueSpectator.MVVM.Helpers
             };
         }
 
-        public static Uri GetBitmap<T>(int id, T leagueType) where T : Enum
+        public static Uri GetUri<T>(int id, T leagueType) where T : Enum
         {
             //Avalonia.Media.Imaging.Bitmap b = new Avalonia.Media.Imaging.Bitmap(ToStream(new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{id}.png"))), ImageFormat.Bmp));
 

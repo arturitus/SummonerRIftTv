@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace LeagueSpectator.Avalonia
 {
-    public partial class App : Application
+    public partial class App : Application, IApp
     {
         private const string LOCALIZATION_STRINGS_NAME = "Strings";
         public override void Initialize()

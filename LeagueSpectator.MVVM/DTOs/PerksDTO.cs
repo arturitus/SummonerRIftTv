@@ -1,7 +1,7 @@
 ﻿using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.Models;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.DTOs
 {
@@ -17,7 +17,7 @@ namespace LeagueSpectator.DTOs
         }
 
         private int perkStyle;
-        [JsonProperty("perkStyle")]
+        [JsonPropertyName("perkStyle")]
         public int PerkStyle
         {
             get => perkStyle;
@@ -25,12 +25,12 @@ namespace LeagueSpectator.DTOs
             {
                 perkStyle = value;
                 MyRunes[0].RuneType = (RuneType)perkStyle;
-                MyRunes[0].Tree = LeagueAssetResolver.GetBitmap(perkStyle, MyRunes[0].RuneType);
+                MyRunes[0].Tree = LeagueAssetResolver.GetUri(perkStyle, MyRunes[0].RuneType);
             }
         }
         private int perkSubStyle;
 
-        [JsonProperty("perkSubStyle")]
+        [JsonPropertyName("perkSubStyle")]
         public int PerkSubStyle
         {
             get => perkSubStyle;
@@ -38,14 +38,14 @@ namespace LeagueSpectator.DTOs
             {
                 perkSubStyle = value;
                 MyRunes[1].RuneType = (RuneType)perkSubStyle;
-                MyRunes[1].Tree = LeagueAssetResolver.GetBitmap(perkSubStyle, MyRunes[1].RuneType);
+                MyRunes[1].Tree = LeagueAssetResolver.GetUri(perkSubStyle, MyRunes[1].RuneType);
             }
         }
         [JsonIgnore]
         public MyRunes[] MyRunes { get; }
 
         private List<int> perkIds;
-        [JsonProperty("perkIds")]
+        [JsonPropertyName("perkIds")]
         public List<int> PerkIds
         {
             get => perkIds;
@@ -58,15 +58,15 @@ namespace LeagueSpectator.DTOs
                     {
                         if (MyRunes[0].Runes.Count >= 4 && MyRunes[1].Runes.Count < 2)
                         {
-                            MyRunes[1].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetBitmap(id, (RuneType)id), RuneType = (RuneType)id });
+                            MyRunes[1].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
                         else if (MyRunes[1].Runes.Count >= 2 && MyRunes[2].Runes.Count < 3)
                         {
-                            MyRunes[2].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetBitmap(id, (RuneType)id), RuneType = (RuneType)id });
+                            MyRunes[2].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
                         else
                         {
-                            MyRunes[0].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetBitmap(id, (RuneType)id), RuneType = (RuneType)id });
+                            MyRunes[0].Runes.Add(new MyRune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
                     }
                 }

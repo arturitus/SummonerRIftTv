@@ -1,7 +1,7 @@
 ﻿using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.Models;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using ReactiveUI;
 
 namespace LeagueSpectator.MVVM.DTOs
@@ -9,22 +9,22 @@ namespace LeagueSpectator.MVVM.DTOs
     public class BannedChampionDTO : LocalizableObject
     {
         private int championId;
-        [JsonProperty("championId")]
+        [JsonPropertyName("championId")]
         public int ChampionId
         {
             get => championId;
             set
             {
                 championId = value;
-                bitmap = LeagueAssetResolver.GetBitmap(championId, ChampionType);
+                bitmap = LeagueAssetResolver.GetUri(championId, ChampionType);
                 championType = (ChampionType)championId;
             }
         }
 
-        [JsonProperty("teamId")]
+        [JsonPropertyName("teamId")]
         public int TeamId { get; set; }
 
-        [JsonProperty("pickTurn")]
+        [JsonPropertyName("pickTurn")]
         public int PickTurn { get; set; }
 
         [JsonIgnore]
