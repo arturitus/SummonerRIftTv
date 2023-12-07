@@ -1,4 +1,4 @@
-﻿namespace LeagueSpectator.Avalonia.Views
+﻿namespace LeagueSpectator.Avalonia.IViews
 {
     public interface IMainWindow
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-namespace LeagueSpectator.Converters
+namespace LeagueSpectator.Avalonia.Converters
 {
     public class IntToBoolConverter : IValueConverter
     {

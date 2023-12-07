@@ -1,22 +1,24 @@
 ﻿using Avalonia.Data.Converters;
+using LeagueSpectator.Avalonia.Extensions;
 using System;
 using System.Globalization;
 
-namespace LeagueSpectator.Converters
+namespace LeagueSpectator.Avalonia.Converters
 {
-    public class ObjectToStringConverter : IValueConverter
+    public class UriToBitmapConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (value == null)
             {
-                return value!.ToString() ?? value;
+                return string.Empty;
             }
-            return null;
+            return ((Uri)value).GetCachedBitmap();
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

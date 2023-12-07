@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Reactive;
 
-namespace LeagueSpectator.ViewModels
+namespace LeagueSpectator.MVVM.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {

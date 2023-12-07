@@ -1,10 +1,30 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="LeagueSpectator.Avalonia.App"
-             RequestedThemeVariant="Default">
+			 xmlns:converters="using:LeagueSpectator.Avalonia.Converters"
+             RequestedThemeVariant="Default"
+			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+			 xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
+             x:Class="LeagueSpectator.Avalonia.App">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+	<Application.Resources>
+		<ResourceDictionary>
+			<converters:MultiEnabledConverter x:Key="MultiEnabledConverter"/>
+			<converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
+			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
+			<converters:UriToBitmapConverter x:Key="UriToBitmap"/>
+			<ResourceDictionary.MergedDictionaries>
+				<!--<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>-->
+				<ResourceInclude Source="/Styles/ComboBox.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+	<Application.Styles>
+		<dialogHostAvalonia:DialogHostStyles />
+		<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>
+		<!--<themes:MaterialThemeBase />-->
+		<!--<FluentTheme/>-->
+		<StyleInclude Source="/Styles/Expander.axaml" />
+	</Application.Styles>
 </Application>

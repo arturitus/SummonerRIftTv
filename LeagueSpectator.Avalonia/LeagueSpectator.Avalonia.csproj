@@ -14,8 +14,272 @@
 
   
   <ItemGroup>
-    <AvaloniaResource Remove="Assets\Strings.es-ES.resx" />
-    <AvaloniaResource Remove="Assets\Strings.resx" />
+    <AvaloniaResource Remove="Assets\AppData.json" />
+    <AvaloniaResource Remove="Assets\spectator.bat" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <None Remove="Assets\Champions\-1.png" />
+    <None Remove="Assets\Champions\1.png" />
+    <None Remove="Assets\Champions\10.png" />
+    <None Remove="Assets\Champions\101.png" />
+    <None Remove="Assets\Champions\102.png" />
+    <None Remove="Assets\Champions\103.png" />
+    <None Remove="Assets\Champions\104.png" />
+    <None Remove="Assets\Champions\105.png" />
+    <None Remove="Assets\Champions\106.png" />
+    <None Remove="Assets\Champions\107.png" />
+    <None Remove="Assets\Champions\11.png" />
+    <None Remove="Assets\Champions\110.png" />
+    <None Remove="Assets\Champions\111.png" />
+    <None Remove="Assets\Champions\112.png" />
+    <None Remove="Assets\Champions\113.png" />
+    <None Remove="Assets\Champions\114.png" />
+    <None Remove="Assets\Champions\115.png" />
+    <None Remove="Assets\Champions\117.png" />
+    <None Remove="Assets\Champions\119.png" />
+    <None Remove="Assets\Champions\12.png" />
+    <None Remove="Assets\Champions\120.png" />
+    <None Remove="Assets\Champions\121.png" />
+    <None Remove="Assets\Champions\122.png" />
+    <None Remove="Assets\Champions\126.png" />
+    <None Remove="Assets\Champions\127.png" />
+    <None Remove="Assets\Champions\13.png" />
+    <None Remove="Assets\Champions\131.png" />
+    <None Remove="Assets\Champions\133.png" />
+    <None Remove="Assets\Champions\134.png" />
+    <None Remove="Assets\Champions\136.png" />
+    <None Remove="Assets\Champions\14.png" />
+    <None Remove="Assets\Champions\141.png" />
+    <None Remove="Assets\Champions\142.png" />
+    <None Remove="Assets\Champions\143.png" />
+    <None Remove="Assets\Champions\145.png" />
+    <None Remove="Assets\Champions\147.png" />
+    <None Remove="Assets\Champions\15.png" />
+    <None Remove="Assets\Champions\150.png" />
+    <None Remove="Assets\Champions\154.png" />
+    <None Remove="Assets\Champions\157.png" />
+    <None Remove="Assets\Champions\16.png" />
+    <None Remove="Assets\Champions\161.png" />
+    <None Remove="Assets\Champions\163.png" />
+    <None Remove="Assets\Champions\164.png" />
+    <None Remove="Assets\Champions\166.png" />
+    <None Remove="Assets\Champions\17.png" />
+    <None Remove="Assets\Champions\18.png" />
+    <None Remove="Assets\Champions\19.png" />
+    <None Remove="Assets\Champions\2.png" />
+    <None Remove="Assets\Champions\20.png" />
+    <None Remove="Assets\Champions\200.png" />
+    <None Remove="Assets\Champions\201.png" />
+    <None Remove="Assets\Champions\202.png" />
+    <None Remove="Assets\Champions\203.png" />
+    <None Remove="Assets\Champions\21.png" />
+    <None Remove="Assets\Champions\22.png" />
+    <None Remove="Assets\Champions\221.png" />
+    <None Remove="Assets\Champions\222.png" />
+    <None Remove="Assets\Champions\223.png" />
+    <None Remove="Assets\Champions\23.png" />
+    <None Remove="Assets\Champions\233.png" />
+    <None Remove="Assets\Champions\234.png" />
+    <None Remove="Assets\Champions\235.png" />
+    <None Remove="Assets\Champions\236.png" />
+    <None Remove="Assets\Champions\238.png" />
+    <None Remove="Assets\Champions\24.png" />
+    <None Remove="Assets\Champions\240.png" />
+    <None Remove="Assets\Champions\245.png" />
+    <None Remove="Assets\Champions\246.png" />
+    <None Remove="Assets\Champions\25.png" />
+    <None Remove="Assets\Champions\254.png" />
+    <None Remove="Assets\Champions\26.png" />
+    <None Remove="Assets\Champions\266.png" />
+    <None Remove="Assets\Champions\267.png" />
+    <None Remove="Assets\Champions\268.png" />
+    <None Remove="Assets\Champions\27.png" />
+    <None Remove="Assets\Champions\28.png" />
+    <None Remove="Assets\Champions\29.png" />
+    <None Remove="Assets\Champions\3.png" />
+    <None Remove="Assets\Champions\30.png" />
+    <None Remove="Assets\Champions\31.png" />
+    <None Remove="Assets\Champions\32.png" />
+    <None Remove="Assets\Champions\33.png" />
+    <None Remove="Assets\Champions\34.png" />
+    <None Remove="Assets\Champions\35.png" />
+    <None Remove="Assets\Champions\350.png" />
+    <None Remove="Assets\Champions\36.png" />
+    <None Remove="Assets\Champions\360.png" />
+    <None Remove="Assets\Champions\37.png" />
+    <None Remove="Assets\Champions\38.png" />
+    <None Remove="Assets\Champions\39.png" />
+    <None Remove="Assets\Champions\4.png" />
+    <None Remove="Assets\Champions\40.png" />
+    <None Remove="Assets\Champions\41.png" />
+    <None Remove="Assets\Champions\412.png" />
+    <None Remove="Assets\Champions\42.png" />
+    <None Remove="Assets\Champions\420.png" />
+    <None Remove="Assets\Champions\421.png" />
+    <None Remove="Assets\Champions\427.png" />
+    <None Remove="Assets\Champions\429.png" />
+    <None Remove="Assets\Champions\43.png" />
+    <None Remove="Assets\Champions\432.png" />
+    <None Remove="Assets\Champions\44.png" />
+    <None Remove="Assets\Champions\45.png" />
+    <None Remove="Assets\Champions\48.png" />
+    <None Remove="Assets\Champions\497.png" />
+    <None Remove="Assets\Champions\498.png" />
+    <None Remove="Assets\Champions\5.png" />
+    <None Remove="Assets\Champions\50.png" />
+    <None Remove="Assets\Champions\51.png" />
+    <None Remove="Assets\Champions\516.png" />
+    <None Remove="Assets\Champions\517.png" />
+    <None Remove="Assets\Champions\518.png" />
+    <None Remove="Assets\Champions\523.png" />
+    <None Remove="Assets\Champions\526.png" />
+    <None Remove="Assets\Champions\53.png" />
+    <None Remove="Assets\Champions\54.png" />
+    <None Remove="Assets\Champions\55.png" />
+    <None Remove="Assets\Champions\555.png" />
+    <None Remove="Assets\Champions\56.png" />
+    <None Remove="Assets\Champions\57.png" />
+    <None Remove="Assets\Champions\58.png" />
+    <None Remove="Assets\Champions\59.png" />
+    <None Remove="Assets\Champions\6.png" />
+    <None Remove="Assets\Champions\60.png" />
+    <None Remove="Assets\Champions\61.png" />
+    <None Remove="Assets\Champions\62.png" />
+    <None Remove="Assets\Champions\63.png" />
+    <None Remove="Assets\Champions\64.png" />
+    <None Remove="Assets\Champions\67.png" />
+    <None Remove="Assets\Champions\68.png" />
+    <None Remove="Assets\Champions\69.png" />
+    <None Remove="Assets\Champions\7.png" />
+    <None Remove="Assets\Champions\711.png" />
+    <None Remove="Assets\Champions\72.png" />
+    <None Remove="Assets\Champions\74.png" />
+    <None Remove="Assets\Champions\75.png" />
+    <None Remove="Assets\Champions\76.png" />
+    <None Remove="Assets\Champions\77.png" />
+    <None Remove="Assets\Champions\777.png" />
+    <None Remove="Assets\Champions\78.png" />
+    <None Remove="Assets\Champions\79.png" />
+    <None Remove="Assets\Champions\8.png" />
+    <None Remove="Assets\Champions\80.png" />
+    <None Remove="Assets\Champions\81.png" />
+    <None Remove="Assets\Champions\82.png" />
+    <None Remove="Assets\Champions\83.png" />
+    <None Remove="Assets\Champions\84.png" />
+    <None Remove="Assets\Champions\85.png" />
+    <None Remove="Assets\Champions\86.png" />
+    <None Remove="Assets\Champions\875.png" />
+    <None Remove="Assets\Champions\876.png" />
+    <None Remove="Assets\Champions\887.png" />
+    <None Remove="Assets\Champions\888.png" />
+    <None Remove="Assets\Champions\89.png" />
+    <None Remove="Assets\Champions\895.png" />
+    <None Remove="Assets\Champions\897.png" />
+    <None Remove="Assets\Champions\9.png" />
+    <None Remove="Assets\Champions\90.png" />
+    <None Remove="Assets\Champions\902.png" />
+    <None Remove="Assets\Champions\91.png" />
+    <None Remove="Assets\Champions\92.png" />
+    <None Remove="Assets\Champions\950.png" />
+    <None Remove="Assets\Champions\96.png" />
+    <None Remove="Assets\Champions\98.png" />
+    <None Remove="Assets\Champions\99.png" />
+    <None Remove="Assets\Runes\5001.png" />
+    <None Remove="Assets\Runes\5002.png" />
+    <None Remove="Assets\Runes\5003.png" />
+    <None Remove="Assets\Runes\5005.png" />
+    <None Remove="Assets\Runes\5007.png" />
+    <None Remove="Assets\Runes\5008.png" />
+    <None Remove="Assets\Runes\8000.png" />
+    <None Remove="Assets\Runes\8005.png" />
+    <None Remove="Assets\Runes\8008.png" />
+    <None Remove="Assets\Runes\8009.png" />
+    <None Remove="Assets\Runes\8010.png" />
+    <None Remove="Assets\Runes\8014.png" />
+    <None Remove="Assets\Runes\8017.png" />
+    <None Remove="Assets\Runes\8021.png" />
+    <None Remove="Assets\Runes\8100.png" />
+    <None Remove="Assets\Runes\8105.png" />
+    <None Remove="Assets\Runes\8106.png" />
+    <None Remove="Assets\Runes\8112.png" />
+    <None Remove="Assets\Runes\8120.png" />
+    <None Remove="Assets\Runes\8124.png" />
+    <None Remove="Assets\Runes\8126.png" />
+    <None Remove="Assets\Runes\8128.png" />
+    <None Remove="Assets\Runes\8134.png" />
+    <None Remove="Assets\Runes\8135.png" />
+    <None Remove="Assets\Runes\8136.png" />
+    <None Remove="Assets\Runes\8138.png" />
+    <None Remove="Assets\Runes\8139.png" />
+    <None Remove="Assets\Runes\8143.png" />
+    <None Remove="Assets\Runes\8200.png" />
+    <None Remove="Assets\Runes\8210.png" />
+    <None Remove="Assets\Runes\8214.png" />
+    <None Remove="Assets\Runes\8224.png" />
+    <None Remove="Assets\Runes\8226.png" />
+    <None Remove="Assets\Runes\8229.png" />
+    <None Remove="Assets\Runes\8230.png" />
+    <None Remove="Assets\Runes\8232.png" />
+    <None Remove="Assets\Runes\8233.png" />
+    <None Remove="Assets\Runes\8234.png" />
+    <None Remove="Assets\Runes\8236.png" />
+    <None Remove="Assets\Runes\8237.png" />
+    <None Remove="Assets\Runes\8242.png" />
+    <None Remove="Assets\Runes\8275.png" />
+    <None Remove="Assets\Runes\8299.png" />
+    <None Remove="Assets\Runes\8300.png" />
+    <None Remove="Assets\Runes\8304.png" />
+    <None Remove="Assets\Runes\8306.png" />
+    <None Remove="Assets\Runes\8313.png" />
+    <None Remove="Assets\Runes\8316.png" />
+    <None Remove="Assets\Runes\8321.png" />
+    <None Remove="Assets\Runes\8345.png" />
+    <None Remove="Assets\Runes\8347.png" />
+    <None Remove="Assets\Runes\8351.png" />
+    <None Remove="Assets\Runes\8352.png" />
+    <None Remove="Assets\Runes\8360.png" />
+    <None Remove="Assets\Runes\8369.png" />
+    <None Remove="Assets\Runes\8400.png" />
+    <None Remove="Assets\Runes\8401.png" />
+    <None Remove="Assets\Runes\8410.png" />
+    <None Remove="Assets\Runes\8429.png" />
+    <None Remove="Assets\Runes\8437.png" />
+    <None Remove="Assets\Runes\8439.png" />
+    <None Remove="Assets\Runes\8444.png" />
+    <None Remove="Assets\Runes\8446.png" />
+    <None Remove="Assets\Runes\8451.png" />
+    <None Remove="Assets\Runes\8453.png" />
+    <None Remove="Assets\Runes\8463.png" />
+    <None Remove="Assets\Runes\8465.png" />
+    <None Remove="Assets\Runes\8473.png" />
+    <None Remove="Assets\Runes\9101.png" />
+    <None Remove="Assets\Runes\9103.png" />
+    <None Remove="Assets\Runes\9104.png" />
+    <None Remove="Assets\Runes\9105.png" />
+    <None Remove="Assets\Runes\9111.png" />
+    <None Remove="Assets\Runes\9923.png" />
+    <None Remove="Assets\SummonerSpells\1.png" />
+    <None Remove="Assets\SummonerSpells\11.png" />
+    <None Remove="Assets\SummonerSpells\12.png" />
+    <None Remove="Assets\SummonerSpells\13.png" />
+    <None Remove="Assets\SummonerSpells\14.png" />
+    <None Remove="Assets\SummonerSpells\21.png" />
+    <None Remove="Assets\SummonerSpells\3.png" />
+    <None Remove="Assets\SummonerSpells\30.png" />
+    <None Remove="Assets\SummonerSpells\31.png" />
+    <None Remove="Assets\SummonerSpells\32.png" />
+    <None Remove="Assets\SummonerSpells\39.png" />
+    <None Remove="Assets\SummonerSpells\4.png" />
+    <None Remove="Assets\SummonerSpells\5.png" />
+    <None Remove="Assets\SummonerSpells\50.png" />
+    <None Remove="Assets\SummonerSpells\51.png" />
+    <None Remove="Assets\SummonerSpells\52.png" />
+    <None Remove="Assets\SummonerSpells\54.png" />
+    <None Remove="Assets\SummonerSpells\55.png" />
+    <None Remove="Assets\SummonerSpells\6.png" />
+    <None Remove="Assets\SummonerSpells\7.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +288,8 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.5" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.5" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.5" />
+    <PackageReference Include="DialogHost.Avalonia" Version="0.7.7" />
+    <PackageReference Include="Material.Avalonia" Version="3.1.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
   </ItemGroup>
 
@@ -33,17 +299,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaResource Update="Assets\Strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </AvaloniaResource>
-    <EmbeddedResource Update="Assets\Strings.es-ES.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Assets\Strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\AppData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\spectator.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

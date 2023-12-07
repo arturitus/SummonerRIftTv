@@ -1,6 +1,6 @@
 using ReactiveUI;
 
-namespace LeagueSpectator.ViewModels
+namespace LeagueSpectator.MVVM.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {

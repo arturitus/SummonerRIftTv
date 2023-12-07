@@ -1,12 +1,289 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:LeagueSpectator.Avalonia.ViewModels"
+        xmlns:vm="using:LeagueSpectator.MVVM.ViewModels"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:assist="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+		xmlns:dtos="using:LeagueSpectator.MVVM.DTOs"
+		xmlns:services="using:LeagueSpectator.MVVM.Services"
+		xmlns:models="using:LeagueSpectator.MVVM.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:LeagueSpectator.Avalonia.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="LeagueSpectator.Avalonia.Views.MainWindow"
+				Width="450"
+				CanResize="True"
+        MinHeight="700"
+        MinWidth="500"
+				ExtendClientAreaToDecorationsHint="False"
+				Height="500"
         Icon="/Assets/avalonia-logo.ico"
-        Title="LeagueSpectator.Avalonia">
-        <views:MainView />
+        Title="LeagueSpectator"
+		x:DataType="vm:MainWindowViewModel">
+
+  <!--ExtendClientAreaTitleBarHeightHint="30"-->
+  <!--<Window.DataContext>
+		<vm:MainWindowViewModel/>
+	</Window.DataContext>-->
+
+	<dialogHost:DialogHost Identifier="busyDialog">
+  <Grid Margin="30" Background="Transparent">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <TabControl>
+      <TabItem Header="{Binding Path=Spectate, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}">
+        <DockPanel Margin="0, 30, 0, 0">
+          <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="{Binding Path=SearchSummoner, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" HorizontalAlignment="Center"/>
+			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=SummonerName, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="outline"/>
+			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=Region, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+          <ComboBox Name="comboRegion" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" Theme="{StaticResource MaterialOutlineComboBox}" ItemsSource="{Binding Regions}" SelectedIndex="-1">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate>
+					  <TextBlock Text="{Binding, Converter={StaticResource ObjectToLocalizationConverter}, Mode=OneWay}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+			  </ComboBox>
+          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Search, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" Command="{Binding SearchCommand}">
+            <Button.IsEnabled>
+              <MultiBinding Converter="{StaticResource MultiEnabledConverter}">
+                <Binding ElementName="tbsummName" Path="Text" />
+                <Binding ElementName="comboRegion" Path="SelectedItem" />
+              </MultiBinding>
+            </Button.IsEnabled>
+            <Button.CommandParameter>
+              <MultiBinding>
+                <Binding ElementName="tbsummName" Path="Text"/>
+                <Binding ElementName="comboRegion" Path="SelectedItem"/>
+                <Binding ElementName="tbApiKey" Path="Text"/>
+              </MultiBinding>
+            </Button.CommandParameter>
+          </Button>
+          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Spectate, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" IsEnabled="{Binding CanSpectate}" Command="{Binding SpectateCommand}"/>
+          <TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
+
+          <!--<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[0], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[1], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[2], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[3], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[4], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+					</StackPanel>
+					<StackPanel Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[5], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[6], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[7], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[8], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+						<Image Height="30" Width="30" Source="{Binding ChampionIds[9], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
+					</StackPanel>-->
+          
+          <Grid RowDefinitions="auto, *" ColumnDefinitions="*, *">
+            
+            <Grid ColumnDefinitions="*, auto" Margin="5,0,10,0" RowDefinitions="*,*">
+              <TextBlock Margin="2" Grid.Row="1" Text="{Binding Path=BlueTeam, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+				 
+              <!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
+                <TextBlock Grid.Column="1" Text="{Binding Path=Bans, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+                <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding BlueTeam.Bans}" Margin="2">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              <!--</StackPanel>-->
+            </Grid>
+
+			  <Grid ColumnDefinitions="*, auto" Margin="0,0,5,0" Grid.Column="1" RowDefinitions="*,*">
+				  <TextBlock Grid.Row="1" Margin="2" Text="{Binding Path=RedTeam, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+				  <!--<StackPanel Margin="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">-->
+					<TextBlock Grid.Column="1" Text="{Binding Path=Bans, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+					<ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding RedTeam.Bans}" VerticalAlignment="Center" Margin="2">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Image HorizontalAlignment="Left" Margin="2" Height="30" Width="30" Source="{Binding Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				  <!--</StackPanel>-->
+			  </Grid>
+			  
+			  <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Padding="0,0,10,0">
+			<Grid ColumnDefinitions="*, *">
+            <ItemsControl Margin="5" ItemsSource="{Binding BlueTeam.Players}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type dtos:ParticipantDTO}">
+                  <Expander Margin="2" Tag="{Binding Path=Runes, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}">
+                    <Expander.Header>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#5B83E6" Width="5" Margin="2"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Left" Margin="2" Height="40" Width="40" Source="{Binding Bitmaps[0], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                        <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
+                          <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                          <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
+                      </Grid>
+                    </Expander.Header>
+						<ItemsControl ItemsSource="{Binding Perks.MyRunes}" Margin="20,0">
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<UniformGrid Columns="3" />
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate DataType="{x:Type models:MyRunes}">
+									<StackPanel>
+										<Image Margin="2" Source="{Binding Tree, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
+									    <ItemsControl ItemsSource="{Binding Runes}" Margin="2" HorizontalAlignment="Center">
+										    <ItemsControl.ItemsPanel>
+											    <ItemsPanelTemplate>
+												    <StackPanel Orientation="Horizontal" Spacing="5"/>
+											    </ItemsPanelTemplate>
+										    </ItemsControl.ItemsPanel>
+										    <ItemsControl.ItemTemplate>
+											    <DataTemplate>
+												    <Image Source="{Binding Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
+											    </DataTemplate>
+										    </ItemsControl.ItemTemplate>
+									    </ItemsControl>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+                  </Expander>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>            
+
+            <ItemsControl Margin="5" ItemsSource="{Binding RedTeam.Players}" Grid.Column="1">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="{x:Type dtos:ParticipantDTO}">
+                  <Expander Margin="2" Tag="{Binding Path=Runes, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}">
+                    <Expander.Header>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="auto"/>
+                          <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#E23E56" Width="5" Margin="2.5"/>
+                        <Image Grid.Column="1" Margin="2.5" HorizontalAlignment="Right" Height="40" Width="40" Source="{Binding Bitmaps[0], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                        <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
+                            <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                            <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource ObjectToLocalizationConverter}}"/>
+                          </StackPanel>
+                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>     
+                      </Grid>
+                    </Expander.Header>
+					  <ItemsControl ItemsSource="{Binding Perks.MyRunes}" Margin="20,0">
+						  <ItemsControl.ItemsPanel>
+							  <ItemsPanelTemplate>
+								  <UniformGrid Columns="3" />
+							  </ItemsPanelTemplate>
+						  </ItemsControl.ItemsPanel>
+						  <ItemsControl.ItemTemplate>
+							  <DataTemplate DataType="{x:Type models:MyRunes}">
+								  <StackPanel>
+									  <Image Margin="2" Source="{Binding Tree, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
+									  <ItemsControl ItemsSource="{Binding Runes}" Margin="2" HorizontalAlignment="Center">
+										  <ItemsControl.ItemsPanel>
+											  <ItemsPanelTemplate>
+												  <StackPanel Orientation="Horizontal" Spacing="5"/>
+											  </ItemsPanelTemplate>
+										  </ItemsControl.ItemsPanel>
+										  <ItemsControl.ItemTemplate>
+											  <DataTemplate>
+												  <Image Source="{Binding Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource ObjectToLocalizationConverter}}" ToolTip.ShowDelay="1" Height="20" Width="20"/>
+											  </DataTemplate>
+										  </ItemsControl.ItemTemplate>
+									  </ItemsControl>
+								  </StackPanel>
+							  </DataTemplate>
+						  </ItemsControl.ItemTemplate>
+					  </ItemsControl>
+                  </Expander>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+            <!--<Grid DockPanel.Dock="Top" Height="20" HorizontalAlignment="Stretch" Background="Red"></Grid>-->
+					  </Grid>
+			  </ScrollViewer>
+          </Grid>
+        </DockPanel>
+      </TabItem>
+      <TabItem Header="{Binding Path=Options, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}">
+        <StackPanel Margin="0, 30, 0, 0" VerticalAlignment="Top">
+          <!--<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>-->
+          <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=LolFolder, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+          <TextBox Text="{Binding AppData.LolFolderPath}" Classes="outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
+          <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=RiotApiKey, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+          <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" Classes="outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Theme, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+		  <ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" Classes="outline" ItemsSource="{Binding Themes}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedIndex="{Binding ThemeIndex, Mode=TwoWay}">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate >
+					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}, Mode=OneWay}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+		  </ComboBox>
+		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Language, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
+		  <ComboBox Margin="5" MinWidth="120" Classes="outline" ItemsSource="{Binding Languages}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedIndex="{Binding LanguageIndex, Mode=TwoWay}">
+			  <ComboBox.ItemTemplate>
+				  <DataTemplate>
+					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}}"/>
+				  </DataTemplate>
+			  </ComboBox.ItemTemplate>
+		  </ComboBox>
+        </StackPanel>
+      </TabItem>
+    </TabControl>
+  </Grid>
+	</dialogHost:DialogHost>
+	<Window.Styles>
+		<Style Selector="ComboBox TextBlock#floatingWatermark">
+			<Setter Property="IsVisible" Value="False"></Setter>
+		</Style>
+	</Window.Styles>
+	
+	<Window.Resources>
+		<StackPanel x:Key="BusyDialogPanel"> 
+			<ProgressBar IsIndeterminate="True" Theme="{StaticResource MaterialCircularProgressBar}" Width="36" Height="36" BorderThickness="6" />
+		</StackPanel>
+	</Window.Resources>
 </Window>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace LeagueSpectator.Converters
+namespace LeagueSpectator.Avalonia.Converters
 {
     public class MultiEnabledConverter : IMultiValueConverter
     {
