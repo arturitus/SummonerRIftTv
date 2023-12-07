@@ -1,8 +1,8 @@
 ﻿using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.Models;
-using System.Text.Json.Serialization;
 using ReactiveUI;
+using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.MVVM.DTOs
 {

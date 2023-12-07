@@ -4,7 +4,6 @@ using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
 using System.Collections.Frozen;
 using System.Globalization;
-using System.Reflection;
 
 namespace LeagueSpectator.MVVM.Services
 {

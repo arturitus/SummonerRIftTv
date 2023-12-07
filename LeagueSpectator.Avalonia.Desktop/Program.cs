@@ -30,7 +30,6 @@ namespace LeagueSpectator.Avalonia.Desktop
             .WithInterFont().LogToTrace().UseReactiveUI();
         }
 
-
         private static void BuildServices()
         {
             new ServiceCollection()

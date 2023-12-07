@@ -1,7 +1,5 @@
 ﻿using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
-using Splat;
-using System.Security.Cryptography.X509Certificates;
 
 namespace LeagueSpectator.MVVM.Helpers
 {
