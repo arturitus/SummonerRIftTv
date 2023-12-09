@@ -482,6 +482,7 @@
         [LocalizationField("en-EN", "Talon")]
         [LocalizationField("es-ES", "Talon")]
         Talon = 91,
+        Hwei = 910,
         [LocalizationField("en-EN", "Riven")]
         [LocalizationField("es-ES", "Riven")]
         Riven = 92,

@@ -53,3 +53,4 @@ namespace LeagueSpectator.RiotApi.Services
 
 
 ///lol/league/v4/entries/by-summoner/{encryptedSummonerId}
+//https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/

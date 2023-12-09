@@ -1,5 +1,6 @@
 ﻿using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
+using LeagueSpectator.MVVM.Services;
 
 namespace LeagueSpectator.MVVM.Helpers
 {
@@ -105,18 +106,25 @@ namespace LeagueSpectator.MVVM.Helpers
         {
             return leagueType switch
             {
-                ChampionType => new Uri($"avares://LeagueSpectator/Assets/Champions/{id}.png"),
-                RuneType => new Uri($"avares://LeagueSpectator/Assets/Runes/{id}.png"),
-                SummonerSpellType => new Uri($"avares://LeagueSpectator/Assets/SummonerSpells/{id}.png"),
-                _ => new Uri($"avares://LeagueSpectator/Assets/Champions/-1.png"),
+                ChampionType => new Uri($"Champions/{id}.png", UriKind.Relative),
+                RuneType => new Uri($"Runes/{id}.png", UriKind.Relative),
+                SummonerSpellType => new Uri($"SummonerSpells/{id}.png", UriKind.Relative),
+                _ => new Uri($"Champions/-1.png", UriKind.Relative),
             };
         }
 
         public static Uri GetUri<T>(int id, T leagueType) where T : Enum
         {
             //Avalonia.Media.Imaging.Bitmap b = new Avalonia.Media.Imaging.Bitmap(ToStream(new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://LeagueSpectator/Assets/Champions/{id}.png"))), ImageFormat.Bmp));
-
-            return m_CachedData != null ? m_CachedData.GetLeagueObject(id, leagueType).Icon : Get(id, leagueType);
+            if (m_CachedData != null)
+            {
+                FrozenLeagueObject<T> leagueObject = m_CachedData.GetLeagueObject(id, leagueType);
+                if(leagueObject != null)
+                {
+                    return leagueObject.Icon;
+                }
+            }
+            return Get(id, leagueType);
         }
 
 

@@ -135,8 +135,8 @@ namespace LeagueSpectator.MVVM.Services
             {
                 nameof(Bans), new LocalizableString
                 ([
-                    new LanguageObject("en-EN", "Summoner name"),
-                    new LanguageObject("es-ES", "Nombre de invocador")
+                    new LanguageObject("en-EN", "Bans"),
+                    new LanguageObject("es-ES", "Bans")
                 ])
             }
 
@@ -468,6 +468,13 @@ namespace LeagueSpectator.MVVM.Services
                 [
                     new LanguageObject("en-EN", "Yasuo"),
                     new LanguageObject("es-ES", "Yasuo")
+                ])
+            ),
+            new LocalizableEnum<ChampionType>(ChampionType.Soraka,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Soraka"),
+                    new LanguageObject("es-ES", "Soraka")
                 ])
             ),
             new LocalizableEnum<ChampionType>(ChampionType.Velkoz,
@@ -1301,6 +1308,13 @@ namespace LeagueSpectator.MVVM.Services
                 [
                     new LanguageObject("en-EN", "Talon"),
                     new LanguageObject("es-ES", "Talon")
+                ])
+            ),
+            new LocalizableEnum<ChampionType>(ChampionType.Hwei,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Hwei"),
+                    new LanguageObject("es-ES", "Hwei")
                 ])
             ),
             new LocalizableEnum<ChampionType>(ChampionType.Riven,
