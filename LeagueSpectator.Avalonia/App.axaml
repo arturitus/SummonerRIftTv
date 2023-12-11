@@ -14,6 +14,7 @@
 			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
 			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
 			<converters:UriToBitmapConverter x:Key="UriToBitmap"/>
+			<converters:MultiFormatConverter x:Key="MultiFormat"/>
 			<ResourceDictionary.MergedDictionaries>
 				<!--<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>-->
 				<ResourceInclude Source="/Styles/ComboBox.axaml" />

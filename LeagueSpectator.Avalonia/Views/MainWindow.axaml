@@ -14,7 +14,7 @@
 				Width="450"
 				CanResize="True"
         MinHeight="700"
-        MinWidth="500"
+        MinWidth="700"
 				ExtendClientAreaToDecorationsHint="False"
 				Height="500"
         Icon="/Assets/avalonia-logo.ico"
@@ -26,7 +26,7 @@
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>-->
 
-	<dialogHost:DialogHost Identifier="busyDialog">
+	<dialogHost:DialogHost Identifier="busyDialog" CloseOnClickAway="True">
   <Grid Margin="30" Background="Transparent">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"></ColumnDefinition>
@@ -36,7 +36,7 @@
         <DockPanel Margin="0, 30, 0, 0">
           <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="{Binding Path=SearchSummoner, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" HorizontalAlignment="Center"/>
 			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=SummonerName, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
-          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="outline"/>
+          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="outline" Text=""/>
 			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{Binding Path=Region, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
           <ComboBox Name="comboRegion" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" Theme="{StaticResource MaterialOutlineComboBox}" ItemsSource="{Binding Regions}" SelectedIndex="-1">
 			  <ComboBox.ItemTemplate>
@@ -45,13 +45,13 @@
 				  </DataTemplate>
 			  </ComboBox.ItemTemplate>
 			  </ComboBox>
-          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Search, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" Command="{Binding SearchCommand}">
-            <Button.IsEnabled>
+          <Button DockPanel.Dock="Top" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Search, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" Command="{Binding OnSearchClick}">
+            <!--<Button.IsEnabled>
               <MultiBinding Converter="{StaticResource MultiEnabledConverter}">
                 <Binding ElementName="tbsummName" Path="Text" />
                 <Binding ElementName="comboRegion" Path="SelectedItem" />
               </MultiBinding>
-            </Button.IsEnabled>
+            </Button.IsEnabled>-->
             <Button.CommandParameter>
               <MultiBinding>
                 <Binding ElementName="tbsummName" Path="Text"/>
@@ -60,8 +60,8 @@
               </MultiBinding>
             </Button.CommandParameter>
           </Button>
-          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Spectate, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" IsEnabled="{Binding CanSpectate}" Command="{Binding SpectateCommand}"/>
-          <TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Message}" TextWrapping="Wrap"/>
+          <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Stretch" Content="{Binding Path=Spectate, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}" IsEnabled="{Binding CanSpectate}" Command="{Binding OnSpectateClick}"/>
+          <TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SpectateState, Converter={StaticResource ObjectToLocalizationConverter}}" TextWrapping="Wrap"/>
 
           <!--<StackPanel Margin="10" HorizontalAlignment="Left" Orientation="Horizontal">
 						<Image Height="30" Width="30" Source="{Binding ChampionIds[0], Converter={StaticResource StringToImg}}" Stretch="Uniform"/>
@@ -284,6 +284,34 @@
 	<Window.Resources>
 		<StackPanel x:Key="BusyDialogPanel"> 
 			<ProgressBar IsIndeterminate="True" Theme="{StaticResource MaterialCircularProgressBar}" Width="36" Height="36" BorderThickness="6" />
+		</StackPanel>
+		<ItemsControl x:Key="InfoDialogPanel">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type models:InfoDialogKeys}">
+					<StackPanel Orientation="Horizontal" Margin="8">
+						<TextBlock Text="●" Margin="4"/>
+						<TextBlock Text="{Binding, Converter={StaticResource ObjectToLocalizationConverter}}}" Margin="4" TextWrapping="Wrap" MaxWidth="300"/>
+					</StackPanel>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+		<StackPanel x:Key="ErrorDialogPanel">
+			<StackPanel Orientation="Horizontal" Margin="8" x:DataType="models:ErrorDialogFormat">
+				<TextBlock Text="●" Margin="4"/>
+				<TextBlock Margin="4" TextWrapping="Wrap" MaxWidth="300">
+					<TextBlock.Text>
+						<MultiBinding Converter="{StaticResource MultiFormat}">
+							<Binding Path="Parameter"/>
+							<Binding Path="DialogKeys"/>
+						</MultiBinding>
+					</TextBlock.Text>
+				</TextBlock>
+			</StackPanel>
 		</StackPanel>
 	</Window.Resources>
 </Window>

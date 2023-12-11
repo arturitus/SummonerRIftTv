@@ -3,6 +3,7 @@ using LeagueSpectator.MVVM.Extensions;
 using LeagueSpectator.MVVM.Services;
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace LeagueSpectator.Avalonia.Converters
 {

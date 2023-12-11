@@ -2113,6 +2113,92 @@ namespace LeagueSpectator.MVVM.Services
 
         }.ToFrozenSet();
 
+        public static readonly FrozenSet<LocalizableEnum<InfoDialogKeys>> infoDialogKeysCollection = new LocalizableEnum<InfoDialogKeys>[]
+        {
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.EmptySummonerName,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Summoner name can't be empty."),
+                    new LanguageObject("es-ES", "El nombre de invocador no puede estar vacio.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.EmptyRegion,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "A region must be selected."),
+                    new LanguageObject("es-ES", "La región debe estar seleccionada.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.EmptyApiKey,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Riot API key can't be empty."),
+                    new LanguageObject("es-ES", "La clave de la API de Riot no puede estar vacia.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.ApiKeyNotValid,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Riot API key is no longer valid."),
+                    new LanguageObject("es-ES", "La clave de la API de Riot ya no es valida.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.SummonerDoesntExist,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Summoner {0} doesn't exist."),
+                    new LanguageObject("es-ES", "El invocador {0} no existe.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.SummonerIsNotInGame,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Summoner {0} is not in game."),
+                    new LanguageObject("es-ES", "El invocador {0} no está en partida.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.EmptyLolPathExe,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "League of Legends folder path can't be empty. "),
+                    new LanguageObject("es-ES", "La ruta de la carpeta de League of Legends no puede estar vacia.")
+                ])
+            ),
+            new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.CantFindLolExe,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Couldn't find \"LeagueofLegends.exe\" inside the folder : {0}."),
+                    new LanguageObject("es-ES", "No se encontró \"LeagueofLegends.exe\" en la carpeta : {0}.")
+                ])
+            )
+
+        }.ToFrozenSet();
+
+        public static readonly FrozenSet<LocalizableEnum<SpectateState>> spectateStateCollection = new LocalizableEnum<SpectateState>[]
+        {
+            new LocalizableEnum<SpectateState>(SpectateState.None,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", string.Empty),
+                    new LanguageObject("es-ES", string.Empty)
+                ])
+            ),
+            new LocalizableEnum<SpectateState>(SpectateState.Spectating,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Spectating game..."),
+                    new LanguageObject("es-ES", "Espectando la partida...")
+                ])
+            ),
+            new LocalizableEnum<SpectateState>(SpectateState.Ended,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Game has ended."),
+                    new LanguageObject("es-ES", "La partida ha terminado.")
+                ])
+            )
+
+        }.ToFrozenSet();
 
         public static string GetChampionDisplayName(ChampionType championType)
         {
@@ -2148,6 +2234,14 @@ namespace LeagueSpectator.MVVM.Services
             if (enumType == typeof(Region))
             {
                 return regionCollection.FirstOrDefault(item => item.EnumValue.Equals(enumValue)).DisplayName;
+            }
+            if (enumType == typeof(InfoDialogKeys))
+            {
+                return infoDialogKeysCollection.FirstOrDefault(item => item.EnumValue.Equals(enumValue)).DisplayName;
+            }
+            if (enumType == typeof(SpectateState))
+            {
+                return spectateStateCollection.FirstOrDefault(item => item.EnumValue.Equals(enumValue)).DisplayName;
             }
             return enumValue.ToString();
         }

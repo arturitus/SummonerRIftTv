@@ -1,9 +1,13 @@
+using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using Avalonia.Threading;
 using DialogHostAvalonia;
 using LeagueSpectator.Avalonia.IViews;
 using LeagueSpectator.MVVM.IViewModels;
+using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.MVVM.ViewModels;
+using System.Collections.Frozen;
+using System.Threading.Tasks;
 
 namespace LeagueSpectator.Avalonia.Views
 {
@@ -20,12 +24,36 @@ namespace LeagueSpectator.Avalonia.Views
             InitializeComponent();
             DataContext = mainWindowViewModel;
             mainWindowViewModel.IsBusy += ToggleBusyDialog;
+            mainWindowViewModel.InfoDialog += InfoDialog;
+            mainWindowViewModel.ErrorDialog += ErrorDialog;
             //Position = appDataService.AppData.Position;
             //PositionChanged += MainWindow_PositionChanged;
             //this.WhenActivated(x =>
             //{
             //    appDataService.SetTheme(appDataService.AppData.ThemeType);
             //});
+        }
+
+        private void ErrorDialog(ErrorDialogFormat format)
+        {
+            Dispatcher.UIThread.InvokeAsync(async () =>
+            {
+                StackPanel itemsControl = (StackPanel)Resources["ErrorDialogPanel"];
+                itemsControl.DataContext = format;
+                _ = DialogHost.Show(itemsControl, "busyDialog");
+                await Task.Delay(5000);
+                DialogHost.Close("busyDialog");
+            });
+        }
+
+        private void InfoDialog(FrozenSet<InfoDialogKeys> set)
+        {
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                ItemsControl itemsControl = (ItemsControl)Resources["InfoDialogPanel"];
+                itemsControl.ItemsSource = set;
+                DialogHost.Show(itemsControl, "busyDialog");
+            });
         }
 
         private void ToggleBusyDialog(bool busy)

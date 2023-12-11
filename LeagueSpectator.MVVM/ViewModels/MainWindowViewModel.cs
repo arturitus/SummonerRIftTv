@@ -5,6 +5,7 @@ using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.IServices;
 using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
+using System.Collections.Frozen;
 using System.Diagnostics;
 using System.Net;
 using System.Reactive;
@@ -14,23 +15,24 @@ namespace LeagueSpectator.MVVM.ViewModels
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
         private Process leagueGameProcess;
-        private string summonerId;
         private readonly IMainWindowService m_MainWindowService;
         //public event Action<ThemeType> OnThemeChange;
         public event Action<bool> IsBusy;
+        public event Action<FrozenSet<InfoDialogKeys>> InfoDialog;
+        public event Action<ErrorDialogFormat> ErrorDialog;
         private readonly FileSystemWatcher fileSystemWatcher;
 
-        public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
-        public ReactiveCommand<Unit, Unit> SpectateCommand { get; }
+        //public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
+        //public ReactiveCommand<Unit, Unit> SpectateCommand { get; }
         public IEnumerable<Region> Regions => Enum.GetValues<Region>();
         public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
         public IEnumerable<Language> Languages => Enum.GetValues<Language>();
 
-        private string message;
-        public string Message
+        private SpectateState m_SpectateState;
+        public SpectateState SpectateState
         {
-            get => message;
-            set => this.RaiseAndSetIfChanged(ref message, value, nameof(Message));
+            get => m_SpectateState;
+            set => this.RaiseAndSetIfChanged(ref m_SpectateState, value, nameof(SpectateState));
         }
 
         private bool canSpectate;
@@ -88,13 +90,12 @@ namespace LeagueSpectator.MVVM.ViewModels
 
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
-            SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
-            SpectateCommand = ReactiveCommand.Create(OnSpectateClick);
+            //SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
+            //SpectateCommand = ReactiveCommand.Create(OnSpectateClick);
             m_AppDataService = appDataService;
             m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             m_MainWindowService = mainWindowService;
-            summonerId = string.Empty;
-            message = string.Empty;
+            m_SpectateState = SpectateState.None;
             canSpectate = false;
             blueTeam = new Team();
             redTeam = new Team();
@@ -108,10 +109,13 @@ namespace LeagueSpectator.MVVM.ViewModels
             ThemeIndex = (int)AppData.ThemeType;
             LanguageIndex = (int)AppData.Language;
         }
+
+
         private IObservable<bool> CanOnSpectate()
         {
             return this.WhenAnyValue(x => x.CanSpectate);
         }
+
 
         private void OnLanguageChanged(Language obj)
         {
@@ -128,23 +132,59 @@ namespace LeagueSpectator.MVVM.ViewModels
             //AppData = appData;
         }
 
-        private async void OnSearchClick(IList<object> parameters)
+        public bool CanSearch(string summName, Region? selectedRegion, string apiKey)
         {
+            List<InfoDialogKeys> keys = new();
+            bool canSearch = true;
+            if(string.IsNullOrEmpty(summName))
+            {
+                keys.Add(InfoDialogKeys.EmptySummonerName);
+                canSearch = false;
+            }
+            if (selectedRegion == null)
+            {
+                keys.Add(InfoDialogKeys.EmptyRegion);
+                canSearch = false;
+            }
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                keys.Add(InfoDialogKeys.EmptyApiKey);
+                canSearch = false;
+            }
+            if(!canSearch)
+            {
+                InfoDialog?.Invoke(keys.ToFrozenSet());
+            }
+            return canSearch;
+        }
+
+        public async void OnSearchClick(IList<object> parameters)
+        {
+            string summName = ((string)parameters[0]).Trim();
+            Region? selectedRegion = (Region?)parameters[1];
+            string apiKey = ((string)parameters[2]).Trim();
+
+            if (!CanSearch(summName, selectedRegion, apiKey))
+            {
+                return;
+            }
             await Task.Run(async () =>
             {
                 try
                 {
                     //ToggleBusyDialog();
                     IsBusy.Invoke(true);
-                    await m_MainWindowService.SearchSummonerAsync(parameters[0].ToString()!, (RegionDTO)parameters[1], parameters[2].ToString()!, out summonerId);
-                    await m_MainWindowService.SearchSpectableGameAsync(summonerId!, (RegionDTO)parameters[1], parameters[2].ToString()!, out blueTeam, out redTeam);
+                    await m_MainWindowService.SearchSummonerAsync(summName, selectedRegion.Value, apiKey, out string summonerId);
+                    await m_MainWindowService.SearchSpectableGameAsync(summonerId!, selectedRegion.Value, apiKey, out blueTeam, out redTeam);
 
                     //Message = $"{parameters[0]} is in game.";
-                    Message = string.Empty;
+                    SpectateState = SpectateState.None;
                     CanSpectate = true;
 
                     this.RaisePropertyChanged(nameof(BlueTeam));
                     this.RaisePropertyChanged(nameof(RedTeam));
+
+                    IsBusy.Invoke(false);
                     return;
                 }
                 catch (RiotApiError e)
@@ -153,7 +193,9 @@ namespace LeagueSpectator.MVVM.ViewModels
                     {
                         ClearPrevouisMatch();
                         CanSpectate = false;
-                        Message = $"API Key is no longer valid.";
+                        //Message = $"API Key is no longer valid.";
+                        IsBusy.Invoke(false);
+                        ErrorDialog?.Invoke(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
 
                         return;
                     }
@@ -162,11 +204,15 @@ namespace LeagueSpectator.MVVM.ViewModels
                         case nameof(IRiotApiService.GetSummonerByNameAsync):
                             ClearPrevouisMatch();
                             CanSpectate = false;
-                            Message = $"{parameters[0]} doesn't exist";
+                            //Message = $"{parameters[0]} doesn't exist";
+                            IsBusy.Invoke(false);
+                            ErrorDialog?.Invoke(new ErrorDialogFormat(summName, InfoDialogKeys.SummonerDoesntExist));
 
                             return;
                         case nameof(IRiotApiService.GetActiveGameAsync):
-                            Message = $"{parameters[0]} is not in game.";
+                            //Message = $"{parameters[0]} is not in game.";
+                            IsBusy.Invoke(false);
+                            ErrorDialog?.Invoke(new ErrorDialogFormat(summName, InfoDialogKeys.SummonerIsNotInGame));
                             ClearPrevouisMatch();
                             CanSpectate = false;
 
@@ -177,50 +223,65 @@ namespace LeagueSpectator.MVVM.ViewModels
                 {
 
                 }
-                finally
-                {
-                    IsBusy.Invoke(false);
-                    //ToggleBusyDialog();
-                }
+                //finally
+                //{
+                //    IsBusy.Invoke(false);
+                //    //ToggleBusyDialog();
+                //}
             });
         }
 
-        private async void OnSpectateClick()
+        private bool CanSpectateClick()
         {
-            if (File.Exists($"{m_AppDataService.AppData.LolFolderPath}/LeagueClient.exe"))
+            if(string.IsNullOrEmpty(AppData.LolFolderPath))
             {
-                await m_MainWindowService.SpectateGameAsync(m_AppDataService.AppData.LolFolderPath!);
+                ErrorDialog?.Invoke(new ErrorDialogFormat("", InfoDialogKeys.EmptyLolPathExe));
+                return false;
+            }
+            if(!File.Exists($"{AppData.LolFolderPath}/LeagueClient.exe"))
+            {
+                ErrorDialog?.Invoke(new ErrorDialogFormat(AppData.LolFolderPath, InfoDialogKeys.CantFindLolExe));
+                return false;
+            }
+            return true;
+        }
 
-                int timer = 0;
-                while (leagueGameProcess == null)
-                {
-                    leagueGameProcess = Process.GetProcessesByName("League of Legends").FirstOrDefault();
-                    if (timer > 5000)
-                    {
-                        return;
-                    }
-                    timer += 100;
-                    Thread.Sleep(100);
-                }
-
-                if (leagueGameProcess != null)
-                {
-                    Message = $"Spectating game...";
-                    leagueGameProcess!.EnableRaisingEvents = true;
-                    leagueGameProcess.Exited += LeagueGameProcess_Exited;
-                    CanSpectate = false;
-                }
-
+        public async void OnSpectateClick()
+        {
+            if (!CanSpectateClick())
+            {
                 return;
             }
-            Message = $"Couldn't locate lol folder at : {m_AppDataService.AppData.LolFolderPath}.";
+
+            await m_MainWindowService.SpectateGameAsync(AppData.LolFolderPath);
+
+            int timer = 0;
+            while (leagueGameProcess == null)
+            {
+                leagueGameProcess = Process.GetProcessesByName("League of Legends").FirstOrDefault();
+                if (timer > 5000)
+                {
+                    return;
+                }
+                timer += 100;
+                Thread.Sleep(100);
+            }
+            leagueGameProcess.WaitForInputIdle();
+
+            //if (leagueGameProcess != null)
+            //{
+            SpectateState = SpectateState.Spectating;
+            leagueGameProcess.EnableRaisingEvents = true;
+            leagueGameProcess.Exited += LeagueGameProcess_Exited;
+            CanSpectate = false;
+            //}
         }
 
         private void LeagueGameProcess_Exited(object sender, EventArgs e)
         {
-            leagueGameProcess!.Exited -= LeagueGameProcess_Exited;
+            leagueGameProcess.Exited -= LeagueGameProcess_Exited;
             leagueGameProcess.Dispose();
-            Message = $"Game ended.";
+            SpectateState = SpectateState.Ended;
             CanSpectate = true;
             ClearPrevouisMatch();
         }

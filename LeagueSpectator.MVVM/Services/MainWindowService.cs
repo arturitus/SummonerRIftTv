@@ -25,11 +25,11 @@ namespace LeagueSpectator.MVVM.Services
             spectatorRegion = string.Empty;
         }
 
-        Task<bool> IMainWindowService.SearchSummonerAsync(string summonerName, RegionDTO region, string apiKey, out string summonerId)
+        Task<bool> IMainWindowService.SearchSummonerAsync(string summonerName, Region region, string apiKey, out string summonerId)
         {
             try
             {
-                RiotApiResponse<Summoner> res = m_RiotApiService.GetSummonerByNameAsync(summonerName, (Region)region, apiKey).Result;
+                RiotApiResponse<Summoner> res = m_RiotApiService.GetSummonerByNameAsync(summonerName, region, apiKey).Result;
                 summonerId = res.Response!.Id!;
                 return Task.FromResult(true);
             }
@@ -41,28 +41,28 @@ namespace LeagueSpectator.MVVM.Services
             }
         }
 
-        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, RegionDTO region, string apiKey, out Team blueTeam, out Team redTeam)
+        Task<bool> IMainWindowService.SearchSpectableGameAsync(string summonerId, Region region, string apiKey, out Team blueTeam, out Team redTeam)
         {
             try
             {
                 RiotApiResponse<ActiveGame> res = m_RiotApiService.GetActiveGameAsync(summonerId, (Region)region, apiKey).Result;
                 authentication = res.Response!.Observers!.EncryptionKey!;
                 matchId = res.Response.GameId;
-                _region = region == RegionDTO.BR || region == RegionDTO.KR ? region.ToString() : $"{region}1";
+                _region = region == Region.BR || region == Region.KR ? region.ToString() : $"{region}1";
                 switch (region)
                 {
-                    case RegionDTO.KR:
+                    case Region.KR:
                         spectatorRegion = "kr";
                         break;
-                    case RegionDTO.NA:
+                    case Region.NA:
                         spectatorRegion = "na2";
                         break;
-                    case RegionDTO.EUW:
+                    case Region.EUW:
                         spectatorRegion = "euw1";
                         break;
-                    case RegionDTO.RU:
+                    case Region.RU:
                         break;
-                    case RegionDTO.BR:
+                    case Region.BR:
                         break;
                     default:
                         spectatorRegion = _region;
