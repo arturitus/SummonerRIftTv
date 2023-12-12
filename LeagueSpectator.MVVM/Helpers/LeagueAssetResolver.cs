@@ -119,7 +119,7 @@ namespace LeagueSpectator.MVVM.Helpers
             if (m_CachedData != null)
             {
                 FrozenLeagueObject<T> leagueObject = m_CachedData.GetLeagueObject(id, leagueType);
-                if(leagueObject != null)
+                if (leagueObject != null)
                 {
                     return leagueObject.Icon;
                 }

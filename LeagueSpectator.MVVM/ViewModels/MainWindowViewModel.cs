@@ -1,4 +1,3 @@
-using LeagueSpectator.MVVM.DTOs;
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.IViewModels;
 using LeagueSpectator.MVVM.Models;
@@ -8,7 +7,7 @@ using ReactiveUI;
 using System.Collections.Frozen;
 using System.Diagnostics;
 using System.Net;
-using System.Reactive;
+using System.Reactive.Linq;
 
 namespace LeagueSpectator.MVVM.ViewModels
 {
@@ -43,32 +42,32 @@ namespace LeagueSpectator.MVVM.ViewModels
         }
         private readonly IAppDataService m_AppDataService;
         public AppData AppData => m_AppDataService.AppData;
-        private int m_ThemeIndex;
-        public int ThemeIndex
+        private ThemeType m_ThemeIndex;
+        public ThemeType ThemeIndex
         {
             get => m_ThemeIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref m_ThemeIndex, value, nameof(ThemeIndex));
                 //OnThemeChange?.Invoke((ThemeType)m_ThemeIndex);
-                m_AppDataService.SetTheme((ThemeType)m_ThemeIndex);
+                m_AppDataService.SetTheme(m_ThemeIndex);
 
 
             }
         }
-        private int m_LanguageIndex;
-        public int LanguageIndex
+        private Language m_LanguageIndex;
+        public Language LanguageIndex
         {
             get => m_LanguageIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref m_LanguageIndex, value, nameof(LanguageIndex));
-                m_AppDataService.SetLanguage((Language)m_LanguageIndex);
-                int index = m_ThemeIndex;
-                m_ThemeIndex = -1;
-                this.RaisePropertyChanged(nameof(ThemeIndex));
-                m_ThemeIndex = index;
-                this.RaisePropertyChanged(nameof(ThemeIndex));
+                m_AppDataService.SetLanguage(m_LanguageIndex);
+                //int index = m_ThemeIndex;
+                //m_ThemeIndex = -1;
+                //this.RaisePropertyChanged(nameof(ThemeIndex));
+                //m_ThemeIndex = index;
+                //this.RaisePropertyChanged(nameof(ThemeIndex));
 
                 //foreach (var b in BlueTeam.Players)
                 //{
@@ -93,7 +92,6 @@ namespace LeagueSpectator.MVVM.ViewModels
             //SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
             //SpectateCommand = ReactiveCommand.Create(OnSpectateClick);
             m_AppDataService = appDataService;
-            m_AppDataService.OnLanguageChanged += OnLanguageChanged;
             m_MainWindowService = mainWindowService;
             m_SpectateState = SpectateState.None;
             canSpectate = false;
@@ -106,8 +104,9 @@ namespace LeagueSpectator.MVVM.ViewModels
                 IncludeSubdirectories = false,
                 Filter = "AppData.json"
             };
-            ThemeIndex = (int)AppData.ThemeType;
-            LanguageIndex = (int)AppData.Language;
+            ThemeIndex = AppData.ThemeType;
+            LanguageIndex = AppData.Language;
+            m_AppDataService.OnLanguageChanged += OnLanguageChanged;
         }
 
 
@@ -124,6 +123,12 @@ namespace LeagueSpectator.MVVM.ViewModels
             //this.RaisePropertyChanged(nameof(SummonerSpellType2));
             BlueTeam.ChangeLanguage();
             RedTeam.ChangeLanguage();
+
+            //this.RaisePropertyChanged(nameof(ThemeIndex));
+            this.RaisePropertyChanged(nameof(SpectateState));
+            this.RaisePropertyChanged(nameof(Themes));
+            this.RaisePropertyChanged(nameof(Regions));
+            this.RaisePropertyChanged(nameof(Languages));
         }
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
@@ -136,7 +141,7 @@ namespace LeagueSpectator.MVVM.ViewModels
         {
             List<InfoDialogKeys> keys = new();
             bool canSearch = true;
-            if(string.IsNullOrEmpty(summName))
+            if (string.IsNullOrEmpty(summName))
             {
                 keys.Add(InfoDialogKeys.EmptySummonerName);
                 canSearch = false;
@@ -151,7 +156,7 @@ namespace LeagueSpectator.MVVM.ViewModels
                 keys.Add(InfoDialogKeys.EmptyApiKey);
                 canSearch = false;
             }
-            if(!canSearch)
+            if (!canSearch)
             {
                 InfoDialog?.Invoke(keys.ToFrozenSet());
             }
@@ -233,12 +238,12 @@ namespace LeagueSpectator.MVVM.ViewModels
 
         private bool CanSpectateClick()
         {
-            if(string.IsNullOrEmpty(AppData.LolFolderPath))
+            if (string.IsNullOrEmpty(AppData.LolFolderPath))
             {
                 ErrorDialog?.Invoke(new ErrorDialogFormat("", InfoDialogKeys.EmptyLolPathExe));
                 return false;
             }
-            if(!File.Exists($"{AppData.LolFolderPath}/LeagueClient.exe"))
+            if (!File.Exists($"{AppData.LolFolderPath}/LeagueClient.exe"))
             {
                 ErrorDialog?.Invoke(new ErrorDialogFormat(AppData.LolFolderPath, InfoDialogKeys.CantFindLolExe));
                 return false;

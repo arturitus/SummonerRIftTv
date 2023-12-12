@@ -255,7 +255,7 @@
           <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=RiotApiKey, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
           <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" Classes="outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
 		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Theme, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
-		  <ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" Classes="outline" ItemsSource="{Binding Themes}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedIndex="{Binding ThemeIndex, Mode=TwoWay}">
+		  <ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" Classes="outline" ItemsSource="{Binding Themes}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedValue="{Binding ThemeIndex}">
 			  <ComboBox.ItemTemplate>
 				  <DataTemplate >
 					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}, Mode=OneWay}"/>
@@ -263,10 +263,10 @@
 			  </ComboBox.ItemTemplate>
 		  </ComboBox>
 		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{Binding Path=Language, DataType={x:Type services:LocalizationStringsService}, Source={StaticResource Strings}}"/>
-		  <ComboBox Margin="5" MinWidth="120" Classes="outline" ItemsSource="{Binding Languages}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedIndex="{Binding LanguageIndex, Mode=TwoWay}">
+		  <ComboBox Margin="5" MinWidth="120" Classes="outline" ItemsSource="{Binding Languages}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedValue="{Binding LanguageIndex}" >
 			  <ComboBox.ItemTemplate>
 				  <DataTemplate>
-					  <TextBlock Text="{Binding , Converter={StaticResource ObjectToLocalizationConverter}}"/>
+					  <TextBlock Text="{Binding, Converter={StaticResource ObjectToLocalizationConverter}}"/>
 				  </DataTemplate>
 			  </ComboBox.ItemTemplate>
 		  </ComboBox>

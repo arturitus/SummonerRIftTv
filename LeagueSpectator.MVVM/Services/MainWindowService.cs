@@ -45,7 +45,7 @@ namespace LeagueSpectator.MVVM.Services
         {
             try
             {
-                RiotApiResponse<ActiveGame> res = m_RiotApiService.GetActiveGameAsync(summonerId, (Region)region, apiKey).Result;
+                RiotApiResponse<ActiveGame> res = m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey).Result;
                 authentication = res.Response!.Observers!.EncryptionKey!;
                 matchId = res.Response.GameId;
                 _region = region == Region.BR || region == Region.KR ? region.ToString() : $"{region}1";
