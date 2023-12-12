@@ -481,6 +481,7 @@
         Malzahar = 90,
         [LocalizationField("en-EN", "Talon")]
         [LocalizationField("es-ES", "Talon")]
+        Milio = 902,
         Talon = 91,
         Hwei = 910,
         [LocalizationField("en-EN", "Riven")]

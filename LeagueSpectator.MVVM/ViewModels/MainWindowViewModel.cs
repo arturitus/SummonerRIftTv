@@ -286,6 +286,7 @@ namespace LeagueSpectator.MVVM.ViewModels
         {
             leagueGameProcess.Exited -= LeagueGameProcess_Exited;
             leagueGameProcess.Dispose();
+            leagueGameProcess = null;
             SpectateState = SpectateState.Ended;
             CanSpectate = true;
             ClearPrevouisMatch();

@@ -1303,6 +1303,13 @@ namespace LeagueSpectator.MVVM.Services
                     new LanguageObject("es-ES", "Malzahar")
                 ])
             ),
+            new LocalizableEnum<ChampionType>(ChampionType.Milio,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "Milio"),
+                    new LanguageObject("es-ES", "Milio")
+                ])
+            ),
             new LocalizableEnum<ChampionType>(ChampionType.Talon,
                 new LocalizableString(
                 [
