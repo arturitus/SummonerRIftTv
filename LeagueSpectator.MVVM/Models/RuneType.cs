@@ -4,6 +4,7 @@
     {
         [LocalizationField("en-EN", "Health per level")]
         [LocalizationField("es-ES", "Vida por nivel")]
+        None = 0,
         HitPointsPerLevel = 5001,
         [LocalizationField("en-EN", "Armor")]
         [LocalizationField("es-ES", "Armadura")]

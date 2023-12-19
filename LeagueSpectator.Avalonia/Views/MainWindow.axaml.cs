@@ -50,6 +50,11 @@ namespace LeagueSpectator.Avalonia.Views
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {
+                if (DialogHost.IsDialogOpen("busyDialog"))
+                {
+                    DialogHost.Close("busyDialog");
+                    return;
+                }
                 ItemsControl itemsControl = (ItemsControl)Resources["InfoDialogPanel"];
                 itemsControl.ItemsSource = set;
                 DialogHost.Show(itemsControl, "busyDialog");

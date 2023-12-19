@@ -14,12 +14,6 @@
 
   
   <ItemGroup>
-    <AvaloniaResource Remove="Assets\AppData.json" />
-    <AvaloniaResource Remove="Assets\spectator.bat" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
     <None Remove="Assets\Champions\-1.png" />
     <None Remove="Assets\Champions\1.png" />
     <None Remove="Assets\Champions\10.png" />
@@ -302,14 +296,5 @@
     <Compile Update="Views\MainWindow.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Assets\AppData.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\spectator.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

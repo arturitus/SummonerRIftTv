@@ -1,19 +1,15 @@
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.IViewModels;
 using LeagueSpectator.MVVM.Models;
-using LeagueSpectator.RiotApi.IServices;
+using LeagueSpectator.MVVM.Services;
 using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
 using System.Collections.Frozen;
-using System.Diagnostics;
-using System.Net;
-using System.Reactive.Linq;
 
 namespace LeagueSpectator.MVVM.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        private Process leagueGameProcess;
         private readonly IMainWindowService m_MainWindowService;
         //public event Action<ThemeType> OnThemeChange;
         public event Action<bool> IsBusy;
@@ -40,8 +36,21 @@ namespace LeagueSpectator.MVVM.ViewModels
             get => canSpectate;
             set => this.RaiseAndSetIfChanged(ref canSpectate, value, nameof(CanSpectate));
         }
+
         private readonly IAppDataService m_AppDataService;
         public AppData AppData => m_AppDataService.AppData;
+
+        private Region m_SelectedRegion;
+        public Region SelectedRegion
+        {
+            get => m_SelectedRegion;
+            set
+            {
+                m_SelectedRegion = value;
+                AppData.Region = value;
+            }
+        }
+
         private ThemeType m_ThemeIndex;
         public ThemeType ThemeIndex
         {
@@ -51,8 +60,6 @@ namespace LeagueSpectator.MVVM.ViewModels
                 this.RaiseAndSetIfChanged(ref m_ThemeIndex, value, nameof(ThemeIndex));
                 //OnThemeChange?.Invoke((ThemeType)m_ThemeIndex);
                 m_AppDataService.SetTheme(m_ThemeIndex);
-
-
             }
         }
         private Language m_LanguageIndex;
@@ -81,11 +88,19 @@ namespace LeagueSpectator.MVVM.ViewModels
             }
         }
 
-        private Team blueTeam;
-        public Team BlueTeam => blueTeam;
+        private Team m_BlueTeam;
+        public Team BlueTeam
+        {
+            get => m_BlueTeam;
+            set => this.RaiseAndSetIfChanged(ref m_BlueTeam, value, nameof(BlueTeam));
+        }
 
-        private Team redTeam;
-        public Team RedTeam => redTeam;
+        private Team m_RedTeam;
+        public Team RedTeam
+        {
+            get => m_RedTeam;
+            set => this.RaiseAndSetIfChanged(ref m_RedTeam, value, nameof(RedTeam));
+        }
 
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
@@ -95,8 +110,8 @@ namespace LeagueSpectator.MVVM.ViewModels
             m_MainWindowService = mainWindowService;
             m_SpectateState = SpectateState.None;
             canSpectate = false;
-            blueTeam = new Team();
-            redTeam = new Team();
+            m_BlueTeam = new Team();
+            m_RedTeam = new Team();
             fileSystemWatcher = new("./Assets")
             {
                 //fileSystemWatcher.Changed += FileSystemWatcher_Changed;
@@ -107,6 +122,8 @@ namespace LeagueSpectator.MVVM.ViewModels
             ThemeIndex = AppData.ThemeType;
             LanguageIndex = AppData.Language;
             m_AppDataService.OnLanguageChanged += OnLanguageChanged;
+            m_MainWindowService.SpectateChanged += OnSpectateStateChanged;
+            SelectedRegion = AppData.Region;
         }
 
 
@@ -173,66 +190,28 @@ namespace LeagueSpectator.MVVM.ViewModels
             {
                 return;
             }
+            ClearPrevouisMatch();
             await Task.Run(async () =>
             {
                 try
                 {
-                    //ToggleBusyDialog();
-                    IsBusy.Invoke(true);
-                    await m_MainWindowService.SearchSummonerAsync(summName, selectedRegion.Value, apiKey, out string summonerId);
-                    await m_MainWindowService.SearchSpectableGameAsync(summonerId!, selectedRegion.Value, apiKey, out blueTeam, out redTeam);
+                    IsBusy?.Invoke(true);
+                    Team[] teams = await m_MainWindowService.SearchSpectableGameAsync(summName, selectedRegion.Value, apiKey);
 
-                    //Message = $"{parameters[0]} is in game.";
                     SpectateState = SpectateState.None;
                     CanSpectate = true;
 
-                    this.RaisePropertyChanged(nameof(BlueTeam));
-                    this.RaisePropertyChanged(nameof(RedTeam));
+                    BlueTeam = teams[0];
+                    RedTeam = teams[1];
 
-                    IsBusy.Invoke(false);
-                    return;
+                    IsBusy?.Invoke(false);
                 }
-                catch (RiotApiError e)
+                catch (MainWindowServiceError e)
                 {
-                    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        ClearPrevouisMatch();
-                        CanSpectate = false;
-                        //Message = $"API Key is no longer valid.";
-                        IsBusy.Invoke(false);
-                        ErrorDialog?.Invoke(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
-
-                        return;
-                    }
-                    switch (e.FunctionName)
-                    {
-                        case nameof(IRiotApiService.GetSummonerByNameAsync):
-                            ClearPrevouisMatch();
-                            CanSpectate = false;
-                            //Message = $"{parameters[0]} doesn't exist";
-                            IsBusy.Invoke(false);
-                            ErrorDialog?.Invoke(new ErrorDialogFormat(summName, InfoDialogKeys.SummonerDoesntExist));
-
-                            return;
-                        case nameof(IRiotApiService.GetActiveGameAsync):
-                            //Message = $"{parameters[0]} is not in game.";
-                            IsBusy.Invoke(false);
-                            ErrorDialog?.Invoke(new ErrorDialogFormat(summName, InfoDialogKeys.SummonerIsNotInGame));
-                            ClearPrevouisMatch();
-                            CanSpectate = false;
-
-                            return;
-                    }
+                    CanSpectate = false;
+                    IsBusy?.Invoke(false);
+                    ErrorDialog?.Invoke(e.ErrorFormat);
                 }
-                catch (Exception e)
-                {
-
-                }
-                //finally
-                //{
-                //    IsBusy.Invoke(false);
-                //    //ToggleBusyDialog();
-                //}
             });
         }
 
@@ -259,37 +238,12 @@ namespace LeagueSpectator.MVVM.ViewModels
             }
 
             await m_MainWindowService.SpectateGameAsync(AppData.LolFolderPath);
-
-            int timer = 0;
-            while (leagueGameProcess == null)
-            {
-                leagueGameProcess = Process.GetProcessesByName("League of Legends").FirstOrDefault();
-                if (timer > 5000)
-                {
-                    return;
-                }
-                timer += 100;
-                Thread.Sleep(100);
-            }
-            leagueGameProcess.WaitForInputIdle();
-
-            //if (leagueGameProcess != null)
-            //{
-            SpectateState = SpectateState.Spectating;
-            leagueGameProcess.EnableRaisingEvents = true;
-            leagueGameProcess.Exited += LeagueGameProcess_Exited;
-            CanSpectate = false;
-            //}
         }
 
-        private void LeagueGameProcess_Exited(object sender, EventArgs e)
+        private void OnSpectateStateChanged(SpectateState spectateState, bool canSpectate)
         {
-            leagueGameProcess.Exited -= LeagueGameProcess_Exited;
-            leagueGameProcess.Dispose();
-            leagueGameProcess = null;
-            SpectateState = SpectateState.Ended;
-            CanSpectate = true;
-            ClearPrevouisMatch();
+            SpectateState = spectateState;
+            CanSpectate = canSpectate;
         }
 
         private void ClearPrevouisMatch()

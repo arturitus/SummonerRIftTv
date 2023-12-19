@@ -136,7 +136,7 @@ namespace LeagueSpectator.MVVM.Services
                 nameof(Bans), new LocalizableString
                 ([
                     new LanguageObject("en-EN", "Bans"),
-                    new LanguageObject("es-ES", "Bans")
+                    new LanguageObject("es-ES", "Baneos")
                 ])
             }
 
@@ -1363,6 +1363,13 @@ namespace LeagueSpectator.MVVM.Services
 
         public static readonly FrozenSet<LocalizableEnum<RuneType>> runeCollection = new List<LocalizableEnum<RuneType>>()
         {
+            new LocalizableEnum<RuneType>(RuneType.None,
+                new LocalizableString(
+                [
+                    new LanguageObject("en-EN", "None"),
+                    new LanguageObject("es-ES", "Ninguno")
+                ])
+            ),
             new LocalizableEnum<RuneType>(RuneType.HitPointsPerLevel,
                 new LocalizableString(
                 [
@@ -2224,7 +2231,9 @@ namespace LeagueSpectator.MVVM.Services
             }
             if (enumType == typeof(RuneType))
             {
-                return runeCollection.FirstOrDefault(item => item.EnumValue.Equals(enumValue)).DisplayName;
+                var v = runeCollection.FirstOrDefault(item => item.EnumValue.Equals(enumValue));
+
+                return v.DisplayName;
             }
             if (enumType == typeof(SummonerSpellType))
             {

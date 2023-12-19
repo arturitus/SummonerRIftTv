@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using LeagueSpectator.RiotApi.Models;
+using System.Drawing;
 using System.Text.Json.Serialization;
+using Region = LeagueSpectator.RiotApi.Models.Region;
 
 namespace LeagueSpectator.MVVM.Models
 {
@@ -70,6 +72,17 @@ namespace LeagueSpectator.MVVM.Models
             set
             {
                 m_Language = value;
+                OnAppDataChanged?.Invoke(this);
+            }
+        }
+
+        private Region m_Region;
+        public Region Region
+        {
+            get => m_Region;
+            set
+            {
+                m_Region = value;
                 OnAppDataChanged?.Invoke(this);
             }
         }
