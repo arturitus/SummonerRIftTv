@@ -38,6 +38,10 @@ namespace LeagueSpectator.MVVM.Services
                 this.RaisePropertyChanged(keyValue.Key);
             }
         }
+        public CultureInfo GetCultureInfo()
+        {
+            return CultureInfo.CurrentCulture;
+        }
 
         private readonly FrozenDictionary<string, LocalizableString> m_Strings = new Dictionary<string, LocalizableString>()
         {
@@ -190,7 +194,7 @@ namespace LeagueSpectator.MVVM.Services
     {
         public static readonly FrozenSet<LocalizableEnum<ChampionType>> championCollection = new LocalizableEnum<ChampionType>[]
         {
-            new LocalizableEnum<ChampionType>(ChampionType.None,
+            new LocalizableEnum<ChampionType>(ChampionType.NoneChampion,
                 new LocalizableString(
                 [
                     new LanguageObject("en-EN", "None"),
@@ -1363,7 +1367,7 @@ namespace LeagueSpectator.MVVM.Services
 
         public static readonly FrozenSet<LocalizableEnum<RuneType>> runeCollection = new List<LocalizableEnum<RuneType>>()
         {
-            new LocalizableEnum<RuneType>(RuneType.None,
+            new LocalizableEnum<RuneType>(RuneType.NoneRune,
                 new LocalizableString(
                 [
                     new LanguageObject("en-EN", "None"),
@@ -1892,7 +1896,7 @@ namespace LeagueSpectator.MVVM.Services
 
         public static readonly FrozenSet<LocalizableEnum<SummonerSpellType>> summonerSpellCollection = new LocalizableEnum<SummonerSpellType>[]
         {
-            new LocalizableEnum<SummonerSpellType>(SummonerSpellType.None,
+            new LocalizableEnum<SummonerSpellType>(SummonerSpellType.NoneSummoner,
                 new LocalizableString(
                 [
                     new LanguageObject("en-EN", "None"),
@@ -2174,7 +2178,7 @@ namespace LeagueSpectator.MVVM.Services
             new LocalizableEnum<InfoDialogKeys>(InfoDialogKeys.EmptyLolPathExe,
                 new LocalizableString(
                 [
-                    new LanguageObject("en-EN", "League of Legends folder path can't be empty. "),
+                    new LanguageObject("en-EN", "League of Legends folder path can't be empty."),
                     new LanguageObject("es-ES", "La ruta de la carpeta de League of Legends no puede estar vacia.")
                 ])
             ),
@@ -2190,7 +2194,7 @@ namespace LeagueSpectator.MVVM.Services
 
         public static readonly FrozenSet<LocalizableEnum<SpectateState>> spectateStateCollection = new LocalizableEnum<SpectateState>[]
         {
-            new LocalizableEnum<SpectateState>(SpectateState.None,
+            new LocalizableEnum<SpectateState>(SpectateState.NoneSpectate,
                 new LocalizableString(
                 [
                     new LanguageObject("en-EN", string.Empty),

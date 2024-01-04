@@ -14,7 +14,6 @@ namespace LeagueSpectator.MVVM
         {
             return services.AddSingleton<IRiotApiService, RiotApiService>()
                 .AddSingleton<IAppDataService, AppDataService>()
-                .AddSingleton<ILocalizationStringsService, LocalizationStringsService>()
                 .AddSingleton<IFrozenDataService, FrozenDataService>()
                 .AddSingleton<IMainWindowViewModel, MainWindowViewModel>()
                 .AddSingleton<IMainWindowService, MainWindowService>();

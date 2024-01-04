@@ -1,4 +1,5 @@
-﻿using Avalonia.Data.Converters;
+﻿using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using LeagueSpectator.MVVM.Extensions;
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.MVVM.Services;
@@ -16,7 +17,8 @@ namespace LeagueSpectator.Avalonia.Converters
             {
                 return string.Empty;
             }
-            string b = ((Enum)values[1]).GetDisplayName();
+            //string b = ((Enum)values[1]).GetDisplayName();
+            string b = App.Current.FindResource(values[1].ToString()) as string;
             return string.Format(b, values[0]);
         }
     }

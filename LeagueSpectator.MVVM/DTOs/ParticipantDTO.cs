@@ -12,7 +12,7 @@ namespace LeagueSpectator.MVVM.DTOs
         public ParticipantDTO()
         {
             Bitmaps = new Uri[3];
-            championType = ChampionType.None;
+            championType = ChampionType.NoneChampion;
         }
 
         public override void LocalizeObject()

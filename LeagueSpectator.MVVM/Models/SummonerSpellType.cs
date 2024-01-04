@@ -4,7 +4,7 @@
     {
         [LocalizationField("en-EN", "None")]
         [LocalizationField("es-ES", "Ninguno")]
-        None = 54,
+        NoneSummoner = 54,
         [LocalizationField("en-EN", "Cleanse")]
         [LocalizationField("es-ES", "Limpiar")]
         Cleanse = 1,

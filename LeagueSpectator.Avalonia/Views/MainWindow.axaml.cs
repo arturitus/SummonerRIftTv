@@ -39,6 +39,7 @@ namespace LeagueSpectator.Avalonia.Views
             Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 StackPanel itemsControl = (StackPanel)Resources["ErrorDialogPanel"];
+                itemsControl.DataContext = null;
                 itemsControl.DataContext = format;
                 _ = DialogHost.Show(itemsControl, "busyDialog");
                 await Task.Delay(5000);

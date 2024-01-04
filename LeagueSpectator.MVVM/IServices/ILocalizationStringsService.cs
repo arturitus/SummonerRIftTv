@@ -20,5 +20,6 @@ namespace LeagueSpectator.MVVM.IServices
         public string Bans { get; }
 
         public void SetCultureInfo(CultureInfo culture);
+        public CultureInfo GetCultureInfo();
     }
 }

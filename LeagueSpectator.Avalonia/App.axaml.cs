@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -9,6 +10,8 @@ using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
 using Material.Styles.Themes;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace LeagueSpectator.Avalonia
 {
@@ -16,12 +19,10 @@ namespace LeagueSpectator.Avalonia
     {
         private const string LOCALIZATION_STRINGS_NAME = "Strings";
         private IMainWindow m_MainWindow;
-        private readonly ILocalizationStringsService m_LocalizationStringsService;
         private readonly IAppDataService m_AppDataService;
 
-        public App(ILocalizationStringsService localizationStringsService, IAppDataService appDataService)
+        public App(IAppDataService appDataService)
         {
-            m_LocalizationStringsService = localizationStringsService;
             m_AppDataService = appDataService;
         }
 
@@ -40,25 +41,30 @@ namespace LeagueSpectator.Avalonia
             base.OnFrameworkInitializationCompleted();
 
             m_AppDataService.OnLanguageChanged += OnLanguageChanged;
-
+            //OnLanguageChanged(m_AppDataService.AppData.Language);
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                Resources.Add(LOCALIZATION_STRINGS_NAME, m_LocalizationStringsService);
                 m_MainWindow = DependencyInjector.GetRequiredService<IMainWindow>();
                 desktop.MainWindow = (MainWindow)m_MainWindow;
             }
-
-            OnLanguageChanged(m_AppDataService.AppData.Language);
-
             m_AppDataService.OnThemeChanged += OnThemeChanged;
 
             OnThemeChanged(m_AppDataService.AppData.ThemeType);
-
         }
 
         private void OnLanguageChanged(Language obj)
         {
-            m_LocalizationStringsService.SetCultureInfo(obj.GetCulture());
+            string oldLang = CultureInfo.CurrentCulture.Name;
+            CultureInfo.CurrentCulture = obj.GetCulture();
+            //m_LocalizationStringsService.SetCultureInfo(obj.GetCulture());
+            Translate(oldLang, obj.GetCulture().Name);
+        }
+
+        public static void Translate(string previousLanguage, string targetLanguage)
+        {
+            ResourceDictionary r = Current.Resources[previousLanguage] as ResourceDictionary;
+            Current.Resources.MergedDictionaries.Remove(r);
+            Current.Resources.MergedDictionaries.Add(Current.Resources[targetLanguage] as ResourceDictionary);
         }
 
         private void OnThemeChanged(ThemeType theme)

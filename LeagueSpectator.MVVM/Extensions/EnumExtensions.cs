@@ -39,7 +39,7 @@ namespace LeagueSpectator.MVVM.Extensions
             return e.ToString();
         }
 
-        public static CultureInfo GetCulture(this object e)
+        public static CultureInfo GetCulture(this Enum e) 
         {
             if (e.GetType().GetMember(e.ToString()).FirstOrDefault() is MemberInfo member)
             {

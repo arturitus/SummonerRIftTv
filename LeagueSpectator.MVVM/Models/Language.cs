@@ -6,12 +6,12 @@
         //[LocalizationField("en-EN", "System")]
         //Default,
         [Culture("en-EN")]
-        [LocalizationField("en-EN", "English")]
-        [LocalizationField("es-ES", "Inglés")]
+        //[LocalizationField("en-EN", "English")]
+        //[LocalizationField("es-ES", "Inglés")]
         English,
         [Culture("es-ES")]
-        [LocalizationField("en-EN", "Spanish")]
-        [LocalizationField("es-ES", "Español")]
+        //[LocalizationField("en-EN", "Spanish")]
+        //[LocalizationField("es-ES", "Español")]
         Spanish
 
     }

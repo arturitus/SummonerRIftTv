@@ -4,7 +4,7 @@
     {
         [LocalizationField("en-EN", "None")]
         [LocalizationField("es-ES", "Ninguno")]
-        None = -1,
+        NoneChampion = -1,
         [LocalizationField("en-EN", "Annie")]
         [LocalizationField("es-ES", "Annie")]
         Annie = 1,

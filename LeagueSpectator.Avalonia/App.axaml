@@ -10,6 +10,7 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:MultiEnabledConverter x:Key="MultiEnabledConverter"/>
+			<converters:EnumToLocalizationConverter x:Key="EnumToLocalizationConverter"/>
 			<converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
 			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
 			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
@@ -18,7 +19,11 @@
 			<ResourceDictionary.MergedDictionaries>
 				<!--<themes:MaterialTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Teal"/>-->
 				<ResourceInclude Source="/Styles/ComboBox.axaml" />
+				<!--<ResourceInclude Source="/Assets/Lang/es-ES.axaml" />-->
+				<!--<ResourceInclude Source="/Assets/Lang/en-EN.axaml" />-->
 			</ResourceDictionary.MergedDictionaries>
+			<ResourceInclude x:Key="en-EN" Source="/Assets/Lang/en-EN.axaml" />
+			<ResourceInclude x:Key="es-ES" Source="/Assets/Lang/es-ES.axaml" />
 		</ResourceDictionary>
 	</Application.Resources>
 	<Application.Styles>

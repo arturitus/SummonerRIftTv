@@ -2,7 +2,7 @@
 {
     public enum SpectateState
     {
-        None,
+        NoneSpectate,
         Spectating,
         Ended
     }

@@ -19,8 +19,8 @@ namespace LeagueSpectator.MVVM.ViewModels
 
         //public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
         //public ReactiveCommand<Unit, Unit> SpectateCommand { get; }
-        public IEnumerable<Region> Regions => Enum.GetValues<Region>();
-        public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
+        //public IEnumerable<Region> Regions => Enum.GetValues<Region>();
+        //public IEnumerable<ThemeType> Themes => Enum.GetValues<ThemeType>();
         public IEnumerable<Language> Languages => Enum.GetValues<Language>();
 
         private SpectateState m_SpectateState;
@@ -70,12 +70,6 @@ namespace LeagueSpectator.MVVM.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref m_LanguageIndex, value, nameof(LanguageIndex));
                 m_AppDataService.SetLanguage(m_LanguageIndex);
-                //int index = m_ThemeIndex;
-                //m_ThemeIndex = -1;
-                //this.RaisePropertyChanged(nameof(ThemeIndex));
-                //m_ThemeIndex = index;
-                //this.RaisePropertyChanged(nameof(ThemeIndex));
-
                 //foreach (var b in BlueTeam.Players)
                 //{
                 //    //b.Spell1Id = b.Spell1Id;
@@ -108,7 +102,7 @@ namespace LeagueSpectator.MVVM.ViewModels
             //SpectateCommand = ReactiveCommand.Create(OnSpectateClick);
             m_AppDataService = appDataService;
             m_MainWindowService = mainWindowService;
-            m_SpectateState = SpectateState.None;
+            m_SpectateState = SpectateState.NoneSpectate;
             canSpectate = false;
             m_BlueTeam = new Team();
             m_RedTeam = new Team();
@@ -141,10 +135,13 @@ namespace LeagueSpectator.MVVM.ViewModels
             BlueTeam.ChangeLanguage();
             RedTeam.ChangeLanguage();
 
-            //this.RaisePropertyChanged(nameof(ThemeIndex));
+            this.RaisePropertyChanged(nameof(SelectedRegion));
+            this.RaisePropertyChanged(nameof(ThemeIndex));
+            //this.RaisePropertyChanged(nameof(LanguageIndex));
             this.RaisePropertyChanged(nameof(SpectateState));
-            this.RaisePropertyChanged(nameof(Themes));
-            this.RaisePropertyChanged(nameof(Regions));
+
+            //this.RaisePropertyChanged(nameof(Themes));
+            //this.RaisePropertyChanged(nameof(Regions));
             this.RaisePropertyChanged(nameof(Languages));
         }
 
@@ -198,7 +195,7 @@ namespace LeagueSpectator.MVVM.ViewModels
                     IsBusy?.Invoke(true);
                     Team[] teams = await m_MainWindowService.SearchSpectableGameAsync(summName, selectedRegion.Value, apiKey);
 
-                    SpectateState = SpectateState.None;
+                    SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;
 
                     BlueTeam = teams[0];

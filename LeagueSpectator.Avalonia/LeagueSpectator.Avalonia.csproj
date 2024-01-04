@@ -14,6 +14,12 @@
 
   
   <ItemGroup>
+    <AvaloniaResource Remove="Assets\Lang\en-EN.axaml" />
+    <AvaloniaResource Remove="Assets\Lang\es-ES.axaml" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
     <None Remove="Assets\Champions\-1.png" />
     <None Remove="Assets\Champions\1.png" />
     <None Remove="Assets\Champions\10.png" />
@@ -290,6 +296,12 @@
   <ItemGroup>
     <ProjectReference Include="..\LeagueSpectator.MVVM\LeagueSpectator.MVVM.csproj" />
     <ProjectReference Include="..\LeagueSpectator.RiotApi\LeagueSpectator.RiotApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\Lang\es-ES.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
 
   <ItemGroup>
