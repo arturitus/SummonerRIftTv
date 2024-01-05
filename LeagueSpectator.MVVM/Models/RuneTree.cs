@@ -2,13 +2,13 @@
 
 namespace LeagueSpectator.MVVM.Models
 {
-    public class RunTree : LocalizableObject
+    public class RuneTree : LocalizableObject
     {
         public RuneType RuneType { get; set; }
         public Uri Tree { get; set; }
         public List<Rune> Runes { get; }
 
-        public RunTree()
+        public RuneTree()
         {
             Runes = new List<Rune>();
         }

@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using LeagueSpectator.Avalonia.Extensions;
 using LeagueSpectator.Avalonia.IViews;
 using LeagueSpectator.Avalonia.Views;
 using LeagueSpectator.MVVM.Extensions;
@@ -10,7 +11,6 @@ using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.Models;
 using Material.Styles.Themes;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace LeagueSpectator.Avalonia
@@ -50,6 +50,7 @@ namespace LeagueSpectator.Avalonia
             m_AppDataService.OnThemeChanged += OnThemeChanged;
 
             OnThemeChanged(m_AppDataService.AppData.ThemeType);
+            AssetLoaderExtensions.Init();
         }
 
         private void OnLanguageChanged(Language obj)

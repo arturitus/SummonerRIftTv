@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace LeagueSpectator.MVVM.Models
+﻿namespace LeagueSpectator.MVVM.Models
 {
     public class EnumLocalizable
     {

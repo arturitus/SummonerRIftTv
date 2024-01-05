@@ -106,10 +106,10 @@ namespace LeagueSpectator.MVVM.Helpers
         {
             return leagueType switch
             {
-                ChampionType => new Uri($"Champions/{id}.png", UriKind.Relative),
-                RuneType => new Uri($"Runes/{id}.png", UriKind.Relative),
-                SummonerSpellType => new Uri($"SummonerSpells/{id}.png", UriKind.Relative),
-                _ => new Uri($"Champions/-1.png", UriKind.Relative),
+                ChampionType => new Uri($"Champions.{id}", UriKind.Relative),
+                RuneType => new Uri($"Runes.{id}", UriKind.Relative),
+                SummonerSpellType => new Uri($"SummonerSpells.{id}", UriKind.Relative),
+                _ => new Uri($"Champions.-1", UriKind.Relative),
             };
         }
 

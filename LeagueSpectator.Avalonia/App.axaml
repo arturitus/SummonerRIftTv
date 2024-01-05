@@ -18,8 +18,8 @@
 				<!--<ResourceInclude Source="/Assets/Lang/es-ES.axaml" />-->
 				<!--<ResourceInclude Source="/Assets/Lang/en-EN.axaml" />-->
 			</ResourceDictionary.MergedDictionaries>
-			<ResourceInclude x:Key="en-EN" Source="/Assets/Lang/en-EN.axaml" />
-			<ResourceInclude x:Key="es-ES" Source="/Assets/Lang/es-ES.axaml" />
+			<ResourceInclude x:Key="en-EN" Source="/Lang/en-EN.axaml" />
+			<ResourceInclude x:Key="es-ES" Source="/Lang/es-ES.axaml" />
 		</ResourceDictionary>
 	</Application.Resources>
 	<Application.Styles>

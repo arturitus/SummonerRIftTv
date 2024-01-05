@@ -17,7 +17,7 @@
         MinWidth="800"
 		ExtendClientAreaToDecorationsHint="False"
 		Height="500"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="resm:LeagueSpectator.MVVM.Assets.avalonia-logo.ico?assembly=LeagueSpectator.MVVM"
         Title="LeagueSpectator"
 		x:DataType="vm:MainWindowViewModel">
 
@@ -148,14 +148,14 @@
                         <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
                       </Grid>
                     </Expander.Header>
-						<ItemsControl ItemsSource="{Binding Perks.MyRunes}" Margin="20,0">
+						<ItemsControl ItemsSource="{Binding Perks.RuneTree}" Margin="20,0">
 							<ItemsControl.ItemsPanel>
 								<ItemsPanelTemplate>
 									<UniformGrid Columns="3" />
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
-								<DataTemplate DataType="{x:Type models:MyRunes}">
+								<DataTemplate DataType="{x:Type models:RuneTree}">
 									<StackPanel>
 										<Image Margin="2" Source="{Binding Tree, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource EnumToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
 									    <ItemsControl ItemsSource="{Binding Runes}" Margin="2" HorizontalAlignment="Center">
@@ -205,14 +205,14 @@
                         <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>     
                       </Grid>
                     </Expander.Header>
-					  <ItemsControl ItemsSource="{Binding Perks.MyRunes}" Margin="20,0">
+					  <ItemsControl ItemsSource="{Binding Perks.RuneTree}" Margin="20,0">
 						  <ItemsControl.ItemsPanel>
 							  <ItemsPanelTemplate>
 								  <UniformGrid Columns="3" />
 							  </ItemsPanelTemplate>
 						  </ItemsControl.ItemsPanel>
 						  <ItemsControl.ItemTemplate>
-							  <DataTemplate DataType="{x:Type models:MyRunes}">
+							  <DataTemplate DataType="{x:Type models:RuneTree}">
 								  <StackPanel>
 									  <Image Margin="2" Source="{Binding Tree, Mode=OneWay, Converter={StaticResource UriToBitmap}}" ToolTip.Tip="{Binding RuneType, Converter={StaticResource EnumToLocalizationConverter}}" ToolTip.ShowDelay="1" Width="25" Height="25" HorizontalAlignment="Center"/>
 									  <ItemsControl ItemsSource="{Binding Runes}" Margin="2" HorizontalAlignment="Center">

@@ -160,7 +160,7 @@
         Nilah = 895,
         Ksante = 897,
         Fiddlesticks = 9,
-        Malzahar = 90, 
+        Malzahar = 90,
         Milio = 902,
         Talon = 91,
         Hwei = 910,

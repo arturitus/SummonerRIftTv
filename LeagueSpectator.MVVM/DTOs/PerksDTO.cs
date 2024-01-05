@@ -9,10 +9,10 @@ namespace LeagueSpectator.DTOs
     {
         public PerksDTO()
         {
-            MyRunes = new RunTree[3];
-            for (int i = 0; i < MyRunes.Length; i++)
+            RuneTree = new RuneTree[3];
+            for (int i = 0; i < RuneTree.Length; i++)
             {
-                MyRunes[i] = new RunTree();
+                RuneTree[i] = new RuneTree();
             }
         }
 
@@ -24,8 +24,8 @@ namespace LeagueSpectator.DTOs
             set
             {
                 perkStyle = value;
-                MyRunes[0].RuneType = (RuneType)perkStyle;
-                MyRunes[0].Tree = LeagueAssetResolver.GetUri(perkStyle, MyRunes[0].RuneType);
+                RuneTree[0].RuneType = (RuneType)perkStyle;
+                RuneTree[0].Tree = LeagueAssetResolver.GetUri(perkStyle, RuneTree[0].RuneType);
             }
         }
         private int perkSubStyle;
@@ -37,12 +37,12 @@ namespace LeagueSpectator.DTOs
             set
             {
                 perkSubStyle = value;
-                MyRunes[1].RuneType = (RuneType)perkSubStyle;
-                MyRunes[1].Tree = LeagueAssetResolver.GetUri(perkSubStyle, MyRunes[1].RuneType);
+                RuneTree[1].RuneType = (RuneType)perkSubStyle;
+                RuneTree[1].Tree = LeagueAssetResolver.GetUri(perkSubStyle, RuneTree[1].RuneType);
             }
         }
         [JsonIgnore]
-        public RunTree[] MyRunes { get; }
+        public RuneTree[] RuneTree { get; }
 
         private List<int> perkIds;
         [JsonPropertyName("perkIds")]
@@ -56,17 +56,17 @@ namespace LeagueSpectator.DTOs
                 {
                     foreach (int id in perkIds)
                     {
-                        if (MyRunes[0].Runes.Count >= 4 && MyRunes[1].Runes.Count < 2)
+                        if (RuneTree[0].Runes.Count >= 4 && RuneTree[1].Runes.Count < 2)
                         {
-                            MyRunes[1].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
+                            RuneTree[1].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
-                        else if (MyRunes[1].Runes.Count >= 2 && MyRunes[2].Runes.Count < 3)
+                        else if (RuneTree[1].Runes.Count >= 2 && RuneTree[2].Runes.Count < 3)
                         {
-                            MyRunes[2].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
+                            RuneTree[2].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
                         else
                         {
-                            MyRunes[0].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
+                            RuneTree[0].Runes.Add(new Rune() { Bitmap = LeagueAssetResolver.GetUri(id, (RuneType)id), RuneType = (RuneType)id });
                         }
                     }
                 }
@@ -75,7 +75,7 @@ namespace LeagueSpectator.DTOs
 
         public void LocalizeObject()
         {
-            foreach (RunTree rune in MyRunes)
+            foreach (RuneTree rune in RuneTree)
             {
                 rune.LocalizeObject();
             }

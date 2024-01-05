@@ -1,8 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Data.Converters;
-using LeagueSpectator.MVVM.Extensions;
 using LeagueSpectator.MVVM.Models;
-using LeagueSpectator.MVVM.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
