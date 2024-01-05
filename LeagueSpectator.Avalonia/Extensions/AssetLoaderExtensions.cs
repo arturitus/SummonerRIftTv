@@ -18,11 +18,12 @@ namespace LeagueSpectator.Avalonia.Extensions
         private const string EMBEDDED_RESOURCES_NAMESPACE = "LeagueSpectator.MVVM.Assets";
         private static readonly string[] SUBFORLDERS = ["Champions", "Runes", "SummonerSpells"];
 
+        private static readonly Bitmap m_NoneSelected;
         private static readonly FrozenSet<EmbeddedResource> m_CachedAssets;
         //private static readonly FrozenSet<Stream> m_CachedAssets;
         static AssetLoaderExtensions()
         {
-            //m_CachedAssets = AssetLoader.GetAssets(new Uri(AVA_RES_BASE), new Uri(AVA_RES_BASE)).ToFrozenSet();
+            m_NoneSelected = GetEmbeddedNothing<MainWindowViewModel>("Champions.-1.png");
             m_CachedAssets = GetEmbeddedAssets<MainWindowViewModel>(EMBEDDED_RESOURCES_NAMESPACE, SUBFORLDERS).ToFrozenSet();
         }
 
@@ -35,7 +36,7 @@ namespace LeagueSpectator.Avalonia.Extensions
                 return cachedBitmap.Bitmap;
             }
             //return new Bitmap(AssetLoader.Open(new Uri($"{AVA_RES_BASE}/Champions/-1.png")));
-            return new Bitmap(AssetLoader.Open(new Uri($"{AVA_RES_BASE}.Champions.-1.png")));
+            return m_NoneSelected;
         }
 
         internal static void Init()
@@ -60,6 +61,12 @@ namespace LeagueSpectator.Avalonia.Extensions
                 }
             }
             return embeddeResources;
+        }
+
+        private static Bitmap GetEmbeddedNothing<T>(string file)
+        {
+            Stream stream = Assembly.GetAssembly(typeof(T)).GetManifestResourceStream($"{EMBEDDED_RESOURCES_NAMESPACE}.{file}");
+            return new Bitmap(stream);
         }
     }
     internal class EmbeddedResource(Uri uri, Stream stream)
