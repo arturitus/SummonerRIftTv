@@ -1,5 +1,4 @@
-﻿using LeagueSpectator.RiotApi.Models;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Text.Json.Serialization;
 using Region = LeagueSpectator.RiotApi.Models.Region;
 

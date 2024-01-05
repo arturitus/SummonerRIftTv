@@ -17,7 +17,6 @@ namespace LeagueSpectator.Avalonia.Converters
             {
                 return string.Empty;
             }
-            //string b = ((Enum)values[1]).GetDisplayName();
             string b = App.Current.FindResource(values[1].ToString()) as string;
             return string.Format(b, values[0]);
         }

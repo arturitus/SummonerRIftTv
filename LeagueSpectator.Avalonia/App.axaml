@@ -9,11 +9,7 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
-			<converters:MultiEnabledConverter x:Key="MultiEnabledConverter"/>
 			<converters:EnumToLocalizationConverter x:Key="EnumToLocalizationConverter"/>
-			<converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
-			<converters:ObjectToLocalizationConverter x:Key="ObjectToLocalizationConverter"/>
-			<converters:ObjectToStringConverter x:Key="ObjectToString"/>
 			<converters:UriToBitmapConverter x:Key="UriToBitmap"/>
 			<converters:MultiFormatConverter x:Key="MultiFormat"/>
 			<ResourceDictionary.MergedDictionaries>

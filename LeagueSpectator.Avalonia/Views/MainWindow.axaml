@@ -11,12 +11,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
         x:Class="LeagueSpectator.Avalonia.Views.MainWindow"
-				Width="450"
-				CanResize="True"
+		Width="450"
+		CanResize="True"
         MinHeight="700"
         MinWidth="800"
-				ExtendClientAreaToDecorationsHint="False"
-				Height="500"
+		ExtendClientAreaToDecorationsHint="False"
+		Height="500"
         Icon="/Assets/avalonia-logo.ico"
         Title="LeagueSpectator"
 		x:DataType="vm:MainWindowViewModel">
@@ -82,10 +82,10 @@
           <Grid RowDefinitions="auto, *" ColumnDefinitions="*, *">
             
             <Grid ColumnDefinitions="*, auto" Margin="5,0,10,0" RowDefinitions="*,*">
-              <TextBlock Margin="2" Grid.Row="1" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+              <TextBlock Margin="2" Grid.Row="1" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding BlueTeam.Bans.Count}"/>
 				 
               <!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
-                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding BlueTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding BlueTeam.Bans.Count}"/>
                 <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding BlueTeam.Bans}" Margin="2">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -102,9 +102,9 @@
             </Grid>
 
 			  <Grid ColumnDefinitions="*, auto" Margin="0,0,5,0" Grid.Column="1" RowDefinitions="*,*">
-				  <TextBlock Grid.Row="1" Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+				  <TextBlock Grid.Row="1" Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding RedTeam.Bans.Count}"/>
 				  <!--<StackPanel Margin="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">-->
-					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding RedTeam.Bans.Count, Converter={StaticResource IntToBoolConverter}}"/>
+					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding RedTeam.Bans.Count}"/>
 					<ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding RedTeam.Bans}" VerticalAlignment="Center" Margin="2">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>

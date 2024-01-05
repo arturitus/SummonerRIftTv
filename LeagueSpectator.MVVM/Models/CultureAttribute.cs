@@ -3,14 +3,9 @@
 namespace LeagueSpectator.MVVM.Models
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class CultureAttribute : Attribute
+    public class CultureAttribute(string cultureInfo) : Attribute
     {
-        public CultureInfo CultureInfo { get; }
-
-        public CultureAttribute(string cultureInfo)
-        {
-            CultureInfo = new CultureInfo(cultureInfo);
-        }
+        public CultureInfo CultureInfo { get; } = new CultureInfo(cultureInfo);
     }
 }
 

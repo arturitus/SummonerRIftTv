@@ -1,20 +1,21 @@
-﻿using Avalonia.Data.Converters;
+﻿using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using System;
 using System.Globalization;
 
 namespace LeagueSpectator.Avalonia.Converters
 {
-    public class IntToBoolConverter : IValueConverter
+    public class EnumToLocalizationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool a = (int?)value > 0;
-            return a;
+            object b = App.Current.FindResource(value.ToString());
+            return b;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

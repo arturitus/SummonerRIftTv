@@ -2,20 +2,20 @@
 
 namespace LeagueSpectator.MVVM.Models
 {
-    public class MyRunes : LocalizableObject
+    public class RunTree : LocalizableObject
     {
         public RuneType RuneType { get; set; }
         public Uri Tree { get; set; }
-        public List<MyRune> Runes { get; }
+        public List<Rune> Runes { get; }
 
-        public MyRunes()
+        public RunTree()
         {
-            Runes = new List<MyRune>();
+            Runes = new List<Rune>();
         }
 
         public override void LocalizeObject()
         {
-            foreach (MyRune item in Runes)
+            foreach (Rune item in Runes)
             {
                 item.LocalizeObject();
             }
