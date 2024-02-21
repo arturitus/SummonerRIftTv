@@ -1,5 +1,4 @@
 ﻿using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using LeagueSpectator.MVVM.ViewModels;
 using System;
 using System.Collections.Frozen;

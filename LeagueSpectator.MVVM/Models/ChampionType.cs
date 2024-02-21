@@ -161,6 +161,7 @@
         Ksante = 897,
         Fiddlesticks = 9,
         Malzahar = 90,
+        Smolder = 901,
         Milio = 902,
         Talon = 91,
         Hwei = 910,

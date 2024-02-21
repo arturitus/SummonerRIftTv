@@ -24,12 +24,12 @@
 	
 	<!-- Regions -->
 	<models:EnumLocalizableCollection x:Key="Regions">
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUW}" DisplayName="Europe West"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUNE}" DisplayName="Europe Nordic &amp; East"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.NA}" DisplayName="North America"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUW1}" DisplayName="Europe West"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUN1}" DisplayName="Europe Nordic &amp; East"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.NA1}" DisplayName="North America"/>
 		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.KR}" DisplayName="Korea"/>
 		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.RU}" DisplayName="Russia"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.BR}" DisplayName="Brazil"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.BR1}" DisplayName="Brazil"/>
 		<!--<sys:string>ASASD</sys:string>-->
 	</models:EnumLocalizableCollection>
 	
@@ -37,6 +37,7 @@
 	<x:String x:Key="Spectate">Spectate</x:String>
 	<x:String x:Key="SearchSummoner">Search for a Summoner</x:String>
 	<x:String x:Key="SummonerName">Summoner name</x:String>
+	<x:String x:Key="TagLine">Tag line</x:String>
 	<x:String x:Key="Search">Search</x:String>
 	<x:String x:Key="Region">Region</x:String>
 	<x:String x:Key="Options">Options</x:String>
@@ -229,6 +230,7 @@
 	<x:String x:Key="Ksante">K'Sante</x:String>
 	<x:String x:Key="Fiddlesticks">Fiddlesticks</x:String>
 	<x:String x:Key="Malzahar">Malzahar</x:String>
+	<x:String x:Key="Smolder">Smolder</x:String>
 	<x:String x:Key="Milio">Milio</x:String>
 	<x:String x:Key="Talon">Talon</x:String>
 	<x:String x:Key="Hwei">Hwei</x:String>

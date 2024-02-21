@@ -7,6 +7,7 @@ namespace LeagueSpectator.MVVM.IServices
     {
         event Action<SpectateState, bool> SpectateChanged;
         Task<Team[]> SearchSpectableGameAsync(string summonerId, Region region, string apiKey);
+        Task<Team[]> SearchSpectableGameAsync(string summonerName, string tagLine, Region region, string apiKey);
         Task SpectateGameAsync(string lolFolderPath);
     }
 }

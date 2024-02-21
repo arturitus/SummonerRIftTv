@@ -7,17 +7,10 @@ namespace LeagueSpectator.DTOs
 {
     public class PerksDTO
     {
-        public PerksDTO()
-        {
-            RuneTree = new RuneTree[3];
-            for (int i = 0; i < RuneTree.Length; i++)
-            {
-                RuneTree[i] = new RuneTree();
-            }
-        }
-
         private int perkStyle;
-        [JsonPropertyName("perkStyle")]
+        private int perkSubStyle;
+        private List<int> perkIds;
+
         public int PerkStyle
         {
             get => perkStyle;
@@ -28,9 +21,7 @@ namespace LeagueSpectator.DTOs
                 RuneTree[0].Tree = LeagueAssetResolver.GetUri(perkStyle, RuneTree[0].RuneType);
             }
         }
-        private int perkSubStyle;
 
-        [JsonPropertyName("perkSubStyle")]
         public int PerkSubStyle
         {
             get => perkSubStyle;
@@ -41,11 +32,9 @@ namespace LeagueSpectator.DTOs
                 RuneTree[1].Tree = LeagueAssetResolver.GetUri(perkSubStyle, RuneTree[1].RuneType);
             }
         }
-        [JsonIgnore]
+
         public RuneTree[] RuneTree { get; }
 
-        private List<int> perkIds;
-        [JsonPropertyName("perkIds")]
         public List<int> PerkIds
         {
             get => perkIds;
@@ -72,6 +61,15 @@ namespace LeagueSpectator.DTOs
                 }
             }
         }
+
+        public PerksDTO()
+        {
+            RuneTree = new RuneTree[3];
+            for (int i = 0; i < RuneTree.Length; i++)
+            {
+                RuneTree[i] = new RuneTree();
+            }
+        }       
 
         public void LocalizeObject()
         {

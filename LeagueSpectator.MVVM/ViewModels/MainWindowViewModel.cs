@@ -1,7 +1,7 @@
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.IViewModels;
 using LeagueSpectator.MVVM.Models;
-using LeagueSpectator.MVVM.Services;
+using LeagueSpectator.RiotApi.Extensions;
 using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
 using System.Collections.Frozen;
@@ -48,6 +48,7 @@ namespace LeagueSpectator.MVVM.ViewModels
             {
                 m_SelectedRegion = value;
                 AppData.Region = value;
+                this.RaisePropertyChanged(nameof(TagLine));
             }
         }
 
@@ -96,6 +97,7 @@ namespace LeagueSpectator.MVVM.ViewModels
             set => this.RaiseAndSetIfChanged(ref m_RedTeam, value, nameof(RedTeam));
         }
 
+        public TagLine TagLine => SelectedRegion.ToTagLine();
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
             //SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
@@ -151,21 +153,21 @@ namespace LeagueSpectator.MVVM.ViewModels
             //AppData = appData;
         }
 
-        public bool CanSearch(string summName, Region? selectedRegion, string apiKey)
+        public bool CanSearch(IList<object> parameters, ref string summName, ref Region? selectedRegion, ref string apiKey)
         {
             List<InfoDialogKeys> keys = new();
             bool canSearch = true;
-            if (string.IsNullOrEmpty(summName))
+            if (string.IsNullOrEmpty((string)parameters[0]))
             {
                 keys.Add(InfoDialogKeys.EmptySummonerName);
                 canSearch = false;
             }
-            if (selectedRegion == null)
+            if ((Region?)parameters[1] is null)
             {
                 keys.Add(InfoDialogKeys.EmptyRegion);
                 canSearch = false;
             }
-            if (string.IsNullOrEmpty(apiKey))
+            if (string.IsNullOrEmpty((string)parameters[2]))
             {
                 keys.Add(InfoDialogKeys.EmptyApiKey);
                 canSearch = false;
@@ -174,26 +176,45 @@ namespace LeagueSpectator.MVVM.ViewModels
             {
                 InfoDialog?.Invoke(keys.ToFrozenSet());
             }
+            else
+            {
+                summName = ((string)parameters[0]).Trim();
+                selectedRegion = (Region?)parameters[1];
+                apiKey = ((string)parameters[2]).Trim();
+            }
             return canSearch;
         }
 
         public async void OnSearchClick(IList<object> parameters)
         {
-            string summName = ((string)parameters[0]).Trim();
-            Region? selectedRegion = (Region?)parameters[1];
-            string apiKey = ((string)parameters[2]).Trim();
+            string summName = string.Empty;
+            Region? selectedRegion = default;
+            string apiKey = string.Empty;
+            string tagLine = string.Empty;
 
-            if (!CanSearch(summName, selectedRegion, apiKey))
+
+            if (!CanSearch(parameters, ref summName, ref selectedRegion, ref apiKey))
             {
                 return;
             }
+            if (summName.Contains('#'))
+            {
+                string[] splitName = summName.Split('#');
+                summName = splitName[0];
+                tagLine = splitName[1];
+            }
+            if (string.IsNullOrEmpty(tagLine))
+            {
+                tagLine = selectedRegion.Value.ToTagLine().ToString();
+            }
+
             ClearPrevouisMatch();
             await Task.Run(async () =>
             {
                 try
                 {
                     IsBusy?.Invoke(true);
-                    Team[] teams = await m_MainWindowService.SearchSpectableGameAsync(summName, selectedRegion.Value, apiKey);
+                    Team[] teams = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value, apiKey);
 
                     SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;

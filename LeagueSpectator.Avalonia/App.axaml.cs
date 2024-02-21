@@ -4,11 +4,12 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using LeagueSpectator.Avalonia.Extensions;
-using LeagueSpectator.Avalonia.IViews;
 using LeagueSpectator.Avalonia.Views;
+using LeagueSpectator.MVVM;
 using LeagueSpectator.MVVM.Extensions;
 using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.IServices;
+using LeagueSpectator.MVVM.IViews;
 using LeagueSpectator.MVVM.Models;
 using Material.Styles.Themes;
 using System.Globalization;
@@ -50,6 +51,7 @@ namespace LeagueSpectator.Avalonia
             m_AppDataService.OnThemeChanged += OnThemeChanged;
 
             OnThemeChanged(m_AppDataService.AppData.ThemeType);
+
             AssetLoaderExtensions.Init();
         }
 
@@ -58,7 +60,7 @@ namespace LeagueSpectator.Avalonia
             string oldLang = CultureInfo.CurrentCulture.Name;
             CultureInfo.CurrentCulture = obj.GetCulture();
             //m_LocalizationStringsService.SetCultureInfo(obj.GetCulture());
-            Translate(oldLang, obj.GetCulture().Name);
+            Translate(oldLang, CultureInfo.CurrentCulture.Name);
         }
 
         public static void Translate(string previousLanguage, string targetLanguage)
@@ -70,22 +72,23 @@ namespace LeagueSpectator.Avalonia
 
         private void OnThemeChanged(ThemeType theme)
         {
+            MaterialTheme materialTheme = Current.LocateMaterialTheme<MaterialTheme>();
             switch (theme)
             {
                 case ThemeType.Default:
-                    new PaletteHelper().SetTheme(Theme.Create(Theme.Light, Colors.Teal, Colors.Teal));
+                    materialTheme.CurrentTheme = Theme.Create(Theme.Light, Colors.Teal, Colors.Teal);
                     WindowsAPI.UseImmersiveDarkMode(m_MainWindow.Handle, false);
                     break;
                 case ThemeType.Light:
-                    new PaletteHelper().SetTheme(Theme.Create(Theme.Light, Colors.Teal, Colors.Teal));
+                    materialTheme.CurrentTheme = Theme.Create(Theme.Light, Colors.Teal, Colors.Teal);
                     WindowsAPI.UseImmersiveDarkMode(m_MainWindow.Handle, false);
                     break;
                 case ThemeType.Dark:
-                    new PaletteHelper().SetTheme(Theme.Create(Theme.Dark, Colors.Teal, Colors.Teal));
+                    materialTheme.CurrentTheme = Theme.Create(Theme.Dark, Colors.Teal, Colors.Teal);
                     WindowsAPI.UseImmersiveDarkMode(m_MainWindow.Handle, true);
                     break;
                 default:
-                    new PaletteHelper().SetTheme(Theme.Create(Theme.Light, Colors.Teal, Colors.Teal));
+                    materialTheme.CurrentTheme = Theme.Create(Theme.Light, Colors.Teal, Colors.Teal);
                     WindowsAPI.UseImmersiveDarkMode(m_MainWindow.Handle, false);
                     break;
             }

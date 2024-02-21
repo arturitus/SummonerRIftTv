@@ -24,18 +24,19 @@
 
 	<!-- Regions -->
 	<models:EnumLocalizableCollection x:Key="Regions">
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUW}" DisplayName="Europa del Oeste"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUNE}" DisplayName="Europa Nórdica y del Este"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.NA}" DisplayName="Norteamérica"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUW1}" DisplayName="Europa del Oeste"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.EUN1}" DisplayName="Europa Nórdica y del Este"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.NA1}" DisplayName="Norteamérica"/>
 		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.KR}" DisplayName="Corea"/>
 		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.RU}" DisplayName="Rusia"/>
-		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.BR}" DisplayName="Brasil"/>
+		<models:EnumLocalizable EnumValue="{x:Static riotApiModels:Region.BR1}" DisplayName="Brasil"/>
 	</models:EnumLocalizableCollection>
 	
 	<!-- Strings -->
 	<x:String x:Key="Spectate">Espectar</x:String>
 	<x:String x:Key="SearchSummoner">Buscar a un Invocador</x:String>
 	<x:String x:Key="SummonerName">Nombre de invocador</x:String>
+	<x:String x:Key="TagLine">Tag line</x:String>
 	<x:String x:Key="Search">Buscar</x:String>
 	<x:String x:Key="Region">Región</x:String>
 	<x:String x:Key="Options">Opciones</x:String>
@@ -227,6 +228,7 @@
 	<x:String x:Key="Ksante">K'Sante</x:String>
 	<x:String x:Key="Fiddlesticks">Fiddlesticks</x:String>
 	<x:String x:Key="Malzahar">Malzahar</x:String>
+	<x:String x:Key="Smolder">Smolder</x:String>
 	<x:String x:Key="Milio">Milio</x:String>
 	<x:String x:Key="Talon">Talon</x:String>
 	<x:String x:Key="Hwei">Hwei</x:String>

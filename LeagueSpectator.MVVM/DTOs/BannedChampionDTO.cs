@@ -9,7 +9,9 @@ namespace LeagueSpectator.MVVM.DTOs
     public class BannedChampionDTO : LocalizableObject
     {
         private int championId;
-        [JsonPropertyName("championId")]
+        private Uri bitmap;
+        private ChampionType championType;
+
         public int ChampionId
         {
             get => championId;
@@ -20,22 +22,12 @@ namespace LeagueSpectator.MVVM.DTOs
                 championType = (ChampionType)championId;
             }
         }
-
-        [JsonPropertyName("teamId")]
         public int TeamId { get; set; }
 
-        [JsonPropertyName("pickTurn")]
         public int PickTurn { get; set; }
 
-        [JsonIgnore]
-        private Uri bitmap;
-        [JsonIgnore]
         public Uri Bitmap => bitmap;
 
-        [JsonIgnore]
-        private ChampionType championType;
-
-        [JsonIgnore]
         public ChampionType ChampionType => championType;
 
         public override void LocalizeObject()

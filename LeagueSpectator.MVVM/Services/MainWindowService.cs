@@ -34,55 +34,137 @@ namespace LeagueSpectator.MVVM.Services
             try
             {
                 Team[] teams = [new Team(), new Team()];
-                string summonerId = await SearchSummonerAsync(summonerName, region, apiKey);
-                RiotApiResponse<ActiveGame> res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
-                authentication = res.Response!.Observers!.EncryptionKey!;
-                matchId = res.Response.GameId;
-                _region = region == Region.BR || region == Region.KR ? region.ToString() : $"{region}1";
+                Summoner summoner = await SearchSummonerAsync(summonerName, region, apiKey);
+                string summonerId = summoner.Id;
+                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
+                authentication = res.Observers!.EncryptionKey!;
+                matchId = res.GameId;
+                _region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
                 switch (region)
                 {
                     case Region.KR:
                         spectatorRegion = "kr";
                         break;
-                    case Region.NA:
+                    case Region.NA1:
                         spectatorRegion = "na2";
                         break;
-                    case Region.EUW:
+                    case Region.EUW1:
                         spectatorRegion = "euw1";
                         break;
                     case Region.RU:
                         break;
-                    case Region.BR:
+                    case Region.BR1:
                         break;
                     default:
                         spectatorRegion = _region;
                         break;
                 }
-                foreach (ParticipantDTO participant in res.Response.Participants.Where(x => x.TeamId == 100))
+                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 100))
                 {
                     teams[0].Players.Add(participant);
                 }
-                foreach (BannedChampion participant in res.Response.BannedChampions.Where(x => x.TeamId == 100))
+                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 100))
                 {
                     teams[0].Bans.Add(participant);
                 }
-                foreach (Participant participant in res.Response.Participants.Where(x => x.TeamId == 200))
+                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 200))
                 {
                     teams[1].Players.Add(participant);
                 }
-                foreach (BannedChampion participant in res.Response.BannedChampions.Where(x => x.TeamId == 200))
+                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 200))
                 {
                     teams[1].Bans.Add(participant);
                 }
                 return teams;
             }
-            catch (RiotApiError e)
+            //catch (RiotApiError e)
+            //{
+            //    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
+            //    {
+            //        throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
+            //    }
+            //    throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
+            //}
+
+            catch (GameNotFoundException)
             {
-                if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
-                }
                 throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
+            }
+            catch (InvalidApiKeyException)
+            {
+                throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
+            }
+        }
+
+        async Task<Team[]> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region, string apiKey)
+        {
+            try
+            {
+                Team[] teams = [new Team(), new Team()];
+                Account account = await SearchAccountAsync(summonerName, tagLine, region, apiKey);
+                Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region, apiKey);
+                string summonerId = summoner.Id;
+                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
+                authentication = res.Observers!.EncryptionKey!;
+                matchId = res.GameId;
+                _region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
+                switch (region)
+                {
+                    case Region.KR:
+                        spectatorRegion = "kr";
+                        break;
+                    case Region.NA1:
+                        spectatorRegion = "na2";
+                        break;
+                    case Region.EUW1:
+                        spectatorRegion = "euw1";
+                        break;
+                    case Region.RU:
+                        break;
+                    case Region.BR1:
+                        break;
+                    default:
+                        spectatorRegion = _region;
+                        break;
+                }
+                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 100))
+                {
+                    teams[0].Players.Add(participant);
+                }
+                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 100))
+                {
+                    teams[0].Bans.Add(participant);
+                }
+                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 200))
+                {
+                    teams[1].Players.Add(participant);
+                }
+                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 200))
+                {
+                    teams[1].Bans.Add(participant);
+                }
+                return teams;
+            }
+            //catch (RiotApiError e)
+            //{
+            //    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
+            //    {
+            //        throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
+            //    }
+            //    throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
+            //}
+
+            catch (SummonerNotFoundException)
+            {
+                throw new MainWindowServiceError(new ErrorDialogFormat($"{summonerName}#{tagLine}", InfoDialogKeys.SummonerDoesntExist));
+            }
+            catch (GameNotFoundException)
+            {
+                throw new MainWindowServiceError(new ErrorDialogFormat($"{summonerName}#{tagLine}", InfoDialogKeys.SummonerIsNotInGame));
+            }
+            catch (InvalidApiKeyException)
+            {
+                throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
             }
         }
 
@@ -128,20 +210,57 @@ namespace LeagueSpectator.MVVM.Services
                 }
             });
         }
-        private async Task<string> SearchSummonerAsync(string summonerName, Region region, string apiKey)
+
+        private async Task<Summoner> SearchSummonerAsync(string summonerName, Region region, string apiKey)
         {
             try
             {
-                RiotApiResponse<Summoner> res = await m_RiotApiService.GetSummonerByNameAsync(summonerName, region, apiKey);
-                return res.Response.Id;
+                Summoner res = await m_RiotApiService.GetSummonerByNameAsync(summonerName, region, apiKey);
+                return res;
             }
-            catch (RiotApiError e)
+
+            catch (SummonerNotFoundException)
             {
-                if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw;
-                }
                 throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerDoesntExist));
+            }
+            catch (InvalidApiKeyException)
+            {
+                throw;
+            }
+        }
+        private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region region, string apiKey)
+        {
+            try
+            {
+                Account res = await m_RiotApiService.GetAccountByNameTag(summonerName, tagLine, region, apiKey);
+                return res;
+            }
+
+            catch (SummonerNotFoundException)
+            {
+                throw;
+            }
+            catch (InvalidApiKeyException)
+            {
+                throw;
+            }            
+        }
+
+        private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region region, string apiKey)
+        {
+            try
+            {
+                Summoner res = await m_RiotApiService.GetSummonerByEncryptedPUUID(encryptedPUUID, region, apiKey);
+                return res;
+            }
+
+            catch (SummonerNotFoundException)
+            {
+                throw;
+            }
+            catch (InvalidApiKeyException)
+            {
+                throw;
             }
         }
 
@@ -152,9 +271,5 @@ namespace LeagueSpectator.MVVM.Services
             m_LeagueProcess = null;
             SpectateChanged?.Invoke(SpectateState.Ended, true);
         }
-    }
-    public class MainWindowServiceError(ErrorDialogFormat errorFormat) : Exception
-    {
-        public ErrorDialogFormat ErrorFormat { get; set; } = errorFormat;
     }
 }

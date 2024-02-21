@@ -1,10 +1,10 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-using LeagueSpectator.Avalonia.IViews;
 using LeagueSpectator.Avalonia.Views;
 using LeagueSpectator.MVVM;
 using LeagueSpectator.MVVM.Helpers;
 using LeagueSpectator.MVVM.IServices;
+using LeagueSpectator.MVVM.IViews;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

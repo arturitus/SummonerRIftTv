@@ -28,15 +28,15 @@
 
 	<dialogHost:DialogHost Identifier="busyDialog" CloseOnClickAway="True">
   <Grid Margin="30" Background="Transparent">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-    </Grid.ColumnDefinitions>
     <TabControl>
       <TabItem Header="{DynamicResource Spectate}">
         <DockPanel Margin="0, 30, 0, 0">
-          <TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="{DynamicResource SearchSummoner}" HorizontalAlignment="Center"/>
-			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{DynamicResource SummonerName}"/>
-          <TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="outline" Text=""/>
+			<TextBlock DockPanel.Dock="Top" FontSize="24" Margin="5" Text="{DynamicResource SearchSummoner}" HorizontalAlignment="Center"/>
+			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5" >
+				<TextBlock FontSize="16" Text="{DynamicResource SummonerName}" />
+				<TextBlock FontSize="16" Text="{Binding TagLine, Mode=OneWay, StringFormat={} + #{0}}" />
+			</StackPanel>
+			<TextBox Name="tbsummName" DockPanel.Dock="Top" Margin="5" Classes="outline"/>
 			<TextBlock DockPanel.Dock="Top" FontSize="16" Margin="5" Text="{DynamicResource Region}"/>
           <!--<ComboBox Name="comboRegion" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" Theme="{StaticResource MaterialOutlineComboBox}" ItemsSource="{Binding Regions}" SelectedValue="{Binding SelectedRegion}">-->
           <ComboBox Name="comboRegion" DisplayMemberBinding="{Binding DisplayName, Mode=OneWay, DataType={x:Type models:EnumLocalizable}}" SelectedValueBinding="{Binding EnumValue, Mode=OneWay, DataType={x:Type models:EnumLocalizable}}" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Margin="5" MinWidth="120" Theme="{StaticResource MaterialOutlineComboBox}" ItemsSource="{DynamicResource Regions}" SelectedValue="{Binding SelectedRegion}">

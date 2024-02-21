@@ -6,5 +6,5 @@
         public string DisplayName { get; set; }
     }
 
-    public class EnumLocalizableCollection : List<EnumLocalizable> { }
+    public class EnumLocalizableCollection : List<EnumLocalizable>;
 }

@@ -23,6 +23,6 @@ namespace LeagueSpectator.RiotApi.Models
         public long RevisionDate { get; set; }
 
         [JsonPropertyName("summonerLevel")]
-        public int SummonerLevel { get; set; }
+        public long SummonerLevel { get; set; }
     }
 }

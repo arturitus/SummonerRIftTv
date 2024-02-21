@@ -41,6 +41,7 @@ namespace LeagueSpectator.RiotApi.Models
     [JsonSourceGenerationOptions(WriteIndented = true)]
     [JsonSerializable(typeof(ActiveGame))]
     [JsonSerializable(typeof(Summoner))]
+    [JsonSerializable(typeof(Account))]
     internal partial class SourceGenerationContext : JsonSerializerContext
     {
     }
