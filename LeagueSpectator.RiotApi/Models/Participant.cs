@@ -5,7 +5,7 @@ namespace LeagueSpectator.RiotApi.Models
     public class Participant
     {
         [JsonPropertyName("teamId")]
-        public int TeamId { get; set; }
+        public TeamId TeamId { get; set; }
 
         [JsonPropertyName("spell1Id")]
         public int Spell1Id { get; set; }
@@ -33,5 +33,11 @@ namespace LeagueSpectator.RiotApi.Models
 
         [JsonPropertyName("perks")]
         public Perks Perks { get; set; }
+    }
+
+    public enum TeamId : int
+    {
+        BlueTeam = 100,
+        RedTeam = 200
     }
 }

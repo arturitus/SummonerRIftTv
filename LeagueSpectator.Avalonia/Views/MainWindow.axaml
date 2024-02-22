@@ -82,11 +82,11 @@
           <Grid RowDefinitions="auto, *" ColumnDefinitions="*, *">
             
             <Grid ColumnDefinitions="*, auto" Margin="5,0,10,0" RowDefinitions="*,*">
-              <TextBlock Margin="2" Grid.Row="1" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding BlueTeam.Bans.Count}"/>
+              <TextBlock Margin="2" Grid.Row="1" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.BlueTeamBans.Count}"/>
 				 
               <!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
-                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding BlueTeam.Bans.Count}"/>
-                <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding BlueTeam.Bans}" Margin="2">
+                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding ActiveGame.BlueTeamBans.Count}"/>
+                <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ActiveGame.BlueTeamBans}" Margin="2">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                       <StackPanel Orientation="Horizontal"/>
@@ -102,10 +102,10 @@
             </Grid>
 
 			  <Grid ColumnDefinitions="*, auto" Margin="0,0,5,0" Grid.Column="1" RowDefinitions="*,*">
-				  <TextBlock Grid.Row="1" Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding RedTeam.Bans.Count}"/>
+				  <TextBlock Grid.Row="1" Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.RedTeamBans.Count}"/>
 				  <!--<StackPanel Margin="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">-->
-					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding RedTeam.Bans.Count}"/>
-					<ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding RedTeam.Bans}" VerticalAlignment="Center" Margin="2">
+					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding ActiveGame.RedTeamBans.Count}"/>
+					<ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ActiveGame.RedTeamBans}" VerticalAlignment="Center" Margin="2">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
 								<StackPanel Orientation="Horizontal"/>
@@ -122,7 +122,7 @@
 			  
 			  <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Padding="0,0,10,0">
 			<Grid ColumnDefinitions="*, *">
-            <ItemsControl Margin="5" ItemsSource="{Binding BlueTeam.Players}">
+            <ItemsControl Margin="5" ItemsSource="{Binding ActiveGame.BlueTeamPlayers}">
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                   <StackPanel/>
@@ -179,7 +179,7 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>            
 
-            <ItemsControl Margin="5" ItemsSource="{Binding RedTeam.Players}" Grid.Column="1">
+            <ItemsControl Margin="5" ItemsSource="{Binding ActiveGame.RedTeamPlayers}" Grid.Column="1">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<StackPanel/>

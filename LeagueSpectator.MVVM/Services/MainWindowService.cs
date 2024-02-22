@@ -4,7 +4,6 @@ using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.IServices;
 using LeagueSpectator.RiotApi.Models;
 using System.Diagnostics;
-using System.Net;
 
 namespace LeagueSpectator.MVVM.Services
 {
@@ -19,6 +18,8 @@ namespace LeagueSpectator.MVVM.Services
         private string _region;
         private string spectatorRegion;
 
+        public event Action<SpectateState, bool> SpectateChanged;
+
         public MainWindowService(IRiotApiService riotApiService)
         {
             m_RiotApiService = riotApiService;
@@ -27,80 +28,10 @@ namespace LeagueSpectator.MVVM.Services
             spectatorRegion = string.Empty;
         }
 
-        public event Action<SpectateState, bool> SpectateChanged;
-
-        async Task<Team[]> IMainWindowService.SearchSpectableGameAsync(string summonerName, Region region, string apiKey)
+        async Task<ActiveGameDTO> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region, string apiKey)
         {
             try
             {
-                Team[] teams = [new Team(), new Team()];
-                Summoner summoner = await SearchSummonerAsync(summonerName, region, apiKey);
-                string summonerId = summoner.Id;
-                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
-                authentication = res.Observers!.EncryptionKey!;
-                matchId = res.GameId;
-                _region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
-                switch (region)
-                {
-                    case Region.KR:
-                        spectatorRegion = "kr";
-                        break;
-                    case Region.NA1:
-                        spectatorRegion = "na2";
-                        break;
-                    case Region.EUW1:
-                        spectatorRegion = "euw1";
-                        break;
-                    case Region.RU:
-                        break;
-                    case Region.BR1:
-                        break;
-                    default:
-                        spectatorRegion = _region;
-                        break;
-                }
-                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 100))
-                {
-                    teams[0].Players.Add(participant);
-                }
-                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 100))
-                {
-                    teams[0].Bans.Add(participant);
-                }
-                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 200))
-                {
-                    teams[1].Players.Add(participant);
-                }
-                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 200))
-                {
-                    teams[1].Bans.Add(participant);
-                }
-                return teams;
-            }
-            //catch (RiotApiError e)
-            //{
-            //    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
-            //    {
-            //        throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
-            //    }
-            //    throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
-            //}
-
-            catch (GameNotFoundException)
-            {
-                throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
-            }
-            catch (InvalidApiKeyException)
-            {
-                throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
-            }
-        }
-
-        async Task<Team[]> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region, string apiKey)
-        {
-            try
-            {
-                Team[] teams = [new Team(), new Team()];
                 Account account = await SearchAccountAsync(summonerName, tagLine, region, apiKey);
                 Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region, apiKey);
                 string summonerId = summoner.Id;
@@ -127,32 +58,8 @@ namespace LeagueSpectator.MVVM.Services
                         spectatorRegion = _region;
                         break;
                 }
-                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 100))
-                {
-                    teams[0].Players.Add(participant);
-                }
-                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 100))
-                {
-                    teams[0].Bans.Add(participant);
-                }
-                foreach (ParticipantDTO participant in res.Participants.Where(x => x.TeamId == 200))
-                {
-                    teams[1].Players.Add(participant);
-                }
-                foreach (BannedChampionDTO participant in res.BannedChampions.Where(x => x.TeamId == 200))
-                {
-                    teams[1].Bans.Add(participant);
-                }
-                return teams;
+                return res;
             }
-            //catch (RiotApiError e)
-            //{
-            //    if (e.StatusCode == HttpStatusCode.Forbidden || e.StatusCode == HttpStatusCode.Unauthorized)
-            //    {
-            //        throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
-            //    }
-            //    throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerIsNotInGame));
-            //}
 
             catch (SummonerNotFoundException)
             {
@@ -243,7 +150,7 @@ namespace LeagueSpectator.MVVM.Services
             catch (InvalidApiKeyException)
             {
                 throw;
-            }            
+            }
         }
 
         private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region region, string apiKey)

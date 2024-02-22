@@ -8,7 +8,7 @@ namespace LeagueSpectator.RiotApi.Models
         public int ChampionId { get; set; }
 
         [JsonPropertyName("teamId")]
-        public int TeamId { get; set; }
+        public TeamId TeamId { get; set; }
 
         [JsonPropertyName("pickTurn")]
         public int PickTurn { get; set; }

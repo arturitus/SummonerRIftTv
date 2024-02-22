@@ -2,7 +2,6 @@
 using LeagueSpectator.MVVM.Models;
 using LeagueSpectator.RiotApi.Models;
 using ReactiveUI;
-using System.Text.Json.Serialization;
 
 namespace LeagueSpectator.MVVM.DTOs
 {
@@ -22,7 +21,7 @@ namespace LeagueSpectator.MVVM.DTOs
                 championType = (ChampionType)championId;
             }
         }
-        public int TeamId { get; set; }
+        public TeamId TeamId { get; set; }
 
         public int PickTurn { get; set; }
 

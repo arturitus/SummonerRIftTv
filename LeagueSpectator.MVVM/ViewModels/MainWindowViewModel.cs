@@ -1,3 +1,4 @@
+using LeagueSpectator.MVVM.DTOs;
 using LeagueSpectator.MVVM.IServices;
 using LeagueSpectator.MVVM.IViewModels;
 using LeagueSpectator.MVVM.Models;
@@ -83,21 +84,14 @@ namespace LeagueSpectator.MVVM.ViewModels
             }
         }
 
-        private Team m_BlueTeam;
-        public Team BlueTeam
-        {
-            get => m_BlueTeam;
-            set => this.RaiseAndSetIfChanged(ref m_BlueTeam, value, nameof(BlueTeam));
-        }
+        public TagLine TagLine => SelectedRegion.ToTagLine(); 
 
-        private Team m_RedTeam;
-        public Team RedTeam
+        private ActiveGameDTO m_ActiveGame;
+        public ActiveGameDTO ActiveGame
         {
-            get => m_RedTeam;
-            set => this.RaiseAndSetIfChanged(ref m_RedTeam, value, nameof(RedTeam));
+            get => m_ActiveGame;
+            set => this.RaiseAndSetIfChanged(ref m_ActiveGame, value, nameof(ActiveGame));
         }
-
-        public TagLine TagLine => SelectedRegion.ToTagLine();
         public MainWindowViewModel(IAppDataService appDataService, IMainWindowService mainWindowService)
         {
             //SearchCommand = ReactiveCommand.Create<IList<object>>(OnSearchClick);
@@ -106,8 +100,7 @@ namespace LeagueSpectator.MVVM.ViewModels
             m_MainWindowService = mainWindowService;
             m_SpectateState = SpectateState.NoneSpectate;
             canSpectate = false;
-            m_BlueTeam = new Team();
-            m_RedTeam = new Team();
+            m_ActiveGame = new ActiveGameDTO();
             fileSystemWatcher = new("./Assets")
             {
                 //fileSystemWatcher.Changed += FileSystemWatcher_Changed;
@@ -134,8 +127,7 @@ namespace LeagueSpectator.MVVM.ViewModels
             //this.RaisePropertyChanged(nameof(SummonerSpellTypes));
             //this.RaisePropertyChanged(nameof(SummonerSpellType1));
             //this.RaisePropertyChanged(nameof(SummonerSpellType2));
-            BlueTeam.ChangeLanguage();
-            RedTeam.ChangeLanguage();
+            m_ActiveGame.LocalizeObject();
 
             this.RaisePropertyChanged(nameof(SelectedRegion));
             this.RaisePropertyChanged(nameof(ThemeIndex));
@@ -208,19 +200,17 @@ namespace LeagueSpectator.MVVM.ViewModels
                 tagLine = selectedRegion.Value.ToTagLine().ToString();
             }
 
-            ClearPrevouisMatch();
+            m_ActiveGame.ClearPrevouisMatch();
             await Task.Run(async () =>
             {
                 try
                 {
                     IsBusy?.Invoke(true);
-                    Team[] teams = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value, apiKey);
+                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value, apiKey);
 
                     SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;
 
-                    BlueTeam = teams[0];
-                    RedTeam = teams[1];
 
                     IsBusy?.Invoke(false);
                 }
@@ -262,12 +252,6 @@ namespace LeagueSpectator.MVVM.ViewModels
         {
             SpectateState = spectateState;
             CanSpectate = canSpectate;
-        }
-
-        private void ClearPrevouisMatch()
-        {
-            BlueTeam.Clear();
-            RedTeam.Clear();
         }
     }
 }

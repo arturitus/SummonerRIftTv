@@ -16,7 +16,7 @@ namespace LeagueSpectator.MVVM.DTOs
         private SummonerSpellType m_SummonerSpellType1;
         private SummonerSpellType m_SummonerSpellType2;
 
-        public int TeamId { get; set; }
+        public TeamId TeamId { get; set; }
 
         public int Spell1Id
         {
