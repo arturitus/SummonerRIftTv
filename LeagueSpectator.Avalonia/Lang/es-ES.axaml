@@ -246,6 +246,9 @@
 	<x:String x:Key="AttackSpeed">Velocidad de ataque</x:String>
 	<x:String x:Key="CooldownReductionPerLevel">Reducción de enfriamiento por nivel</x:String>
 	<x:String x:Key="AdaptativeForce">Fuerza adaptativa</x:String>
+	<x:String x:Key="MoveSpeed">Velocidad de movimiento</x:String>
+	<x:String x:Key="HitPoints">Vida</x:String>
+	<x:String x:Key="Tenacity">Tenacidad</x:String>
 	<x:String x:Key="Precision">Precisión</x:String>
 	<x:String x:Key="PressTheAttack">Ataque intensificado</x:String>
 	<x:String x:Key="LethalTempo">Compás letal</x:String>

@@ -248,6 +248,9 @@
 	<x:String x:Key="AttackSpeed">Attack speed</x:String>
 	<x:String x:Key="CooldownReductionPerLevel">Cooldown reduction per level</x:String>
 	<x:String x:Key="AdaptativeForce">Adaptative force</x:String>
+	<x:String x:Key="MoveSpeed">Move speed</x:String>
+	<x:String x:Key="HitPoints">Health</x:String>
+	<x:String x:Key="Tenacity">Tenacity</x:String>
 	<x:String x:Key="Precision">Precision</x:String>
 	<x:String x:Key="PressTheAttack">Press the attack</x:String>
 	<x:String x:Key="LethalTempo">LethalTempo</x:String>
