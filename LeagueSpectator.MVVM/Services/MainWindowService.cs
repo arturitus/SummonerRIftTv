@@ -38,7 +38,8 @@ namespace LeagueSpectator.MVVM.Services
                 ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
                 authentication = res.Observers!.EncryptionKey!;
                 matchId = res.GameId;
-                _region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
+                //_region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
+                _region = region.ToString();
                 switch (region)
                 {
                     case Region.KR:
@@ -90,7 +91,10 @@ namespace LeagueSpectator.MVVM.Services
                         process.StartInfo.ArgumentList.Add(matchId.ToString());
                         process.StartInfo.ArgumentList.Add(_region);
                         process.StartInfo.ArgumentList.Add(spectatorRegion);
+                        process.StartInfo.RedirectStandardOutput = true;
                         process.Start();
+                        //var a = process.StandardOutput;
+                        //string b = a.ReadToEnd();
                     }
 
                     int timer = 0;
@@ -104,6 +108,10 @@ namespace LeagueSpectator.MVVM.Services
                         timer += 100;
                         Thread.Sleep(100);
                     }
+                    if(m_LeagueProcess.HasExited)
+                    {
+                        return;
+                    }
                     m_LeagueProcess.WaitForInputIdle();
 
                     //if (leagueGameProcess != null)
@@ -112,7 +120,7 @@ namespace LeagueSpectator.MVVM.Services
                     m_LeagueProcess.EnableRaisingEvents = true;
                     m_LeagueProcess.Exited += LeagueGameProcess_Exited;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                 }
             });

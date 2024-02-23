@@ -8,7 +8,8 @@ echo -----------------------
 
 set RADS_PATH=%1
 
-echo "" "League of Legends.exe" "spectator spectator."%5".lol.riotgames.com:80""" %2 %3 %4 "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+
+echo "" "League of Legends.exe" "spectator spectator-consumer.%5.lol.pvp.net:80 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
 if exist "%RADS_PATH%\Game" (
 	cd /d "!RADS_PATH!\Config"
 	for /F "delims=" %%a in ('find "        locale: " LeagueClientSettings.yaml') do set "locale=%%a"
@@ -18,7 +19,7 @@ if exist "%RADS_PATH%\Game" (
 	@cd /d !RADS_PATH!
 	
 	if exist "League of Legends.exe" (
-		@start "" "League of Legends.exe" "spectator spectator-consumer."%5".lol.pvp.net:80""" %2 %3 %4 "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:80 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
 		goto :eof
 	)
 )
@@ -78,7 +79,7 @@ if exist "%RADS_PATH%\RADS" (
 
 	@cd /d "!RADS_PATH!\solutions\lol_game_client_sln\releases\!lolver!\deploy"
 	if exist "League of Legends.exe" (
-		@start "" "League of Legends.exe" "spectator spectator-consumer."%5".lol.pvp.net:80""" %2 %3 %4 "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+		@start "" "League of Legends.exe" "spectator spectator-consumer.%5.lol.pvp.net:80 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
 		goto :eof
 	)
 )
