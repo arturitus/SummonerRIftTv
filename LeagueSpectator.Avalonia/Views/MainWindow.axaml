@@ -17,7 +17,7 @@
         MinWidth="800"
 		ExtendClientAreaToDecorationsHint="False"
 		Height="500"
-        Icon="resm:LeagueSpectator.MVVM.Assets.avalonia-logo.ico?assembly=LeagueSpectator.MVVM"
+        Icon="resm:LeagueSpectator.MVVM.Assets.appIcon.ico?assembly=LeagueSpectator.MVVM"
         Title="LeagueSpectator"
 		x:DataType="vm:MainWindowViewModel">
 
