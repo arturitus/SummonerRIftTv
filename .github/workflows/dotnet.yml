@@ -32,3 +32,12 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish LeagueSpectator.Avalonia.Desktop --no-build -r:win-x64
+      
+    - name: Zip
+      run: powershell -command "Compress-Archive -Path 'LeagueSpectator.Avalonia.Desktop\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+       name: MSIX Package
+       path: Publish.zip
