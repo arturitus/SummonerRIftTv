@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueSpectator.Avalonia", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueSpectator.Avalonia.Desktop", "LeagueSpectator.Avalonia.Desktop\LeagueSpectator.Avalonia.Desktop.csproj", "{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeagueSpectator.Test", "LeagueSpectator.Test\LeagueSpectator.Test.csproj", "{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

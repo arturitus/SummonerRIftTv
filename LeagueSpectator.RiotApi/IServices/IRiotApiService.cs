@@ -8,6 +8,5 @@ namespace LeagueSpectator.RiotApi.IServices
         Task<Summoner> GetSummonerByEncryptedPUUID(string encryptedPUUID, Region region, string apiKey);
         Task<Summoner> GetSummonerByNameAsync(string summonerName, Region region, string apiKey);
         Task<ActiveGame> GetActiveGameAsync(string summonerId, Region region, string apiKey);
-
     }
 }

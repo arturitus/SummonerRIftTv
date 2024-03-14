@@ -120,7 +120,7 @@ namespace LeagueSpectator.MVVM.Services
                     m_LeagueProcess.EnableRaisingEvents = true;
                     m_LeagueProcess.Exited += LeagueGameProcess_Exited;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             });
