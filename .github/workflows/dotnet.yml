@@ -31,4 +31,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish LeagueSpectator.Avalonia.Desktop --no-build --arch x64
+      run: dotnet publish LeagueSpectator.Avalonia.Desktop --no-build --runtime win-x64
