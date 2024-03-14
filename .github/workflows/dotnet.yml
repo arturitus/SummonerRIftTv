@@ -3,6 +3,8 @@
 
 name: .NET
 
+env:
+  GITHUB_TOKEN: ${{ github.token }}
 on:
   push:
     branches: [ "master" ]
@@ -37,7 +39,25 @@ jobs:
       run: powershell -command "Compress-Archive -Path 'LeagueSpectator.Avalonia.Desktop\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
        name: MSIX Package
        path: Publish.zip
+
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ github.ref }}
+        body_path: CHANGELOG.md     
+      
+    - name: upload windows artifact
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: Publish.zip
+        asset_name: Publish.zip
+        asset_content_type: application/zip
