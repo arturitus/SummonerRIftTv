@@ -52,7 +52,6 @@ jobs:
         prerelease: false
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ github.ref }}
-        body_path: CHANGELOG.md     
       
     - name: upload windows artifact
       uses: actions/upload-release-asset@v1
