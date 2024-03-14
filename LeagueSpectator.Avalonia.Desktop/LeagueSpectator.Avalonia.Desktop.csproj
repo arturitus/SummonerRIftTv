@@ -6,11 +6,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
 	  <PublishAot>true</PublishAot>
+	  <IsAotCompatible>true</IsAotCompatible>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>appIcon.ico</ApplicationIcon>
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<DebugType>None</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
   <ItemGroup>
     <Content Include="appIcon.ico" />
   </ItemGroup>

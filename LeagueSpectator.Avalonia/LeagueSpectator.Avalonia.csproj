@@ -4,10 +4,15 @@
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
 	  <PublishAot>true</PublishAot>
+	  <IsAotCompatible>true</IsAotCompatible>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
-  
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<DebugType>None</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Lang\**" />
   </ItemGroup>  
