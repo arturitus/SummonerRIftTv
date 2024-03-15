@@ -1,11 +1,3 @@
-rem OP.GG Spectate
-SETLOCAL enableextensions enabledelayedexpansion
-@echo off
-
-echo -----------------------
-echo Spectate by op.gg
-echo -----------------------
-
 set RADS_PATH=%1
 
 
