@@ -1,3 +1,6 @@
+SETLOCAL enableextensions enabledelayedexpansion
+@echo off
+
 set RADS_PATH=%1
 
 
