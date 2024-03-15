@@ -50,8 +50,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0
-        release_name: Release 1.0.0
+        tag_name: v${{ steps.version.outputs.version }}
+        release_name: Release ${{ steps.version.outputs.version }}
         draft: false
         prerelease: false
 
