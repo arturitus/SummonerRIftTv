@@ -12,7 +12,7 @@ on:
  #   branches: [ "master" ]
 
 env:
-  DAY_OF_WEEK: "SummonerRiftTv.Avalonia.Desktop"
+  PROJECT_NAME: "SummonerRiftTv.Avalonia.Desktop"
   
 jobs:
   build:
@@ -36,10 +36,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish $DAY_OF_WEEK -r:win-x64
+      run: dotnet publish $PROJECT_NAME -r:win-x64
       
     - name: Zip
-      run: powershell -command "Compress-Archive -Path $DAY_OF_WEEK'\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
+      run: powershell -command "Compress-Archive -Path $PROJECT_NAME'\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
