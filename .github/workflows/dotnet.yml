@@ -12,7 +12,7 @@ on:
  #   branches: [ "master" ]
 
 env:
-  PROJECT_NAME: "SummonerRiftTv.Avalonia.Desktop"
+  PROJECT_NAME: SummonerRiftTv.Avalonia.Desktop
   
 jobs:
   build:
@@ -28,6 +28,9 @@ jobs:
         
     - name: CurrentLocation
       run: pwd
+
+    - name: PROJECTNAME
+      run: echo $PROJECT_NAME
       
     - name: Restore dependencies
       run: dotnet restore
