@@ -30,7 +30,7 @@ jobs:
       run: pwd
 
     - name: PROJECTNAME
-      run: echo 'Project:$PROJECT_NAME'
+      run: echo 'Project:${{ env.PROJECT_NAME }}'
       
     - name: Restore dependencies
       run: dotnet restore
@@ -39,10 +39,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish '$PROJECT_NAME' -r:win-x64
+      run: dotnet publish '${{ env.PROJECT_NAME }}' -r:win-x64
       
     - name: Zip
-      run: powershell -command "Compress-Archive -Path '$PROJECT_NAME\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
+      run: powershell -command "Compress-Archive -Path '${{ env.PROJECT_NAME }}\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
