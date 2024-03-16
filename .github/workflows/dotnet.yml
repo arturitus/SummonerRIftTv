@@ -30,7 +30,7 @@ jobs:
       run: pwd
 
     - name: PROJECTNAME
-      run: echo $PROJECT_NAME
+      run: echo ${{ PROJECT_NAME }} 
       
     - name: Restore dependencies
       run: dotnet restore
