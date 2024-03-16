@@ -43,7 +43,7 @@ namespace SummonerRiftTV.Test
         }
 
         [Fact]
-        public async Task Get1AccountByNameTag_Should_Return_Account()
+        public async Task GetAccountByNameTag_Should_Return_Account1()
         {
             try
             {
@@ -63,7 +63,7 @@ namespace SummonerRiftTV.Test
         }
 
         [Fact]
-        public async Task Get2SummonerByEncryptedPUUID_Should_Return_Summoner()
+        public async Task GetSummonerByEncryptedPUUID_Should_Return_Summoner2()
         {
             if (string.IsNullOrEmpty(_RiotApiServiceFixture.EncryptedPuuid))
             {
@@ -79,7 +79,7 @@ namespace SummonerRiftTV.Test
         }
 
         [Fact]
-        public async Task Get3SummonerByNameAsync_Should_Return_Summoner()
+        public async Task GetSummonerByNameAsync_Should_Return_Summoner3()
         {
             try
             {
@@ -99,7 +99,7 @@ namespace SummonerRiftTV.Test
         }
 
         [Fact]
-        public async Task Get4ActiveGameAsync_Should_Return_ActiveGame()
+        public async Task GetActiveGameAsync_Should_Return_ActiveGame4()
         {
             if (string.IsNullOrEmpty(_RiotApiServiceFixture.SummonerId))
             {
