@@ -29,7 +29,7 @@ namespace SummonerRiftTV.Test
         private const string TAG_LINE = "EUW";
         private const Region REGION = Region.EUW1;
         //private const string API_KEY = "RGAPI-1377051c-7ed6-41b3-9793-6b1fa908f03c";
-        private const string API_KEY = "RGAPI-16adf1fd-7e3b-42ac-a2d8-b5d7c92e6a42";
+        private const string API_KEY = "RGAPI-9ccfed8c-6c04-40e7-a343-92da983cc2b3";
 
         private readonly ITestOutputHelper _output;
         private readonly IRiotApiService _RiotApiService;
