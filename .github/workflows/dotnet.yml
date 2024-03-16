@@ -12,6 +12,7 @@ on:
  #   branches: [ "master" ]
 
 env:
+  GITHUB_TOKEN: ${{ github.token }}
   PROJECT_NAME: "SummonerRiftTv.Avalonia.Desktop"
   
 jobs:
