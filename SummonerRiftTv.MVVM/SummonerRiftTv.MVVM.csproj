@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+	<PublishAot>true</PublishAot>
+	  <IsAotCompatible>true</IsAotCompatible>
+	<IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<DebugType>None</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Assets\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="Assets\AppData.json" />
+	  <EmbeddedResource Remove="Assets\spectator.bat" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="ReactiveUI" Version="19.5.41" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
+  </ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SummonerRiftTv.RiotApi\SummonerRiftTv.RiotApi.csproj" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\AppData.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\spectator.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

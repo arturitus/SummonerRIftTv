@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummonerRiftTv.RiotApi", "SummonerRiftTv.RiotApi\SummonerRiftTv.RiotApi.csproj", "{9E45F5F9-828B-4AAC-9197-C44071E39042}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummonerRiftTv.MVVM", "SummonerRiftTv.MVVM\SummonerRiftTv.MVVM.csproj", "{923AA73E-3922-460E-B232-EF64AFDC8916}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummonerRiftTv.Avalonia", "SummonerRiftTv.Avalonia\SummonerRiftTv.Avalonia.csproj", "{7D12F60E-892E-4DC9-A716-F420E1FE1013}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummonerRiftTv.Avalonia.Desktop", "SummonerRiftTv.Avalonia.Desktop\SummonerRiftTv.Avalonia.Desktop.csproj", "{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SummonerRiftTv.Test", "SummonerRiftTv.Test\SummonerRiftTv.Test.csproj", "{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E45F5F9-828B-4AAC-9197-C44071E39042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923AA73E-3922-460E-B232-EF64AFDC8916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923AA73E-3922-460E-B232-EF64AFDC8916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923AA73E-3922-460E-B232-EF64AFDC8916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923AA73E-3922-460E-B232-EF64AFDC8916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D12F60E-892E-4DC9-A716-F420E1FE1013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D12F60E-892E-4DC9-A716-F420E1FE1013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D12F60E-892E-4DC9-A716-F420E1FE1013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D12F60E-892E-4DC9-A716-F420E1FE1013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50F9F0C-3BD4-4504-8977-2D7C6ADDB7C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A53EC6-EC99-4FD1-9CCF-076EE4FA3D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D1A031A-E4A5-43A4-B752-D793433213CC}
+	EndGlobalSection
+EndGlobal
