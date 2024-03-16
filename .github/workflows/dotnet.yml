@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish LeagueSpectator.Avalonia.Desktop -r:win-x64
+      run: dotnet publish SummonerRiftTv.Avalonia.Desktop -r:win-x64
       
     - name: Zip
       run: powershell -command "Compress-Archive -Path 'LeagueSpectator.Avalonia.Desktop\bin\Release\net8.0\win-x64\publish\*' -DestinationPath 'Publish.zip'"
