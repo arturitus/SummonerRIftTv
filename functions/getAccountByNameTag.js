@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
     }
   
     // Construct the URL
-    const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`;
+    const url = `https://${riotServerRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`;
   
     // Return the URL as JSON
     return {
