@@ -1,9 +1,9 @@
 exports.handler = async (event, context) => {
-    const { region, summonerName, tagLine } = event.queryStringParameters;
+    const { riotServerRegion, summonerName, tagLine } = event.queryStringParameters;
 
     const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
     // Check if required parameters are provided
-    if (!region || !summonerName || !tagLine) {
+    if (!riotServerRegion || !summonerName || !tagLine) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: "Missing required parameters" })
