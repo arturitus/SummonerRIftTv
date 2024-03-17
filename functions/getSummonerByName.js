@@ -1,24 +1,25 @@
 const axios = require('axios');
-// Function to retrieve summoner by name
-exports.handler = async (event, context) => 
-{ 
-  const { region, summonerName, apiKey } = event.queryStringParameters;
-  
-  const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`;
-  return fetchData(url);
-};
 
-// Helper function to fetch data from API
-const fetchData = async (url) => 
-{
-  try 
-  {
+// Function to retrieve summoner by name
+exports.handler = async (event, context) => {
+  try {
+    const { region, summonerName, apiKey } = event.queryStringParameters;
+    const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`;
+    
+    // Fetch data from the API
     const response = await axios.get(url);
-    return response.data;
-  } 
-  catch (error)
-  {
+
+    // Return the response to the client
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.data)
+    };
+  } catch (error) {
+    // If an error occurs, return an error response
     console.error(`Error fetching data: ${error.message}`);
-    throw error;
+    return {
+      statusCode: error.response.status || 500,
+      body: JSON.stringify({ error: error.message })
+    };
   }
 };
