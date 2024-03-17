@@ -3,7 +3,8 @@ const axios = require('axios');
 // Function to retrieve summoner by name
 exports.handler = async (event, context) => {
   try {
-    const { region, summonerName, apiKey } = event.queryStringParameters;
+    const { region, summonerName } = event.queryStringParameters;
+    const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
     const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`;
     
     // Fetch data from the API

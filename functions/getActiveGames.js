@@ -1,24 +1,26 @@
 const axios = require('axios');
 
-// Function to retrieve active games
-exports.handler = async (region, summonerId, apiKey) => 
-{
-  const url = `https://${region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${summonerId}?api_key=${apiKey}`;
-  return fetchData(url);
-};
-
-
-// Helper function to fetch data from API
-const fetchData = async (url) => 
-{
-  try 
-  {
+// Function to retrieve summoner by name
+exports.handler = async (event, context) => {
+  try {
+    const { region, summonerId } = event.queryStringParameters;
+    const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
+    const url = `https://${region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${summonerId}?api_key=${apiKey}`;
+    
+    // Fetch data from the API
     const response = await axios.get(url);
-    return response.data;
-  } 
-  catch (error)
-  {
+
+    // Return the response to the client
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response.data)
+    };
+  } catch (error) {
+    // If an error occurs, return an error response
     console.error(`Error fetching data: ${error.message}`);
-    throw error;
+    return {
+      statusCode: error.response.status || 500,
+      body: JSON.stringify({ error: error.message })
+    };
   }
 };
