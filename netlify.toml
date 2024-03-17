@@ -1,6 +1,3 @@
-[build]
-  functions = "functions"  # Specifies the folder where Netlify will look for serverless functions
-
 [functions]
-  path = "functions/proxy.js"         # Path to the JavaScript file containing your function code
-  external_url = "/"  
+  directory  = "functions/"       
+  external_node_modules = ["axios"]
