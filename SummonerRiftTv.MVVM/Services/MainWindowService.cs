@@ -28,14 +28,14 @@ namespace SummonerRiftTv.MVVM.Services
             spectatorRegion = string.Empty;
         }
 
-        async Task<ActiveGameDTO> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region, string apiKey)
+        async Task<ActiveGameDTO> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region)
         {
             try
             {
-                Account account = await SearchAccountAsync(summonerName, tagLine, region, apiKey);
-                Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region, apiKey);
+                Account account = await SearchAccountAsync(summonerName, tagLine, region);
+                Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region);
                 string summonerId = summoner.Id;
-                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region, apiKey);
+                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region);
                 authentication = res.Observers!.EncryptionKey!;
                 matchId = res.GameId;
                 //_region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";
@@ -126,11 +126,11 @@ namespace SummonerRiftTv.MVVM.Services
             });
         }
 
-        private async Task<Summoner> SearchSummonerAsync(string summonerName, Region region, string apiKey)
+        private async Task<Summoner> SearchSummonerAsync(string summonerName, Region region)
         {
             try
             {
-                Summoner res = await m_RiotApiService.GetSummonerByNameAsync(summonerName, region, apiKey);
+                Summoner res = await m_RiotApiService.GetSummonerByNameAsync(summonerName, region);
                 return res;
             }
 
@@ -143,11 +143,11 @@ namespace SummonerRiftTv.MVVM.Services
                 throw;
             }
         }
-        private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region region, string apiKey)
+        private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region region)
         {
             try
             {
-                Account res = await m_RiotApiService.GetAccountByNameTag(summonerName, tagLine, region, apiKey);
+                Account res = await m_RiotApiService.GetAccountByNameTagAsync(summonerName, tagLine, region);
                 return res;
             }
 
@@ -161,11 +161,11 @@ namespace SummonerRiftTv.MVVM.Services
             }
         }
 
-        private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region region, string apiKey)
+        private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region region)
         {
             try
             {
-                Summoner res = await m_RiotApiService.GetSummonerByEncryptedPUUID(encryptedPUUID, region, apiKey);
+                Summoner res = await m_RiotApiService.GetSummonerByEncryptedPUUIDAsync(encryptedPUUID, region);
                 return res;
             }
 

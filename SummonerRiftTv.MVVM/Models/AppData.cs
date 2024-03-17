@@ -8,23 +8,6 @@ namespace SummonerRiftTv.MVVM.Models
     {
         public const string APP_DATA_PATH = "./Assets/AppData.json";
         public event Action<AppData> OnAppDataChanged;
-        private string apiKey;
-        public string ApiKey
-        {
-            get
-            {
-                return apiKey;
-            }
-            set
-            {
-                apiKey = value;
-                //if (lolFolderPath != null && apiKey != null)
-                //{
-                //}
-
-                OnAppDataChanged?.Invoke(this);
-            }
-        }
 
         private string lolFolderPath;
         public string LolFolderPath
@@ -36,9 +19,6 @@ namespace SummonerRiftTv.MVVM.Models
             set
             {
                 lolFolderPath = value;
-                //if (lolFolderPath != null && apiKey != null)
-                //{
-                //}
                 OnAppDataChanged?.Invoke(this);
             }
         }

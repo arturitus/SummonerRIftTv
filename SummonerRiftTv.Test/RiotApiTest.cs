@@ -28,8 +28,6 @@ namespace SummonerRiftTV.Test
         private const string SUMMONER_NAME = "arturo238";
         private const string TAG_LINE = "EUW";
         private const Region REGION = Region.EUW1;
-        //private const string API_KEY = "RGAPI-1377051c-7ed6-41b3-9793-6b1fa908f03c";
-        private const string API_KEY = "RGAPI-9ccfed8c-6c04-40e7-a343-92da983cc2b3";
 
         private readonly ITestOutputHelper _output;
         private readonly IRiotApiService _RiotApiService;
@@ -47,7 +45,7 @@ namespace SummonerRiftTV.Test
         {
             try
             {
-                Account account = await _RiotApiService.GetAccountByNameTag(SUMMONER_NAME, TAG_LINE, REGION, API_KEY);
+                Account account = await _RiotApiService.GetAccountByNameTagAsync(SUMMONER_NAME, TAG_LINE, REGION);
 
                 if (account is not null)
                 {
@@ -69,7 +67,7 @@ namespace SummonerRiftTV.Test
             {
                 Assert.Fail($"{nameof(_RiotApiServiceFixture.EncryptedPuuid)} was null or empty");
             }
-            Summoner summoner = await _RiotApiService.GetSummonerByEncryptedPUUID(_RiotApiServiceFixture.EncryptedPuuid, REGION, API_KEY);
+            Summoner summoner = await _RiotApiService.GetSummonerByEncryptedPUUIDAsync(_RiotApiServiceFixture.EncryptedPuuid, REGION);
 
             if (summoner is not null)
             {
@@ -83,7 +81,7 @@ namespace SummonerRiftTV.Test
         {
             try
             {
-                Summoner summoner = await _RiotApiService.GetSummonerByNameAsync(SUMMONER_NAME, REGION, API_KEY);
+                Summoner summoner = await _RiotApiService.GetSummonerByNameAsync(SUMMONER_NAME, REGION);
 
                 if (summoner is not null)
                 {
@@ -107,7 +105,7 @@ namespace SummonerRiftTV.Test
             }
             try
             {
-                ActiveGame activeGame = await _RiotApiService.GetActiveGameAsync(_RiotApiServiceFixture.SummonerId, REGION, API_KEY);
+                ActiveGame activeGame = await _RiotApiService.GetActiveGameAsync(_RiotApiServiceFixture.SummonerId, REGION);
 
                 Assert.NotNull(activeGame);
             }

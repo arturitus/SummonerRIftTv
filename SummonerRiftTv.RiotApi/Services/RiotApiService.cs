@@ -8,16 +8,25 @@ namespace SummonerRiftTv.RiotApi.Services
 {
     public class RiotApiService : IRiotApiService
     {
-        async Task<Account> IRiotApiService.GetAccountByNameTag(string summonerName, string tagLine, Region region, string apiKey)
+        private const string BASE_ADDRESS = "https://summonerrifttv.netlify.app/";
+        private const string NETLIFY_FUNCTIONS = ".netlify/functions";
+
+        async Task<Account> IRiotApiService.GetAccountByNameTagAsync(string summonerName, string tagLine, Region region)
         {
-            using (HttpClient httpClient = new())
+            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
                 if (string.IsNullOrEmpty(tagLine))
                 {
                     tagLine = region.ToTagLine().ToString();
                 }
                 RiotServerRegion riotServerRegion = region.ToRiotServerRegion();
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{riotServerRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{summonerName}/{tagLine}/?api_key={apiKey}").Result)
+
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getAccountByNameTag" +
+                                    $"?riotServerRegion={riotServerRegion}" +
+                                    $"&summonerName={summonerName}" +
+                                    $"&tagLine={tagLine}";
+
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {
                     if (responseMessage.IsSuccessStatusCode)
                     {
@@ -34,11 +43,13 @@ namespace SummonerRiftTv.RiotApi.Services
             }
         }
 
-        async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUID(string encryptedPUUID, Region region, string apiKey)
+        async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region region)
         {
-            using (HttpClient httpClient = new())
+            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}?api_key={apiKey}").Result)
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getSummonerByEncryptedPUUID?region={region}&encryptedPUUID={encryptedPUUID}";
+
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {
                     if (responseMessage.IsSuccessStatusCode)
                     {
@@ -55,11 +66,12 @@ namespace SummonerRiftTv.RiotApi.Services
             }
         }
 
-        async Task<Summoner> IRiotApiService.GetSummonerByNameAsync(string summonerName, Region region, string apiKey)
+        async Task<Summoner> IRiotApiService.GetSummonerByNameAsync(string summonerName, Region region)
         {
-            using (HttpClient httpClient = new())
+            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey}").Result)
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getSummonerByName?region={region}&summonerName={summonerName}";
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {
 
                     if (responseMessage.IsSuccessStatusCode)
@@ -75,11 +87,13 @@ namespace SummonerRiftTv.RiotApi.Services
                 }
             }
         }
-        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string summonerId, Region region, string apiKey)
+        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string summonerId, Region region)
         {
-            using (HttpClient httpClient = new())
+            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
-                using (HttpResponseMessage responseMessage = httpClient.GetAsync($"https://{region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{summonerId}?api_key={apiKey}").Result)
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getActiveGames?region={region}&summonerId={summonerId}";
+
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {
                     if (responseMessage.IsSuccessStatusCode)
                     {

@@ -15,6 +15,7 @@
 		CanResize="True"
         MinHeight="700"
         MinWidth="800"
+		WindowStartupLocation="CenterScreen"
 		ExtendClientAreaToDecorationsHint="False"
 		Height="500"
         Icon="resm:SummonerRiftTv.MVVM.Assets.appIcon.ico?assembly=SummonerRiftTv.MVVM"
@@ -57,7 +58,6 @@
               <MultiBinding>
                 <Binding ElementName="tbsummName" Path="Text"/>
                 <Binding ElementName="comboRegion" Path="SelectedValue"/>
-                <Binding ElementName="tbApiKey" Path="Text"/>
               </MultiBinding>
             </Button.CommandParameter>
           </Button>
@@ -253,8 +253,6 @@
 					</Grid.RowDefinitions>-->
           <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{DynamicResource LolFolder}"/>
           <TextBox Text="{Binding AppData.LolFolderPath}" Classes="outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1"/>
-          <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{DynamicResource RiotApiKey}"/>
-          <TextBox Name="tbApiKey" Text="{Binding AppData.ApiKey}" Classes="outline" Margin="5" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
 		  <TextBlock FontSize="16" Margin="5" VerticalAlignment="Center" Text="{DynamicResource Theme}"/>
 		  <!--<ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" Classes="outline" ItemsSource="{Binding Themes}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedValue="{Binding ThemeIndex}">-->
 		  <ComboBox Margin="5" Name="ThemeCombo" MinWidth="120" DisplayMemberBinding="{Binding DisplayName, Mode=OneWay, DataType={x:Type models:EnumLocalizable}}" SelectedValueBinding="{Binding EnumValue, Mode=OneWay, DataType={x:Type models:EnumLocalizable}}" Classes="outline" ItemsSource="{DynamicResource Themes}" Theme="{StaticResource MaterialOutlineComboBox}" SelectedValue="{Binding ThemeIndex}">

@@ -145,7 +145,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
             //AppData = appData;
         }
 
-        public bool CanSearch(IList<object> parameters, ref string summName, ref Region? selectedRegion, ref string apiKey)
+        public bool CanSearch(IList<object> parameters, ref string summName, ref Region? selectedRegion)
         {
             List<InfoDialogKeys> keys = new();
             bool canSearch = true;
@@ -158,12 +158,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
             {
                 keys.Add(InfoDialogKeys.EmptyRegion);
                 canSearch = false;
-            }
-            if (string.IsNullOrEmpty((string)parameters[2]))
-            {
-                keys.Add(InfoDialogKeys.EmptyApiKey);
-                canSearch = false;
-            }
+            }            
             if (!canSearch)
             {
                 InfoDialog?.Invoke(keys.ToFrozenSet());
@@ -172,7 +167,6 @@ namespace SummonerRiftTv.MVVM.ViewModels
             {
                 summName = ((string)parameters[0]).Trim();
                 selectedRegion = (Region?)parameters[1];
-                apiKey = ((string)parameters[2]).Trim();
             }
             return canSearch;
         }
@@ -181,11 +175,10 @@ namespace SummonerRiftTv.MVVM.ViewModels
         {
             string summName = string.Empty;
             Region? selectedRegion = default;
-            string apiKey = string.Empty;
             string tagLine = string.Empty;
 
 
-            if (!CanSearch(parameters, ref summName, ref selectedRegion, ref apiKey))
+            if (!CanSearch(parameters, ref summName, ref selectedRegion))
             {
                 return;
             }
@@ -206,7 +199,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
                 try
                 {
                     IsBusy?.Invoke(true);
-                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value, apiKey);
+                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value);
 
                     SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;
