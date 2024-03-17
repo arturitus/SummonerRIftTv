@@ -1,0 +1,3 @@
+[[functions]]
+  path = "functions/proxy.js"
+  external_url = "/"
