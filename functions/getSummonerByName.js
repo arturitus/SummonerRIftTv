@@ -1,4 +1,4 @@
-
+const axios = require('axios');
 // Function to retrieve summoner by name
 exports.handler = async (region, summonerName, apiKey) => 
 {
