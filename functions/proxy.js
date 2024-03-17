@@ -30,4 +30,13 @@ const fetchData = async (url) =>
   }
 };
 
-module.exports = { getActiveGames, getSummonerByName };
+const hello = async (event, context) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: "Hello World"
+    })
+  }
+}
+
+module.exports = { getActiveGames, getSummonerByName, hello };
