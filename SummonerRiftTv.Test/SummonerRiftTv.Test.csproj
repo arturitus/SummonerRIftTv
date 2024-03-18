@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PublishAot>true</PublishAot>
-	  <IsAotCompatible>true</IsAotCompatible>
+	  <!--<PublishAot>true</PublishAot>-->
+	  <!--<IsAotCompatible>true</IsAotCompatible>-->
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>

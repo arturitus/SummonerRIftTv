@@ -5,8 +5,8 @@
     One for Windows with net7.0-windows TFM, one for MacOS with net7.0-macos and one with net7.0 TFM for Linux.-->
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
-	  <PublishAot>true</PublishAot>
-	  <IsAotCompatible>true</IsAotCompatible>
+	  <!--<PublishAot>true</PublishAot>-->
+	  <!--<IsAotCompatible>true</IsAotCompatible>-->
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>appIcon.ico</ApplicationIcon>
