@@ -15,8 +15,8 @@ namespace SummonerRiftTv.Avalonia.Converters
             {
                 return string.Empty;
             }
-            string b = App.Current.FindResource(values[1].ToString()) as string;
-            return string.Format(b, values[0]);
+            string res = App.Current.FindResource(values[1].ToString()) as string;
+            return string.Format(res, values[0]);
         }
     }
 }
