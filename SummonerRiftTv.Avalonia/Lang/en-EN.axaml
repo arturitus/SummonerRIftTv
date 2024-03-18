@@ -71,7 +71,7 @@
 	<x:String x:Key="Ended">Game has ended.</x:String>	
 	
 	<!--ChampionType-->
-	<x:String x:Key="NoneChampion">Ninguno</x:String>
+	<x:String x:Key="NoneChampion">None</x:String>
 	<x:String x:Key="Annie">Annie</x:String>
 	<x:String x:Key="Kayle">Kayle</x:String>
 	<x:String x:Key="Xerath">Xerath</x:String>
