@@ -53,13 +53,13 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-       name: MSIX Package
+       name: Publish
        path: Publish.zip
 
     - name: Upload AoT build artifacts
       uses: actions/upload-artifact@v4
       with:
-       name: MSIX Package
+       name: Publish AoT
        path: PublishAoT.zip
 
     - name: Create Release
