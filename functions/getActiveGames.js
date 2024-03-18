@@ -1,6 +1,5 @@
 const axios = require('axios');
 
-// Function to retrieve summoner by name
 exports.handler = async (event, context) => {
   try {
     const { region, summonerId } = event.queryStringParameters;
