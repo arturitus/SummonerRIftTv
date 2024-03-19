@@ -25,7 +25,7 @@ namespace SummonerRiftTV.Test
 
     public class RiotApiTest : IClassFixture<RiotApiServiceFixture>
     {
-        private const string SUMMONER_NAME = "arturo238";
+        private const string SUMMONER_NAME = "elmiillor03";
         private const string TAG_LINE = "EUW";
         private const Region REGION = Region.EUW1;
 
