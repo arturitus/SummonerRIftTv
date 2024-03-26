@@ -59,6 +59,9 @@ namespace SummonerRiftTv.MVVM.Services
                         spectatorRegion = _region;
                         break;
                 }
+                ActiveGameDTO activeGameDTO = await ActiveGameDTO.FromActiveGameAsync(res,
+                                              async (s) => await ActiveGameDTO_OnAskPlayerLeague(s, region));
+                return activeGameDTO;
                 return res;
             }
 
@@ -74,6 +77,11 @@ namespace SummonerRiftTv.MVVM.Services
             {
                 throw new MainWindowServiceError(new ErrorDialogFormat("", InfoDialogKeys.ApiKeyNotValid));
             }
+        }
+
+        private async Task<HashSet<LeagueItem>> ActiveGameDTO_OnAskPlayerLeague(string summonerId, Region region)
+        {
+            return await m_RiotApiService.GetLeagueEntryBySummonerIdAsync(summonerId, region);
         }
 
         async Task IMainWindowService.SpectateGameAsync(string lolFolderPath)

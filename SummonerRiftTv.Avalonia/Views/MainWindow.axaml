@@ -82,10 +82,18 @@
           <Grid RowDefinitions="auto, *" ColumnDefinitions="*, *">
             
             <Grid ColumnDefinitions="*, auto" Margin="5,0,10,0" RowDefinitions="*,*">
-              <TextBlock Margin="2" Grid.Row="1" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.BlueTeamBans.Count}"/>
-				 
-              <!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
-                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding ActiveGame.BlueTeamBans.Count}"/>
+				<StackPanel Grid.Row="1" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.BlueTeamPlayers.Count}">
+					<TextBlock Margin="2" Text="{DynamicResource BlueTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center"/>
+					<TextBlock Margin="2" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center">
+						<Run Text="{DynamicResource TierAverage}"/>
+						<Run Text=":"/>
+						<Run Text="{Binding ActiveGame.BlueTeamAvgTier, Converter={StaticResource EnumToLocalizationConverter}}"/>
+					</TextBlock>
+					<!--<TextBlock Margin="2" Text="{Binding ActiveGame.BlueTeamAvgTier, Converter={StaticResource EnumToLocalizationConverter}}" FontSize="14" FontWeight="SemiBold" Foreground="#5B83E6" VerticalAlignment="Center"/>-->
+				</StackPanel>
+
+				<!--<StackPanel Margin="2" Grid.Column="1" HorizontalAlignment="Right">-->
+                <TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Margin="2" FontWeight="SemiBold" Foreground="#5B83E6" IsVisible="{Binding ActiveGame.BlueTeamPlayers.Count}"/>
                 <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ActiveGame.BlueTeamBans}" Margin="2">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -102,9 +110,17 @@
             </Grid>
 
 			  <Grid ColumnDefinitions="*, auto" Margin="0,0,5,0" Grid.Column="1" RowDefinitions="*,*">
-				  <TextBlock Grid.Row="1" Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.RedTeamBans.Count}"/>
+				  <StackPanel Grid.Row="1" VerticalAlignment="Center" IsVisible="{Binding ActiveGame.RedTeamPlayers.Count}">
+					  <TextBlock Margin="2" Text="{DynamicResource RedTeam}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center"/>
+					  <TextBlock Margin="2" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center">
+						  <Run Text="{DynamicResource TierAverage}"/>
+						  <Run Text=":"/>
+						  <Run Text="{Binding ActiveGame.RedTeamAvgTier, Converter={StaticResource EnumToLocalizationConverter}}"/>
+					  </TextBlock>
+					  <!--<TextBlock Margin="2" Text="{Binding ActiveGame.RedTeamAvgTier, Converter={StaticResource EnumToLocalizationConverter}}" FontSize="14" FontWeight="SemiBold" Foreground="#E23E56" VerticalAlignment="Center"/>-->
+				  </StackPanel>				  
 				  <!--<StackPanel Margin="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">-->
-					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding ActiveGame.RedTeamBans.Count}"/>
+					<TextBlock Grid.Column="1" Text="{DynamicResource Bans}" HorizontalAlignment="Right" Foreground="#E23E56" FontWeight="SemiBold" Margin="2"  IsVisible="{Binding ActiveGame.RedTeamPlayers.Count}"/>
 					<ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ActiveGame.RedTeamBans}" VerticalAlignment="Center" Margin="2">
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
@@ -137,7 +153,8 @@
                           <ColumnDefinition Width="auto"/>
                           <ColumnDefinition Width="auto"/>
                           <ColumnDefinition Width="auto"/>
-                          <ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#5B83E6" Width="5" Margin="2"/>
                         <Image Grid.Column="1" HorizontalAlignment="Left" Margin="2" Height="40" Width="40" Source="{Binding Bitmaps[0], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource EnumToLocalizationConverter}}"/>
@@ -145,7 +162,20 @@
                           <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource EnumToLocalizationConverter}}"/>
                           <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource EnumToLocalizationConverter}}"/>
                         </StackPanel>
-                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="{Binding RiotId}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
+						  <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+							  <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding SoloQueueRank.Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SoloQueueRank.Tier, Converter={StaticResource EnumToLocalizationConverter}}"/>
+							  <TextBlock FontSize="12" VerticalAlignment="Center" IsVisible="{Binding SoloQueueRank.IsRankVisible}">
+								  <Run Text="{Binding SoloQueueRank.Rank}"/>
+								  <Run Text=""/>
+							 </TextBlock>
+							  <TextBlock FontSize="12" VerticalAlignment="Center" IsVisible="{Binding SoloQueueRank, Converter={x:Static ObjectConverters.IsNotNull}}">
+								  <!--<Run Text="("/>-->
+								  <Run Text="{Binding SoloQueueRank.LeaguePoints}"/>
+								  <Run Text="{DynamicResource LP}"/>
+								  <!--<Run Text=")"/>-->
+							  </TextBlock>
+						  </StackPanel>
                       </Grid>
                     </Expander.Header>
 						<ItemsControl ItemsSource="{Binding Perks.RuneTree}" Margin="20,0">
@@ -194,15 +224,29 @@
                           <ColumnDefinition Width="auto"/>
                           <ColumnDefinition Width="auto"/>
                           <ColumnDefinition Width="auto"/>
+						  <ColumnDefinition Width="*"/>
                           <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#E23E56" Width="5" Margin="2.5"/>
-                        <Image Grid.Column="1" Margin="2.5" HorizontalAlignment="Right" Height="40" Width="40" Source="{Binding Bitmaps[0], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource EnumToLocalizationConverter}}"/>
+                        <Image Grid.Column="1" Margin="2.5" Height="40" Width="40" Source="{Binding Bitmaps[0], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding ChampionType, Converter={StaticResource EnumToLocalizationConverter}}"/>
                         <StackPanel Grid.Column="2" Margin="2" VerticalAlignment="Center">
                             <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding Bitmaps[1], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType1, Converter={StaticResource EnumToLocalizationConverter}}"/>
                             <Image Margin="2, 1, 2, 2" Height="20" Width="20" Source="{Binding Bitmaps[2], Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SummonerSpellType2, Converter={StaticResource EnumToLocalizationConverter}}"/>
                           </StackPanel>
-                        <TextBlock Grid.Column="3" Text="{Binding SummonerName}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>     
+                        <TextBlock Grid.Column="3" Text="{Binding RiotId}" VerticalAlignment="Center" Margin="2" FontSize="12" FontWeight="SemiBold"/>
+						  <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="2" VerticalAlignment="Center">
+							  <Image Margin="2, 2, 2, 1" Height="20" Width="20" Source="{Binding SoloQueueRank.Bitmap, Mode=OneWay, Converter={StaticResource UriToBitmap}}" Stretch="Uniform" ToolTip.Tip="{Binding SoloQueueRank.Tier, Converter={StaticResource EnumToLocalizationConverter}}"/>
+							  <TextBlock FontSize="12" VerticalAlignment="Center" IsVisible="{Binding SoloQueueRank.IsRankVisible}">
+								  <Run Text="{Binding SoloQueueRank.Rank}"/>
+								  <Run Text=""/>
+							  </TextBlock>
+							 <TextBlock FontSize="12" VerticalAlignment="Center" IsVisible="{Binding SoloQueueRank, Converter={x:Static ObjectConverters.IsNotNull}}">
+								  <!--<Run Text="("/>-->
+								  <Run Text="{Binding SoloQueueRank.LeaguePoints}"/>
+								  <Run Text="{DynamicResource LP}"/>
+								  <!--<Run Text=")"/>-->
+							  </TextBlock>
+						  </StackPanel>
                       </Grid>
                     </Expander.Header>
 					  <ItemsControl ItemsSource="{Binding Perks.RuneTree}" Margin="20,0">

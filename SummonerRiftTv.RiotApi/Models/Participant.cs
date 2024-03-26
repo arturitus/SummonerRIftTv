@@ -22,6 +22,9 @@ namespace SummonerRiftTv.RiotApi.Models
         [JsonPropertyName("summonerName")]
         public string SummonerName { get; set; }
 
+        [JsonPropertyName("riotId")]
+        public string RiotId { get; set; }
+
         [JsonPropertyName("bot")]
         public bool Bot { get; set; }
 

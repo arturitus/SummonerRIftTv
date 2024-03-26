@@ -8,5 +8,6 @@ namespace SummonerRiftTv.RiotApi.IServices
         Task<Summoner> GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region region);
         Task<Summoner> GetSummonerByNameAsync(string summonerName, Region region);
         Task<ActiveGame> GetActiveGameAsync(string summonerId, Region region);
+        Task<HashSet<LeagueItem>> GetLeagueEntryBySummonerIdAsync(string summonerId, Region region);
     }
 }

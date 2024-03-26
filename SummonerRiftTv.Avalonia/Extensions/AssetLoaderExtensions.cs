@@ -15,7 +15,7 @@ namespace SummonerRiftTv.Avalonia.Extensions
         //private const string AVA_RES_BASE = "avares://SummonerRiftTv.Avalonia/Assets/";
 
         private const string EMBEDDED_RESOURCES_NAMESPACE = "SummonerRiftTv.MVVM.Assets";
-        private static readonly string[] SUBFORLDERS = ["Champions", "Runes", "SummonerSpells"];
+        private static readonly string[] SUBFORLDERS = ["Champions", "Runes", "SummonerSpells", "Tiers"];
 
         private static readonly Bitmap m_NoneSelected;
         private static readonly FrozenSet<EmbeddedResource> m_CachedAssets;

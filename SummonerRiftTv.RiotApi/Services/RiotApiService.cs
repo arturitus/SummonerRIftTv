@@ -3,6 +3,7 @@ using SummonerRiftTv.RiotApi.IServices;
 using SummonerRiftTv.RiotApi.Models;
 using System.Net;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace SummonerRiftTv.RiotApi.Services
 {
@@ -41,6 +42,33 @@ namespace SummonerRiftTv.RiotApi.Services
                     throw new InvalidApiKeyException();
                 }
             }
+        }
+
+        async Task<HashSet<LeagueItem>> IRiotApiService.GetLeagueEntryBySummonerIdAsync(string summonerId, Region region)
+        {
+            using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
+            {
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getLeagueEntries?region={region}&summonerId={summonerId}";
+                //string requestUri = $"https://{region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{summonerId}?api_key=RGAPI-00db2ab2-cec3-441b-a283-eca0a9b52105";
+
+                using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
+                {
+                    responseMessage.EnsureSuccessStatusCode();
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string json = await responseMessage.Content.ReadAsStringAsync();
+                        return JsonSerializer.Deserialize(json, SourceGenerationContext.Default.HashSetLeagueItem);
+                    }
+
+                    if (responseMessage.StatusCode is HttpStatusCode.NotFound)
+                    {
+                        throw new SummonerNotFoundException();
+                    }
+
+                    throw new InvalidApiKeyException();
+                }
+            }
+        
         }
 
         async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region region)

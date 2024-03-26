@@ -115,5 +115,26 @@ namespace SummonerRiftTV.Test
                 Assert.NotNull(ex);
             }
         }
+
+        [Fact]
+        public async Task GetLeagueEntriesAsync_Should_Return_LeagueEntries5()
+        {
+            if (string.IsNullOrEmpty(_RiotApiServiceFixture.SummonerId))
+            {
+                Assert.Fail($"{nameof(_RiotApiServiceFixture.SummonerId)} was null or empty");
+            }
+            try
+            {
+                HashSet<LeagueItem> activeGame = await _RiotApiService.GetLeagueEntryBySummonerIdAsync(_RiotApiServiceFixture.SummonerId, REGION);
+
+                Assert.NotNull(activeGame);
+                Assert.NotEmpty(activeGame);
+            }
+            catch (GameNotFoundException ex)
+            {
+                _output.WriteLine("Warning: was successfull, but no league entries were found.");
+                Assert.NotNull(ex);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace SummonerRiftTv.MVVM.Services
         private readonly FrozenSet<FrozenLeagueObject<ChampionType>> m_Champions;
         private readonly FrozenSet<FrozenLeagueObject<RuneType>> m_Runes;
         private readonly FrozenSet<FrozenLeagueObject<SummonerSpellType>> m_SummonerSpells;
+        private readonly FrozenSet<FrozenLeagueObject<Tier>> m_Tiers;
 
         //private readonly List<FrozenLeagueObject<ChampionType>> m_Champions;
         //private readonly List<FrozenLeagueObject<RuneType>> m_Runes;
@@ -25,6 +26,7 @@ namespace SummonerRiftTv.MVVM.Services
             m_Champions = PopulateData<ChampionType>();
             m_Runes = PopulateData<RuneType>();
             m_SummonerSpells = PopulateData<SummonerSpellType>();
+            m_Tiers = PopulateData<Tier>();
         }
 
         private void PopulateData()
@@ -61,6 +63,7 @@ namespace SummonerRiftTv.MVVM.Services
                 ChampionType => m_Champions.FirstOrDefault(c => c.Id == id) as FrozenLeagueObject<T>,
                 RuneType => m_Runes.FirstOrDefault(c => c.Id == id) as FrozenLeagueObject<T>,
                 SummonerSpellType => m_SummonerSpells.FirstOrDefault(c => c.Id == id) as FrozenLeagueObject<T>,
+                Tier => m_Tiers.FirstOrDefault(c => c.Id == id) as FrozenLeagueObject<T>,
                 _ => m_Champions.FirstOrDefault(c => c.Id == -1) as FrozenLeagueObject<T>,
             };
         }

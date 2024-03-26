@@ -42,6 +42,7 @@ namespace SummonerRiftTv.RiotApi.Models
     [JsonSerializable(typeof(ActiveGame))]
     [JsonSerializable(typeof(Summoner))]
     [JsonSerializable(typeof(Account))]
+    [JsonSerializable(typeof(HashSet<LeagueItem>))]
     internal partial class SourceGenerationContext : JsonSerializerContext
     {
     }

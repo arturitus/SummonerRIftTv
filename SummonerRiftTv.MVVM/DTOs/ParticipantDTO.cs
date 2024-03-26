@@ -54,9 +54,13 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public string SummonerName { get; set; }
 
+        public string RiotId { get; set; }
+
         public bool Bot { get; set; }
 
         public string SummonerId { get; set; }
+
+        public LeagueItemDTO SoloQueueRank { get; set; }
 
         public List<object> GameCustomizationObjects { get; set; }
 
@@ -80,6 +84,7 @@ namespace SummonerRiftTv.MVVM.DTOs
         public override void LocalizeObject()
         {
             Perks.LocalizeObject();
+            SoloQueueRank.LocalizeObject();
             this.RaisePropertyChanged(nameof(ChampionType));
             this.RaisePropertyChanged(nameof(SummonerSpellType1));
             this.RaisePropertyChanged(nameof(SummonerSpellType2));
@@ -98,6 +103,7 @@ namespace SummonerRiftTv.MVVM.DTOs
                 Spell2Id = participant.Spell2Id,
                 SummonerId = participant.SummonerId,
                 SummonerName = participant.SummonerName,
+                RiotId = participant.RiotId,
                 TeamId = participant.TeamId
             };
         }

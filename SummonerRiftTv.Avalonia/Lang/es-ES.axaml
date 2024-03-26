@@ -45,8 +45,10 @@
 	<x:String x:Key="Theme">Tema</x:String>
 	<x:String x:Key="Language">Idioma</x:String>
 	<x:String x:Key="Runes">Runas</x:String>
-	<x:String x:Key="RedTeam">Equipo Rojo</x:String>
-	<x:String x:Key="BlueTeam">Equipo Azul</x:String>
+	<x:String x:Key="RedTeam">Equipo rojo</x:String>
+	<x:String x:Key="BlueTeam">Equipo azul</x:String>
+	<x:String x:Key="TierAverage">Nivel medio</x:String>
+	<x:String x:Key="LP">PL</x:String>
 	<x:String x:Key="Bans">Baneos</x:String>
 	
 	<!-- InfoDialogKeys -->
@@ -339,6 +341,46 @@
 	<x:String x:Key="Ghost_1">Fantasmal</x:String>
 	<x:String x:Key="Dash">Deslizamiento</x:String>
 	<x:String x:Key="RuinedKingSmite">Aplastar del Rey Arruinado</x:String>
+	
+	<!--Tier-->
+	<x:String x:Key="Unranked">Unranked</x:String>
+	<x:String x:Key="Challenger">Aspirante</x:String>
+	<x:String x:Key="Grandmaster">Gran maestro</x:String>
+	<x:String x:Key="Master">Maestro</x:String>
+	<x:String x:Key="Diamond">Diamante</x:String>
+	<x:String x:Key="Emerald">Esmeralda</x:String>
+	<x:String x:Key="Platinum">Platino</x:String>
+	<x:String x:Key="Gold">Oro</x:String>
+	<x:String x:Key="Silver">Plata</x:String>
+	<x:String x:Key="Iron">Hierro</x:String>
+
+	<x:String x:Key="Challenger1">Aspirante</x:String>
+	<x:String x:Key="Grandmaster1">Gran maestro</x:String>
+	<x:String x:Key="Master1">Maestro</x:String>
+	<x:String x:Key="Diamond1">Diamante 1</x:String>
+	<x:String x:Key="Diamond2">Diamante 2</x:String>
+	<x:String x:Key="Diamond3">Diamante 3</x:String>
+	<x:String x:Key="Diamond4">Diamante 4</x:String>
+	<x:String x:Key="Emerald1">Esmeralda 1</x:String>
+	<x:String x:Key="Emerald2">Esmeralda 2</x:String>
+	<x:String x:Key="Emerald3">Esmeralda 3</x:String>
+	<x:String x:Key="Emerald4">Esmeralda 4</x:String>
+	<x:String x:Key="Platinum1">Platino 1</x:String>
+	<x:String x:Key="Platinum2">Platino 2</x:String>
+	<x:String x:Key="Platinum3">Platino 3</x:String>
+	<x:String x:Key="Platinum4">Platino 4</x:String>
+	<x:String x:Key="Gold1">Oro 1</x:String>
+	<x:String x:Key="Gold2">Oro 2</x:String>
+	<x:String x:Key="Gold3">Oro 3</x:String>
+	<x:String x:Key="Gold4">Oro 4</x:String>
+	<x:String x:Key="Silver1">Plata 1</x:String>
+	<x:String x:Key="Silver2">Plata 2</x:String>
+	<x:String x:Key="Silver3">Plata 3</x:String>
+	<x:String x:Key="Silver4">Plata 4</x:String>
+	<x:String x:Key="Iron1">Plata 1</x:String>
+	<x:String x:Key="Iron2">Plata 2</x:String>
+	<x:String x:Key="Iron3">Plata 3</x:String>
+	<x:String x:Key="Iron4">Plata 4</x:String>
 
 
 	<!--<sys:String x:Key="The" >ASASD</sys:String>

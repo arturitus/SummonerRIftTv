@@ -109,6 +109,7 @@ namespace SummonerRiftTv.MVVM.Helpers
                 ChampionType => new Uri($"Champions.{id}", UriKind.Relative),
                 RuneType => new Uri($"Runes.{id}", UriKind.Relative),
                 SummonerSpellType => new Uri($"SummonerSpells.{id}", UriKind.Relative),
+                Tier => new Uri($"Tiers.{id}", UriKind.Relative),
                 _ => new Uri($"Champions.-1", UriKind.Relative),
             };
         }

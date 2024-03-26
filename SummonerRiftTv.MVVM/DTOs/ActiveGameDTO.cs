@@ -6,6 +6,8 @@ namespace SummonerRiftTv.MVVM.DTOs
 {
     public class ActiveGameDTO : LocalizableObject
     {
+        public AverageTier BlueTeamAvgTier => TeamAverageTier(BlueTeamPlayers);
+        public AverageTier RedTeamAvgTier => TeamAverageTier(RedTeamPlayers);
         public ObservableCollection<ParticipantDTO> BlueTeamPlayers { get; } = new ObservableCollection<ParticipantDTO>();
         public ObservableCollection<BannedChampionDTO> BlueTeamBans { get; } = new ObservableCollection<BannedChampionDTO>();
         public ObservableCollection<ParticipantDTO> RedTeamPlayers { get; } = new ObservableCollection<ParticipantDTO>();
@@ -70,6 +72,41 @@ namespace SummonerRiftTv.MVVM.DTOs
             return activeGameDTO;
         }
 
+        public static async Task<ActiveGameDTO> FromActiveGameAsync(ActiveGame activeGame, Func<string, Task<HashSet<LeagueItem>>> func)
+        {
+            ActiveGameDTO activeGameDTO = new ActiveGameDTO()
+            {
+                MapId = activeGame.MapId,
+                GameMode = activeGame.GameMode,
+                GameType = activeGame.GameType,
+                GameLength = activeGame.GameLength
+            };
+            foreach (ParticipantDTO participant in activeGame.Participants)
+            {
+                HashSet<LeagueItem> list = await func?.Invoke(participant.SummonerId);
+                if (list.Count > 0)
+                {
+                    participant.SoloQueueRank = list.FirstOrDefault(l => ((LeagueItemDTO)l).QueueType == QueueType.RANKED_SOLO_5x5);
+                }
+                if (participant.TeamId is TeamId.BlueTeam)
+                {
+                    activeGameDTO.AddPlayer(participant);
+                    continue;
+                }
+                activeGameDTO.AddPlayer(participant);
+            }
+            foreach (BannedChampionDTO participant in activeGame.BannedChampions)
+            {
+                if (participant.TeamId is TeamId.BlueTeam)
+                {
+                    activeGameDTO.AddBan(participant);
+                    continue;
+                }
+                activeGameDTO.AddBan(participant);
+            }
+            return activeGameDTO;
+        }
+
         private void AddPlayer(ParticipantDTO participant)
         {
             if (participant.TeamId is TeamId.BlueTeam)
@@ -88,6 +125,31 @@ namespace SummonerRiftTv.MVVM.DTOs
                 return;
             }
             RedTeamBans.Add(participant);
+        }
+
+        private static AverageTier TeamAverageTier(ObservableCollection<ParticipantDTO> participants)
+        {
+            List<AverageTier> averageTier = [];
+            IEnumerable<int> possibleTiers = Enum.GetValues<AverageTier>().Select(x => (int)x);
+            IEnumerable<AverageTier> possibleTiers2 = Enum.GetValues<AverageTier>();
+
+            foreach (ParticipantDTO item in participants)
+            {
+                if(item.SoloQueueRank is not null)
+                {
+                    averageTier.Add((AverageTier)((int)item.SoloQueueRank.Tier | (int)item.SoloQueueRank.Rank));
+                }
+            }
+
+            if(averageTier.Count <= 0)
+            {
+                return AverageTier.Unranked;
+            }
+
+            double avg = averageTier.Average(x => (int)x);
+            int closestTier = possibleTiers.OrderBy(x => Math.Abs(x - avg)).FirstOrDefault();
+
+            return (AverageTier)closestTier;
         }
     }
 }

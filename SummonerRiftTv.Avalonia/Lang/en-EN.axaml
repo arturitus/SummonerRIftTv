@@ -46,8 +46,10 @@
 	<x:String x:Key="Theme">Theme</x:String>
 	<x:String x:Key="Language">Language</x:String>
 	<x:String x:Key="Runes">Runes</x:String>
-	<x:String x:Key="RedTeam">Red Team</x:String>
-	<x:String x:Key="BlueTeam">Blue Team</x:String>
+	<x:String x:Key="RedTeam">Red team</x:String>
+	<x:String x:Key="BlueTeam">Blue team</x:String>
+	<x:String x:Key="TierAverage">Tier average</x:String>
+	<x:String x:Key="LP">LP</x:String>
 	<x:String x:Key="Bans">Bans</x:String>
 
 
@@ -321,7 +323,7 @@
 	<x:String x:Key="HailOfBlades">Hail of blades</x:String>
 	
 	<!--SummonerSpellType-->
-	<x:String x:Key="NoneSummoner">Ninguno</x:String>
+	<x:String x:Key="NoneSummoner">None</x:String>
 	<x:String x:Key="Cleanse">Cleanse</x:String>
 	<x:String x:Key="Exhaust">Exhaust</x:String>
 	<x:String x:Key="Flash">Flash</x:String>
@@ -341,6 +343,46 @@
 	<x:String x:Key="Ghost_1">Ghost</x:String>
 	<x:String x:Key="Dash">Dash</x:String>
 	<x:String x:Key="RuinedKingSmite">Ruined King Smite</x:String>
+
+	<!--Tier-->
+	<x:String x:Key="Unranked">Unranked</x:String>
+	<x:String x:Key="Challenger">Challenger</x:String>
+	<x:String x:Key="Grandmaster">Grandmaster</x:String>
+	<x:String x:Key="Master">Master</x:String>
+	<x:String x:Key="Diamond">Diamond</x:String>
+	<x:String x:Key="Emerald">Emerald</x:String>
+	<x:String x:Key="Platinum">Platinum</x:String>
+	<x:String x:Key="Gold">Gold</x:String>
+	<x:String x:Key="Silver">Silver</x:String>
+	<x:String x:Key="Iron">Iron</x:String>
+
+	<x:String x:Key="Challenger1">Challenger</x:String>
+	<x:String x:Key="Grandmaster1">Grandmaster</x:String>
+	<x:String x:Key="Master1">Master</x:String>
+	<x:String x:Key="Diamond1">Diamond 1</x:String>
+	<x:String x:Key="Diamond2">Diamond 2</x:String>
+	<x:String x:Key="Diamond3">Diamond 3</x:String>
+	<x:String x:Key="Diamond4">Diamond 4</x:String>
+	<x:String x:Key="Emerald1">Emerald 1</x:String>
+	<x:String x:Key="Emerald2">Emerald 2</x:String>
+	<x:String x:Key="Emerald3">Emerald 3</x:String>
+	<x:String x:Key="Emerald4">Emerald 4</x:String>
+	<x:String x:Key="Platinum1">Platinum 1</x:String>
+	<x:String x:Key="Platinum2">Platinum 2</x:String>
+	<x:String x:Key="Platinum3">Platinum 3</x:String>
+	<x:String x:Key="Platinum4">Platinum 4</x:String>
+	<x:String x:Key="Gold1">Gold 1</x:String>
+	<x:String x:Key="Gold2">Gold 2</x:String>
+	<x:String x:Key="Gold3">Gold 3</x:String>
+	<x:String x:Key="Gold4">Gold 4</x:String>
+	<x:String x:Key="Silver1">Silver 1</x:String>
+	<x:String x:Key="Silver2">Silver 2</x:String>
+	<x:String x:Key="Silver3">Silver 3</x:String>
+	<x:String x:Key="Silver4">Silver 4</x:String>
+	<x:String x:Key="Iron1">Iron 1</x:String>
+	<x:String x:Key="Iron2">Iron 2</x:String>
+	<x:String x:Key="Iron3">Iron 3</x:String>
+	<x:String x:Key="Iron4">Iron 4</x:String>
 
 	<!--<sys:String x:Key="The" >ASASD</sys:String>
 	<models:EnumLocalizable x:Key="Dark" EnumValue="{x:Static models:ThemeType.Dark}" DisplayName="Dark"/>

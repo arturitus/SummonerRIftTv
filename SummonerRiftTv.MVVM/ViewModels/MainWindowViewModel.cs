@@ -171,7 +171,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
             return canSearch;
         }
 
-        public async void OnSearchClick(IList<object> parameters)
+        public async Task OnSearchClick(IList<object> parameters)
         {
             string summName = string.Empty;
             Region? selectedRegion = default;
@@ -194,12 +194,12 @@ namespace SummonerRiftTv.MVVM.ViewModels
             }
 
             m_ActiveGame.ClearPrevouisMatch();
-            await Task.Run(async () =>
-            {
+            //Task.Run(async () =>
+            //{ 
                 try
                 {
                     IsBusy?.Invoke(true);
-                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value);
+                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value).ConfigureAwait(false);
 
                     SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;
@@ -213,7 +213,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
                     IsBusy?.Invoke(false);
                     ErrorDialog?.Invoke(e.ErrorFormat);
                 }
-            });
+            //});
         }
 
         private bool CanSpectateClick()
@@ -231,7 +231,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
             return true;
         }
 
-        public async void OnSpectateClick()
+        public async Task OnSpectateClick()
         {
             if (!CanSpectateClick())
             {
