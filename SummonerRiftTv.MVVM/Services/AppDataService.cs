@@ -9,8 +9,8 @@ namespace SummonerRiftTv.MVVM.Services
         public const string APP_DATA_PATH = "./Assets/AppData.json";
         private AppData m_AppData;
 
-        public event Action<ThemeType> OnThemeChanged;
-        public event Action<Language> OnLanguageChanged;
+        public event Action<ThemeType>? OnThemeChanged;
+        public event Action<Language>? OnLanguageChanged;
 
         public AppData AppData => m_AppData;
         public AppDataService()

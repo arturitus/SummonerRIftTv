@@ -1,6 +1,7 @@
 ﻿using SummonerRiftTv.MVVM.Models;
 using SummonerRiftTv.RiotApi.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace SummonerRiftTv.MVVM.DTOs
 {
@@ -14,8 +15,8 @@ namespace SummonerRiftTv.MVVM.DTOs
         public ObservableCollection<BannedChampionDTO> RedTeamBans { get; } = new ObservableCollection<BannedChampionDTO>();
 
         public int MapId { get; set; }
-        public string GameMode { get; set; }
-        public string GameType { get; set; }
+        public string? GameMode { get; set; }
+        public string? GameType { get; set; }
         public int GameLength { get; set; }
 
         public override void LocalizeObject()
@@ -72,8 +73,9 @@ namespace SummonerRiftTv.MVVM.DTOs
             return activeGameDTO;
         }
 
-        public static async Task<ActiveGameDTO> FromActiveGameAsync(ActiveGame activeGame, Func<string, Task<HashSet<LeagueItem>>> func)
+        public static async Task<ActiveGameDTO> FromActiveGameAsync(ActiveGame activeGame, Func<string?, Task<HashSet<LeagueItem>>> func)
         {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             ActiveGameDTO activeGameDTO = new ActiveGameDTO()
             {
                 MapId = activeGame.MapId,
@@ -83,10 +85,14 @@ namespace SummonerRiftTv.MVVM.DTOs
             };
             foreach (ParticipantDTO participant in activeGame.Participants)
             {
-                HashSet<LeagueItem> list = await func?.Invoke(participant.SummonerId);
+                HashSet<LeagueItem> list = await Task.Factory.StartNew(async () => await func.Invoke(participant.SummonerId),
+                                                     cancellationTokenSource.Token,
+                                                     TaskCreationOptions.LongRunning,
+                                                     TaskScheduler.Default).Unwrap();
+
                 if (list.Count > 0)
                 {
-                    participant.SoloQueueRank = list.FirstOrDefault(l => ((LeagueItemDTO)l).QueueType == QueueType.RANKED_SOLO_5x5);
+                    participant.SoloQueueRank = list.FirstOrDefault(l => ((LeagueItemDTO?)l)?.QueueType == QueueType.RANKED_SOLO_5x5);
                 }
                 if (participant.TeamId is TeamId.BlueTeam)
                 {
@@ -104,6 +110,7 @@ namespace SummonerRiftTv.MVVM.DTOs
                 }
                 activeGameDTO.AddBan(participant);
             }
+            await cancellationTokenSource.CancelAsync();
             return activeGameDTO;
         }
 
@@ -135,13 +142,13 @@ namespace SummonerRiftTv.MVVM.DTOs
 
             foreach (ParticipantDTO item in participants)
             {
-                if(item.SoloQueueRank is not null)
+                if (item.SoloQueueRank is not null)
                 {
                     averageTier.Add((AverageTier)((int)item.SoloQueueRank.Tier | (int)item.SoloQueueRank.Rank));
                 }
             }
 
-            if(averageTier.Count <= 0)
+            if (averageTier.Count <= 0)
             {
                 return AverageTier.Unranked;
             }

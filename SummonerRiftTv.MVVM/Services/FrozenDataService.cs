@@ -56,7 +56,7 @@ namespace SummonerRiftTv.MVVM.Services
             return items.ToFrozenSet();
         }
 
-        public FrozenLeagueObject<T> GetLeagueObject<T>(int id, T leagueType) where T : Enum
+        public FrozenLeagueObject<T>? GetLeagueObject<T>(int id, T? leagueType) where T : Enum
         {
             return leagueType switch
             {
@@ -72,7 +72,7 @@ namespace SummonerRiftTv.MVVM.Services
     public class FrozenLeagueObject<T> where T : Enum
     {
         public int Id { get; }
-        public T ObjectType { get; }
+        public T? ObjectType { get; }
         public Uri Icon { get; }
         public FrozenLeagueObject(int id)
         {

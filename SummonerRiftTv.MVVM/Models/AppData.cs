@@ -7,10 +7,10 @@ namespace SummonerRiftTv.MVVM.Models
     public class AppData
     {
         public const string APP_DATA_PATH = "./Assets/AppData.json";
-        public event Action<AppData> OnAppDataChanged;
+        public event Action<AppData>? OnAppDataChanged;
 
-        private string lolFolderPath;
-        public string LolFolderPath
+        private string? lolFolderPath;
+        public string? LolFolderPath
         {
             get
             {

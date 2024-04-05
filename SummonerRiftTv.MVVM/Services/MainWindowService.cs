@@ -4,21 +4,22 @@ using SummonerRiftTv.MVVM.Models;
 using SummonerRiftTv.RiotApi.IServices;
 using SummonerRiftTv.RiotApi.Models;
 using System.Diagnostics;
+using System.Threading;
 
 namespace SummonerRiftTv.MVVM.Services
 {
     public class MainWindowService : IMainWindowService
     {
-        private Process m_LeagueProcess;
+        private Process? m_LeagueProcess;
         private readonly IRiotApiService m_RiotApiService;
         private const string APP_DATA_PATH = "./Assets/AppData.json";
         private const string BAT_PATH = "./Assets/spectator.bat";
         private string authentication;
         private long matchId;
-        private string _region;
-        private string spectatorRegion;
+        private string? _region;
+        private string? spectatorRegion;
 
-        public event Action<SpectateState, bool> SpectateChanged;
+        public event Action<SpectateState, bool>? SpectateChanged;
 
         public MainWindowService(IRiotApiService riotApiService)
         {
@@ -28,7 +29,7 @@ namespace SummonerRiftTv.MVVM.Services
             spectatorRegion = string.Empty;
         }
 
-        async Task<ActiveGameDTO> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region region)
+        async Task<ActiveGameDTO> IMainWindowService.SearchSpectableGameAsync(string summonerName, string tagLine, Region? region)
         {
             try
             {
@@ -59,10 +60,11 @@ namespace SummonerRiftTv.MVVM.Services
                         spectatorRegion = _region;
                         break;
                 }
+
                 ActiveGameDTO activeGameDTO = await ActiveGameDTO.FromActiveGameAsync(res,
                                               async (s) => await ActiveGameDTO_OnAskPlayerLeague(s, region));
+                await cancellationTokenSource.CancelAsync();
                 return activeGameDTO;
-                return res;
             }
 
             catch (SummonerNotFoundException)
@@ -79,12 +81,12 @@ namespace SummonerRiftTv.MVVM.Services
             }
         }
 
-        private async Task<HashSet<LeagueItem>> ActiveGameDTO_OnAskPlayerLeague(string summonerId, Region region)
+        private async Task<HashSet<LeagueItem>> ActiveGameDTO_OnAskPlayerLeague(string? summonerId, Region? region)
         {
             return await m_RiotApiService.GetLeagueEntryBySummonerIdAsync(summonerId, region);
         }
 
-        async Task IMainWindowService.SpectateGameAsync(string lolFolderPath)
+        async Task IMainWindowService.SpectateGameAsync(string? lolFolderPath)
         {
             //TODO batFile con authentication y matchId FolderPath
             await Task.Run(() =>
@@ -94,11 +96,11 @@ namespace SummonerRiftTv.MVVM.Services
                     using (Process process = new())
                     {
                         process.StartInfo.FileName = BAT_PATH;
-                        process.StartInfo.ArgumentList.Add(lolFolderPath);
+                        process.StartInfo.ArgumentList.Add(lolFolderPath ?? string.Empty);
                         process.StartInfo.ArgumentList.Add(authentication);
                         process.StartInfo.ArgumentList.Add(matchId.ToString());
-                        process.StartInfo.ArgumentList.Add(_region);
-                        process.StartInfo.ArgumentList.Add(spectatorRegion);
+                        process.StartInfo.ArgumentList.Add(_region ?? string.Empty);
+                        process.StartInfo.ArgumentList.Add(spectatorRegion ?? string.Empty);
                         process.StartInfo.RedirectStandardOutput = true;
                         process.Start();
                         //var a = process.StandardOutput;
@@ -151,7 +153,7 @@ namespace SummonerRiftTv.MVVM.Services
                 throw;
             }
         }
-        private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region region)
+        private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region? region)
         {
             try
             {
@@ -169,7 +171,7 @@ namespace SummonerRiftTv.MVVM.Services
             }
         }
 
-        private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region region)
+        private async Task<Summoner> SearchSummonerByPUUIDAsync(string encryptedPUUID, Region? region)
         {
             try
             {
@@ -187,12 +189,15 @@ namespace SummonerRiftTv.MVVM.Services
             }
         }
 
-        private void LeagueGameProcess_Exited(object sender, EventArgs e)
+        private void LeagueGameProcess_Exited(object? sender, EventArgs e)
         {
-            m_LeagueProcess.Exited -= LeagueGameProcess_Exited;
-            m_LeagueProcess.Dispose();
-            m_LeagueProcess = null;
-            SpectateChanged?.Invoke(SpectateState.Ended, true);
+            if (m_LeagueProcess is not null)
+            {
+                m_LeagueProcess.Exited -= LeagueGameProcess_Exited;
+                m_LeagueProcess.Dispose();
+                m_LeagueProcess = null;
+                SpectateChanged?.Invoke(SpectateState.Ended, true);
+            }
         }
     }
 }

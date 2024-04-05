@@ -13,9 +13,9 @@ namespace SummonerRiftTv.MVVM.ViewModels
     {
         private readonly IMainWindowService m_MainWindowService;
         //public event Action<ThemeType> OnThemeChange;
-        public event Action<bool> IsBusy;
-        public event Action<FrozenSet<InfoDialogKeys>> InfoDialog;
-        public event Action<ErrorDialogFormat> ErrorDialog;
+        public event Action<bool>? IsBusy;
+        public event Action<FrozenSet<InfoDialogKeys>>? InfoDialog;
+        public event Action<ErrorDialogFormat>? ErrorDialog;
         private readonly FileSystemWatcher fileSystemWatcher;
 
         //public ReactiveCommand<IList<object>, Unit> SearchCommand { get; }
@@ -158,7 +158,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
             {
                 keys.Add(InfoDialogKeys.EmptyRegion);
                 canSearch = false;
-            }            
+            }
             if (!canSearch)
             {
                 InfoDialog?.Invoke(keys.ToFrozenSet());
@@ -190,16 +190,19 @@ namespace SummonerRiftTv.MVVM.ViewModels
             }
             if (string.IsNullOrEmpty(tagLine))
             {
-                tagLine = selectedRegion.Value.ToTagLine().ToString();
+                tagLine = selectedRegion.ToTagLine().ToString();
             }
 
             m_ActiveGame.ClearPrevouisMatch();
-            //Task.Run(async () =>
-            //{ 
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            await Task.Run(async () =>
+            {
                 try
                 {
                     IsBusy?.Invoke(true);
-                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion.Value).ConfigureAwait(false);
+                    ActiveGame = await m_MainWindowService.SearchSpectableGameAsync(summName, tagLine, selectedRegion);
 
                     SpectateState = SpectateState.NoneSpectate;
                     CanSpectate = true;
@@ -213,7 +216,9 @@ namespace SummonerRiftTv.MVVM.ViewModels
                     IsBusy?.Invoke(false);
                     ErrorDialog?.Invoke(e.ErrorFormat);
                 }
-            //});
+            }, cancellationTokenSource.Token);
+
+            await cancellationTokenSource.CancelAsync();
         }
 
         private bool CanSpectateClick()

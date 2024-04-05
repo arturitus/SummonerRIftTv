@@ -8,7 +8,7 @@ namespace SummonerRiftTv.DTOs
     {
         private int perkStyle;
         private int perkSubStyle;
-        private List<int> perkIds;
+        private List<int>? perkIds;
 
         public int PerkStyle
         {
@@ -34,7 +34,7 @@ namespace SummonerRiftTv.DTOs
 
         public RuneTree[] RuneTree { get; }
 
-        public List<int> PerkIds
+        public List<int>? PerkIds
         {
             get => perkIds;
             set

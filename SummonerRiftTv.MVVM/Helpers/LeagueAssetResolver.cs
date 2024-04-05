@@ -23,7 +23,7 @@ namespace SummonerRiftTv.MVVM.Helpers
         //    stream.Position = 0;
         //    return stream;
         //}
-        private static IFrozenDataService m_CachedData;
+        private static IFrozenDataService? m_CachedData;
         //public static bool Initialized { get; private set; }
         //public static IBitmapHelper Instance { get; private set; }
 
@@ -102,7 +102,7 @@ namespace SummonerRiftTv.MVVM.Helpers
         //    return new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://SummonerRiftTv/Assets/Runes/{id}.png")));
         //}
 
-        public static Uri Get<T>(int id, T leagueType) where T : Enum
+        public static Uri Get<T>(int id, T? leagueType) where T : Enum
         {
             return leagueType switch
             {
@@ -114,12 +114,12 @@ namespace SummonerRiftTv.MVVM.Helpers
             };
         }
 
-        public static Uri GetUri<T>(int id, T leagueType) where T : Enum
+        public static Uri GetUri<T>(int id, T? leagueType) where T : Enum
         {
             //Avalonia.Media.Imaging.Bitmap b = new Avalonia.Media.Imaging.Bitmap(ToStream(new Bitmap(AvaloniaLocator.Current.GetService<IAssetLoader>()!.Open(new Uri($"avares://SummonerRiftTv/Assets/Champions/{id}.png"))), ImageFormat.Bmp));
             if (m_CachedData != null)
             {
-                FrozenLeagueObject<T> leagueObject = m_CachedData.GetLeagueObject(id, leagueType);
+                FrozenLeagueObject<T>? leagueObject = m_CachedData.GetLeagueObject(id, leagueType);
                 if (leagueObject != null)
                 {
                     return leagueObject.Icon;

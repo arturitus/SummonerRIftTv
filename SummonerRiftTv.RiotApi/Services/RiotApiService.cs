@@ -3,7 +3,6 @@ using SummonerRiftTv.RiotApi.IServices;
 using SummonerRiftTv.RiotApi.Models;
 using System.Net;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace SummonerRiftTv.RiotApi.Services
 {
@@ -12,7 +11,7 @@ namespace SummonerRiftTv.RiotApi.Services
         private const string BASE_ADDRESS = "https://summonerrifttv.netlify.app/";
         private const string NETLIFY_FUNCTIONS = ".netlify/functions";
 
-        async Task<Account> IRiotApiService.GetAccountByNameTagAsync(string summonerName, string tagLine, Region region)
+        async Task<Account> IRiotApiService.GetAccountByNameTagAsync(string summonerName, string tagLine, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
@@ -44,7 +43,7 @@ namespace SummonerRiftTv.RiotApi.Services
             }
         }
 
-        async Task<HashSet<LeagueItem>> IRiotApiService.GetLeagueEntryBySummonerIdAsync(string summonerId, Region region)
+        async Task<HashSet<LeagueItem>> IRiotApiService.GetLeagueEntryBySummonerIdAsync(string summonerId, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
@@ -53,7 +52,7 @@ namespace SummonerRiftTv.RiotApi.Services
 
                 using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {
-                    responseMessage.EnsureSuccessStatusCode();
+                    //responseMessage.EnsureSuccessStatusCode();
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         string json = await responseMessage.Content.ReadAsStringAsync();
@@ -67,11 +66,10 @@ namespace SummonerRiftTv.RiotApi.Services
 
                     throw new InvalidApiKeyException();
                 }
-            }
-        
+            }        
         }
 
-        async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region region)
+        async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
@@ -94,7 +92,7 @@ namespace SummonerRiftTv.RiotApi.Services
             }
         }
 
-        async Task<Summoner> IRiotApiService.GetSummonerByNameAsync(string summonerName, Region region)
+        async Task<Summoner> IRiotApiService.GetSummonerByNameAsync(string summonerName, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
@@ -115,7 +113,7 @@ namespace SummonerRiftTv.RiotApi.Services
                 }
             }
         }
-        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string summonerId, Region region)
+        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string summonerId, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {

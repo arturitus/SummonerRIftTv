@@ -8,7 +8,7 @@ namespace SummonerRiftTv.MVVM.DTOs
     public class BannedChampionDTO : LocalizableObject
     {
         private int championId;
-        private Uri bitmap;
+        private Uri? bitmap;
         private ChampionType championType;
 
         public int ChampionId
@@ -25,7 +25,7 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public int PickTurn { get; set; }
 
-        public Uri Bitmap => bitmap;
+        public Uri? Bitmap => bitmap;
 
         public ChampionType ChampionType => championType;
 

@@ -7,7 +7,7 @@ namespace SummonerRiftTv.MVVM.IServices
     public interface IMainWindowService
     {
         event Action<SpectateState, bool> SpectateChanged;
-        Task<ActiveGameDTO> SearchSpectableGameAsync(string summonerName, string tagLine, Region region);
-        Task SpectateGameAsync(string lolFolderPath);
+        Task<ActiveGameDTO> SearchSpectableGameAsync(string summonerName, string tagLine, Region? region);
+        Task SpectateGameAsync(string? lolFolderPath);
     }
 }

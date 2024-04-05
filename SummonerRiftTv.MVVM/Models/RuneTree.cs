@@ -5,7 +5,7 @@ namespace SummonerRiftTv.MVVM.Models
     public class RuneTree : LocalizableObject
     {
         public RuneType RuneType { get; set; }
-        public Uri Tree { get; set; }
+        public Uri? Tree { get; set; }
         public List<Rune> Runes { get; }
 
         public RuneTree()

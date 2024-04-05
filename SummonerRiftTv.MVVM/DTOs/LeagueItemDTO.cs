@@ -29,7 +29,7 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public int Losses { get; set; }
 
-        public Uri Bitmap { get; set; }
+        public Uri? Bitmap { get; set; }
 
         public bool IsRankVisible
         {
@@ -44,7 +44,7 @@ namespace SummonerRiftTv.MVVM.DTOs
             this.RaisePropertyChanged(nameof(Tier));
         }
 
-        public static implicit operator LeagueItemDTO(LeagueItem leagueItem)
+        public static implicit operator LeagueItemDTO?(LeagueItem? leagueItem)
         {
             if(leagueItem is null)
             {

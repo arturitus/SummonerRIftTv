@@ -52,19 +52,19 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public int ProfileIconId { get; set; }
 
-        public string SummonerName { get; set; }
+        public string? SummonerName { get; set; }
 
-        public string RiotId { get; set; }
+        public string? RiotId { get; set; }
 
         public bool Bot { get; set; }
 
-        public string SummonerId { get; set; }
+        public string? SummonerId { get; set; }
 
-        public LeagueItemDTO SoloQueueRank { get; set; }
+        public LeagueItemDTO? SoloQueueRank { get; set; }
 
-        public List<object> GameCustomizationObjects { get; set; }
+        public List<object>? GameCustomizationObjects { get; set; }
 
-        public PerksDTO Perks { get; set; }
+        public PerksDTO? Perks { get; set; }
 
         public Uri[] Bitmaps { get; }
 
@@ -83,8 +83,8 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public override void LocalizeObject()
         {
-            Perks.LocalizeObject();
-            SoloQueueRank.LocalizeObject();
+            Perks?.LocalizeObject();
+            SoloQueueRank?.LocalizeObject();
             this.RaisePropertyChanged(nameof(ChampionType));
             this.RaisePropertyChanged(nameof(SummonerSpellType1));
             this.RaisePropertyChanged(nameof(SummonerSpellType2));
