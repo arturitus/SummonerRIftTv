@@ -99,13 +99,13 @@ namespace SummonerRiftTV.Test
         [Fact]
         public async Task GetActiveGameAsync_Should_Return_ActiveGame4()
         {
-            if (string.IsNullOrEmpty(_RiotApiServiceFixture.SummonerId))
+            if (string.IsNullOrEmpty(_RiotApiServiceFixture.EncryptedPuuid))
             {
-                Assert.Fail($"{nameof(_RiotApiServiceFixture.SummonerId)} was null or empty");
+                Assert.Fail($"{nameof(_RiotApiServiceFixture.EncryptedPuuid)} was null or empty");
             }
             try
             {
-                ActiveGame activeGame = await _RiotApiService.GetActiveGameAsync(_RiotApiServiceFixture.SummonerId, REGION);
+                ActiveGame activeGame = await _RiotApiService.GetActiveGameAsync(_RiotApiServiceFixture.EncryptedPuuid, REGION);
 
                 Assert.NotNull(activeGame);
             }
