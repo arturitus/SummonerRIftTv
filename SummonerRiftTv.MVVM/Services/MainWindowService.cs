@@ -63,7 +63,6 @@ namespace SummonerRiftTv.MVVM.Services
 
                 ActiveGameDTO activeGameDTO = await ActiveGameDTO.FromActiveGameAsync(res,
                                               async (s) => await ActiveGameDTO_OnAskPlayerLeague(s, region));
-                await cancellationTokenSource.CancelAsync();
                 return activeGameDTO;
             }
 
