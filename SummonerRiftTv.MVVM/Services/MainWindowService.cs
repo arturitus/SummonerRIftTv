@@ -34,9 +34,9 @@ namespace SummonerRiftTv.MVVM.Services
             try
             {
                 Account account = await SearchAccountAsync(summonerName, tagLine, region);
-                Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region);
-                string summonerId = summoner.Id;
-                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(summonerId, region);
+                //Summoner summoner = await SearchSummonerByPUUIDAsync(account.Puuid, region);
+                string encryptedPUUID = account.Puuid;
+                ActiveGame res = await m_RiotApiService.GetActiveGameAsync(encryptedPUUID, region);
                 authentication = res.Observers!.EncryptionKey!;
                 matchId = res.GameId;
                 //_region = region is Region.BR1 or Region.RU or Region.KR ? region.ToString() : $"{region}1";

@@ -113,11 +113,11 @@ namespace SummonerRiftTv.RiotApi.Services
                 }
             }
         }
-        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string summonerId, Region? region)
+        async Task<ActiveGame> IRiotApiService.GetActiveGameAsync(string encryptedPUUID, Region? region)
         {
             using (HttpClient httpClient = new() { BaseAddress = new Uri(BASE_ADDRESS) })
             {
-                string requestUri = $"{NETLIFY_FUNCTIONS}/getActiveGames?region={region}&summonerId={summonerId}";
+                string requestUri = $"{NETLIFY_FUNCTIONS}/getActiveGames?region={region}&encryptedPUUID={encryptedPUUID}";
 
                 using (HttpResponseMessage responseMessage = await httpClient.GetAsync(requestUri))
                 {

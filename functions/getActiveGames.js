@@ -2,9 +2,9 @@ const axios = require('axios');
 
 exports.handler = async (event, context) => {
   try {
-    const { region, summonerId } = event.queryStringParameters;
+    const { region, encryptedPUUID } = event.queryStringParameters;
     const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
-    const url = `https://${region}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${summonerId}?api_key=${apiKey}`;
+    const url = `https://${region}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${encryptedPUUID}?api_key=${apiKey}`;
     
     // Fetch data from the API
     const response = await axios.get(url);
