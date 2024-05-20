@@ -92,7 +92,13 @@ namespace SummonerRiftTv.MVVM.DTOs
 
                 if (list.Count > 0)
                 {
-                    participant.SoloQueueRank = list.FirstOrDefault(l => ((LeagueItemDTO?)l)?.QueueType == QueueType.RANKED_SOLO_5x5);
+                    try
+                    {
+                        participant.SoloQueueRank = list.FirstOrDefault(l => ((LeagueItemDTO?)l)?.QueueType == QueueType.RANKED_SOLO_5x5);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
                 if (participant.TeamId is TeamId.BlueTeam)
                 {
