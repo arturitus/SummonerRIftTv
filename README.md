@@ -5,7 +5,7 @@
 
 Summoner Rift Tv is a desktop app for spectating League of Legends matches without the need for the League of Legends client.
 
-![image](https://github.com/arturitus/SummonerRIftTv/assets/68915153/57460b8f-ccd0-451c-bd91-a55e652f4b0e)
+![image](https://github.com/arturitus/SummonerRIftTv/assets/68915153/918eac73-c415-4ce8-9a1d-23a16d9accc3)
 
 ## Build status 
 [![.NET](https://github.com/arturitus/SummonerRIftTv/actions/workflows/dotnet.yml/badge.svg)](https://github.com/arturitus/SummonerRIftTv/actions/workflows/dotnet.yml)
@@ -54,8 +54,12 @@ This project wouldn't have been possible without the help, contributions, and re
 - [![Virus Total AoT](https://img.shields.io/badge/VirusTotal-AoT_Scan-blue?logo=virustotal)](https://www.virustotal.com/gui/file/bd0ef835d6e65b987d08173072a06446577eec28f656a362dee99125464e2247/detection)
     For some reason this compiled exe gets flagged.
 
+## Known issues
+Since the 14.9 patch (Vanguard Anti-Cheat), players may encounter an error where they need to exit Vanguard in order to launch `League of Legends.exe`.
+I've reached out to Riot regarding this matter, but unfortunately, there's currently no workaround available.
 
 ## TODO
-- Display the the `gameName` instead of the `summonerName`.
-- Display each player solo queue rank.
-- Display team average rank.
+- [x] Display the the `gameName` instead of the `summonerName`.
+- [x] Display each player solo queue rank.
+- [x] Display team average rank.
+- [ ] Add featured games.
