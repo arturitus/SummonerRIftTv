@@ -137,7 +137,7 @@
 	<x:String x:Key="Viego">Viego</x:String>
 	<x:String x:Key="Senna">Senna</x:String>
 	<x:String x:Key="Lucian">Lucian</x:String>
-	<x:String x:Key="Zed>">Zed</x:String>
+	<x:String x:Key="Zed">Zed</x:String>
 	<x:String x:Key="Jax">Jax</x:String>
 	<x:String x:Key="Kled">Kled</x:String>
 	<x:String x:Key="Ekko">Ekko</x:String>
@@ -343,6 +343,8 @@
 	<x:String x:Key="Ghost_1">Ghost</x:String>
 	<x:String x:Key="Dash">Dash</x:String>
 	<x:String x:Key="RuinedKingSmite">Ruined King Smite</x:String>
+	<x:String x:Key="FlashArena">Flash</x:String>
+	<x:String x:Key="Flee">Flee</x:String>
 
 	<!--Tier-->
 	<x:String x:Key="Unranked">Unranked</x:String>

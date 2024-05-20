@@ -21,6 +21,8 @@
         AscensionRevive = 50,
         Ghost_1 = 51,
         Dash = 52,
-        RuinedKingSmite = 55
+        RuinedKingSmite = 55,
+        Flee = 2201,
+        FlashArena = 2202,
     }
 }
