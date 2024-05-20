@@ -1,4 +1,5 @@
-﻿using SummonerRiftTv.MVVM.Models;
+﻿using ReactiveUI;
+using SummonerRiftTv.MVVM.Models;
 using SummonerRiftTv.RiotApi.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -21,6 +22,8 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public override void LocalizeObject()
         {
+            this.RaisePropertyChanged(nameof(BlueTeamAvgTier));
+            this.RaisePropertyChanged(nameof(RedTeamAvgTier));
             LocalizeCollection(BlueTeamPlayers);
             LocalizeCollection(BlueTeamBans);
             LocalizeCollection(RedTeamPlayers);
@@ -40,7 +43,7 @@ namespace SummonerRiftTv.MVVM.DTOs
             foreach (T item in items)
             {
                 item.LocalizeObject();
-            }
+            }            
         }
 
         public static implicit operator ActiveGameDTO(ActiveGame activeGame)
