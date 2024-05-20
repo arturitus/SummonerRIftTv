@@ -4,7 +4,10 @@ exports.handler = async (event, context) => {
   try {
     const { riotServerRegion, summonerName, tagLine } = event.queryStringParameters;
     const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
-    const url = `https://${riotServerRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}?api_key=${apiKey}`;
+
+    const encodedSummonerName = encodeURIComponent(summonerName);
+    const encodedTagLine = encodeURIComponent(tagLine);
+    const url = `https://${riotServerRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodedSummonerName}/${encodedTagLine}?api_key=${apiKey}`;
     
     // Fetch data from the API
     const response = await axios.get(url);
