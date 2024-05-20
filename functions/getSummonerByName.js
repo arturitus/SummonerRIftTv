@@ -4,7 +4,9 @@ exports.handler = async (event, context) => {
   try {
     const { region, summonerName } = event.queryStringParameters;
     const apiKey = process.env.API_KEY; // Accessing the API key from environment variable
-    const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${apiKey}`;
+    
+    const encodedSummonerName = encodeURIComponent(summonerName);
+    const url = `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${encodedSummonerName}?api_key=${apiKey}`;
     
     // Fetch data from the API
     const response = await axios.get(url);
