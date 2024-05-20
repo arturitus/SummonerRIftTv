@@ -25,8 +25,8 @@ namespace SummonerRiftTV.Test
 
     public class RiotApiTest : IClassFixture<RiotApiServiceFixture>
     {
-        private const string SUMMONER_NAME = "elmiillor03";
-        private const string TAG_LINE = "EUW";
+        private const string SUMMONER_NAME = "Razørk Activoo";
+        private const string TAG_LINE = "razzz";
         private const Region REGION = Region.EUW1;
 
         private readonly ITestOutputHelper _output;
@@ -74,26 +74,6 @@ namespace SummonerRiftTV.Test
                 _RiotApiServiceFixture.SummonerId = summoner.Id;
             }
             Assert.NotNull(summoner);
-        }
-
-        [Fact]
-        public async Task GetSummonerByNameAsync_Should_Return_Summoner3()
-        {
-            try
-            {
-                Summoner summoner = await _RiotApiService.GetSummonerByNameAsync(SUMMONER_NAME, REGION);
-
-                if (summoner is not null)
-                {
-                    _RiotApiServiceFixture.SummonerId = summoner.Id;
-                }
-                Assert.NotNull(summoner);
-            }
-            catch (SummonerNotFoundException ex)
-            {
-                _output.WriteLine("Warning: was successfull, but no summoner was found.");
-                Assert.NotNull(ex);
-            }
         }
 
         [Fact]

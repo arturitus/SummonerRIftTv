@@ -135,23 +135,6 @@ namespace SummonerRiftTv.MVVM.Services
             });
         }
 
-        private async Task<Summoner> SearchSummonerAsync(string summonerName, Region region)
-        {
-            try
-            {
-                Summoner res = await m_RiotApiService.GetSummonerByNameAsync(summonerName, region);
-                return res;
-            }
-
-            catch (SummonerNotFoundException)
-            {
-                throw new MainWindowServiceError(new ErrorDialogFormat(summonerName, InfoDialogKeys.SummonerDoesntExist));
-            }
-            catch (InvalidApiKeyException)
-            {
-                throw;
-            }
-        }
         private async Task<Account> SearchAccountAsync(string summonerName, string tagLine, Region? region)
         {
             try
