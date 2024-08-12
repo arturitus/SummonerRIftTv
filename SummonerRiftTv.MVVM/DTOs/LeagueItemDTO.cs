@@ -50,11 +50,16 @@ namespace SummonerRiftTv.MVVM.DTOs
             {
                 return null;
             }
+
+            Enum.TryParse(leagueItem.QueueType, true, out QueueType queueType);
+            Enum.TryParse(leagueItem.Tier, true, out Tier tier);
+            Enum.TryParse(leagueItem.Rank, true, out Rank rank);
+
             return new LeagueItemDTO
             {
-                QueueType = Enum.Parse<QueueType>(leagueItem.QueueType),
-                Tier = Enum.Parse<Tier>(leagueItem.Tier, true),
-                Rank = Enum.Parse<Rank>(leagueItem.Rank),
+                QueueType = queueType,
+                Tier = tier,
+                Rank = rank,
                 LeaguePoints = leagueItem.LeaguePoints,
                 Wins = leagueItem.Wins,
                 Losses = leagueItem.Losses
