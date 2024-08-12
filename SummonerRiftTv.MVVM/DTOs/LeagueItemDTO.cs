@@ -46,7 +46,7 @@ namespace SummonerRiftTv.MVVM.DTOs
 
         public static implicit operator LeagueItemDTO?(LeagueItem? leagueItem)
         {
-            if(leagueItem is null)
+            if (leagueItem is null)
             {
                 return null;
             }

@@ -154,7 +154,7 @@ namespace SummonerRiftTv.MVVM.ViewModels
                 keys.Add(InfoDialogKeys.EmptySummonerName);
                 canSearch = false;
             }
-            if ((Region?)parameters[1] is null)
+            if (parameters[1] is null || ((int)parameters[1] == -1))
             {
                 keys.Add(InfoDialogKeys.EmptyRegion);
                 canSearch = false;

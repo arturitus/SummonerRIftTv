@@ -4,7 +4,6 @@ using SummonerRiftTv.MVVM.Models;
 using SummonerRiftTv.RiotApi.IServices;
 using SummonerRiftTv.RiotApi.Models;
 using System.Diagnostics;
-using System.Threading;
 
 namespace SummonerRiftTv.MVVM.Services
 {

@@ -2,7 +2,6 @@
 using SummonerRiftTv.MVVM.Models;
 using SummonerRiftTv.RiotApi.Models;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace SummonerRiftTv.MVVM.DTOs
 {
@@ -43,7 +42,7 @@ namespace SummonerRiftTv.MVVM.DTOs
             foreach (T item in items)
             {
                 item.LocalizeObject();
-            }            
+            }
         }
 
         public static implicit operator ActiveGameDTO(ActiveGame activeGame)

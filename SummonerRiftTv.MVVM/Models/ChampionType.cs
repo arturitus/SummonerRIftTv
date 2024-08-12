@@ -157,6 +157,7 @@
         Gwen = 887,
         RenataGlasc = 888,
         Leona = 89,
+        Aurora = 893,
         Nilah = 895,
         Ksante = 897,
         Fiddlesticks = 9,

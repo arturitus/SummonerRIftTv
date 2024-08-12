@@ -228,6 +228,7 @@
 	<x:String x:Key="Gwen">Gwen</x:String>
 	<x:String x:Key="RenataGlasc">Renata Glasc</x:String>
 	<x:String x:Key="Leona">Leona</x:String>
+	<x:String x:Key="Aurora">Aurora</x:String>
 	<x:String x:Key="Nilah">Nilah</x:String>
 	<x:String x:Key="Ksante">K'Sante</x:String>
 	<x:String x:Key="Fiddlesticks">Fiddlesticks</x:String>

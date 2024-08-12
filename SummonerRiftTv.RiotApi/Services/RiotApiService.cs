@@ -66,7 +66,7 @@ namespace SummonerRiftTv.RiotApi.Services
 
                     throw new InvalidApiKeyException();
                 }
-            }        
+            }
         }
 
         async Task<Summoner> IRiotApiService.GetSummonerByEncryptedPUUIDAsync(string encryptedPUUID, Region? region)
