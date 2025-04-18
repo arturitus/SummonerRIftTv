@@ -14,7 +14,12 @@ if exist "%RADS_PATH%\Game" (
 	@cd /d !RADS_PATH!
 	
 	if exist "League of Legends.exe" (
+		NET STOP vgc >NUL 2>NUL
+		NET STOP vgk >NUL 2>NUL
 		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+		NET START vgk >NUL 2>NUL
+		NET START vgc >NUL 2>NUL
+		TIMEOUT /T 3
 		goto :eof
 	)
 )
@@ -74,7 +79,12 @@ if exist "%RADS_PATH%\RADS" (
 
 	@cd /d "!RADS_PATH!\solutions\lol_game_client_sln\releases\!lolver!\deploy"
 	if exist "League of Legends.exe" (
-		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+		NET STOP vgc >NUL 2>NUL
+		NET STOP vgk >NUL 2>NUL
+		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-SkipBuild" "-GameBaseDir=.."
+		NET START vgk >NUL 2>NUL
+		NET START vgc >NUL 2>NUL
+		TIMEOUT /T 3
 		goto :eof
 	)
 )
