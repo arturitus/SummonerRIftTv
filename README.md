@@ -1,6 +1,6 @@
 # Summoner Rift Tv 
 
-[![.NET 8.0](https://img.shields.io/badge/NET-8.0-brightgreen.svg)](https://github.com/dotnet/core/blob/main/release-notes/8.0/README.md)
+[![.NET 9.0](https://img.shields.io/badge/NET-8.0-brightgreen.svg)](https://github.com/dotnet/core/blob/main/release-notes/8.0/README.md)
 [![Avalonia](https://img.shields.io/badge/Avalonia-11.0.10-brightgreen.svg)](https://avaloniaui.net)
 
 Summoner Rift Tv is a desktop app for spectating League of Legends matches without the need for the League of Legends client.

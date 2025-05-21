@@ -4,7 +4,7 @@ SETLOCAL enableextensions enabledelayedexpansion
 set RADS_PATH=%1
 
 
-echo "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+echo "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-GameBaseDir=.."
 if exist "%RADS_PATH%\Game" (
 	cd /d "!RADS_PATH!\Config"
 	for /F "delims=" %%a in ('find "        locale: " LeagueClientSettings.yaml') do set "locale=%%a"
@@ -16,7 +16,7 @@ if exist "%RADS_PATH%\Game" (
 	if exist "League of Legends.exe" (
 		NET STOP vgc >NUL 2>NUL
 		NET STOP vgk >NUL 2>NUL
-		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-GameBaseDir=.."
+		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-GameBaseDir=.."
 		NET START vgk >NUL 2>NUL
 		NET START vgc >NUL 2>NUL
 		TIMEOUT /T 3
@@ -81,7 +81,7 @@ if exist "%RADS_PATH%\RADS" (
 	if exist "League of Legends.exe" (
 		NET STOP vgc >NUL 2>NUL
 		NET STOP vgk >NUL 2>NUL
-		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-Locale=!locale!" "-SkipBuild" "-GameBaseDir=.."
+		@start "" "League of Legends.exe" "spectator spectator.%5.lol.pvp.net:8080 %2 %3 %4" "-UseRads" "-SkipBuild" "-GameBaseDir=.."
 		NET START vgk >NUL 2>NUL
 		NET START vgc >NUL 2>NUL
 		TIMEOUT /T 3
