@@ -1,6 +1,6 @@
 # Summoner Rift Tv 
 
-[![.NET 9.0](https://img.shields.io/badge/NET-8.0-brightgreen.svg)](https://github.com/dotnet/core/blob/main/release-notes/8.0/README.md)
+[![.NET 9.0](https://img.shields.io/badge/NET-9.0-brightgreen.svg)](https://github.com/dotnet/core/blob/main/release-notes/8.0/README.md)
 [![Avalonia](https://img.shields.io/badge/Avalonia-11.0.10-brightgreen.svg)](https://avaloniaui.net)
 
 Summoner Rift Tv is a desktop app for spectating League of Legends matches without the need for the League of Legends client.
@@ -48,15 +48,15 @@ This project wouldn't have been possible without the help, contributions, and re
 ## Technical stuff
 
 - Summoner Rift Tv has been tested only on Windows 10, although Avalonia is known for being cross-platform.
-- Summoner Rift Tv has been specifically compiled for win-x64, leveraging Avalonia's compatibility with Ahead-of-Time (AoT) compilation offered by .NET 8. This choice not only reduces application size but also enhances startup times. 
+- Summoner Rift Tv has been specifically compiled for win-x64, leveraging Avalonia's compatibility with Ahead-of-Time (AoT) compilation offered by .NET 9. This choice not only reduces application size but also enhances startup times. 
     
 - [![Virus Total](https://img.shields.io/badge/VirusTotal-Scan-blue?logo=virustotal)](https://www.virustotal.com/gui/file/8db9bcf730f9d5d816b1e1da69274e6788c08e91d326cb8973a30df087803da5/detection)
 - [![Virus Total AoT](https://img.shields.io/badge/VirusTotal-AoT_Scan-blue?logo=virustotal)](https://www.virustotal.com/gui/file/bd0ef835d6e65b987d08173072a06446577eec28f656a362dee99125464e2247/detection)
     For some reason this compiled exe gets flagged.
 
 ## Known issues
-Since the 14.9 patch (Vanguard Anti-Cheat), players may encounter an error where they need to exit Vanguard in order to launch `League of Legends.exe`.
-I've reached out to Riot regarding this matter, but unfortunately, there's currently no workaround available.
+Since the 14.9 patch (Vanguard Anti-Cheat), Vanguard must be exited in order to launch `League of Legends.exe`.
+The only workaround I've found is to stop the Vanguard service and then restart it. League can't be run simultaneously, but spectating becomes available again without needing to log into the client.
 
 ## TODO
 - [x] Display the the `gameName` instead of the `summonerName`.
